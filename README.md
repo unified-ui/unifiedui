@@ -1,6 +1,6 @@
 # unified-ui
 
-> **Unified-UI for your AI** — One interface for all your AI agents, regardless of origin.
+> **unified-ui for your AI** — One interface for all your AI agents, regardless of origin.
 
 ## Overview
 
