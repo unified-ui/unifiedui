@@ -20,6 +20,14 @@
 Notizen foundry:
 - conversation hat automantisch an conversation die chat history dran -> wir brauchen keine history mitgeben, nur auf conversation beziehen!
 - 
+
+config:
+{
+    "agent_type": "AGENT|MULTI_AGENT"
+    "api_version": "2025-11-15-preview", # aktuell nur "2025-11-15-preview"
+    "project_endpoint": "https://engo-foundry.services.ai.azure.com/api/projects/proj-default-2",
+    "agent_name": ""
+}
 ```
 
 - Copilot anbinden
