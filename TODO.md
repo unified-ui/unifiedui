@@ -2,59 +2,53 @@
 
 ## Plan
 
-*Erst Foundry, und Langchain anbinden, bevor wir Tracings umsetzen, damit wir tracing-logiken aus verschiedenen 
-
-- Foundry anbinden
-    - Simplen Agent bauen
-        - Agent
-        - Multi-Agent (Workflow)
-            - Send Message
-            - Ask a question
-    - platform-service
-        - bei POST /conversation -> wenn Foundry -> hier auch foundry conversation anlegen und in db speichern (in config feld der conversation -> kann dann über /config zurückgegeben werden!)
-    - Integration in GO mit sdk bauen
-    - Integration testen (postman)
-    - Config im Frontend implementieren
-    - Agent im Frontend testen
-```txt
-Notizen foundry:
-- conversation hat automantisch an conversation die chat history dran -> wir brauchen keine history mitgeben, nur auf conversation beziehen!
-- 
-
-config:
-{
-    "agent_type": "AGENT|MULTI_AGENT"
-    "api_version": "2025-11-15-preview", # aktuell nur "2025-11-15-preview"
-    "project_endpoint": "https://engo-foundry.services.ai.azure.com/api/projects/proj-default-2",
-    "agent_name": ""
-}
-```
-
-- Copilot anbinden
-    - python sdk -> FastAPI Copilot Chat service
-        - trigger über agent-service
-        - FastAPI nur für Copilot-Anbindung -> alles sonst in GO agent-service
-    - Integration in GO mit sdk bauen
-    - Integration testen (postman)
-    - Config im Frontend implementieren
-    - Agent im Frontend testen
-
-- Langchain und Langgraph REST API Service
-    - einen simplen Langchain Agent bauen -> per REST API exposen
-    - state auch irgendwie senden
-        - einfach als dict?
-    - Integration in GO mit sdk bauen
-    - Integration testen (postman)
-    - Config im Frontend implementieren
-    - Agent im Frontend testen
+- checken:
+    1. wurde /api/v1/agent-service/tenants/{id}/... genutzt
+    2. PUT "/refresh" weg!
 
 - Tracing implementieren
-    - Collection entwickeln
-    - N8N anbinden
-    - Frontend tracing im Chat einbauen
-        - klick auf message -> Rechte Sidebar für tracing einbauen und anzeigen
+    - TODOS
+        - Frontend:
+            - Autonomous-Agent Config bauen (aktuell nur n8n)
+        - Platform-Service
+            - /autonomous-agents/{id}/config implementieren
+        - Agent Service
+            -  Endpoints und handler / dto implementieren:
+                - POST /autonomous-agents/{id}/traces/import
+                - PUT /autonomous-agents/{id}/traces/{id}/import/refresh
+                - PUT /conversations/{id}/traces/{id}/import/refresh
 
 - Frontend
+    - tracing im Chat einbauen -> beim draufklicken Hierarchische Struktur
+        - klick auf message -> Rechte Sidebar für tracing einbauen und anzeigen
+        - oben am Chat: Icon, bei dem man sich alle traces zu der conversation anschauen kann.
+            - auch rechts als Sidebar
+                - wenn man auf message in sidebar klickt, soll man zu dieser geführt werden
+    - AutonomousAgentPage
+        - TabBar
+            - Runs
+            - Autonomous Agent
+        - Liste der Autonomous Agents:
+            - wie jede andere auch
+        - Liste der RUNS:
+            - Filter
+                - nach Tag, Monat, Jahr
+                - status
+                    - Success
+                    - In Progress
+                    - Partial Error
+                    - Error
+                    - Import Error
+            - Sort by
+                - ...
+    - TracesPage
+        - hier ALLE traces, Chat Agent und Autonoumus Agents mit coolen filtern etc
+    - TracingDetailPage
+        - details zu den traces
+            - Kopf: mit Metadaten (created, duration, status, name, description etc)
+            - Tracings... Hierarchie
+
+- Frontend Refactoring
     - Credentials raus aus Sidebar und in Tenant-Settings rein
         - extra Tab; ähnlich wie Cutsom Groups
     - ConversationPage schöner designen
@@ -64,7 +58,6 @@ config:
         - beim wechseln des tenants
             - context leeren
                 - zB sidebardatalist sind noch die bereits gefetcheten sachen dabei
-        
         - beim fetchen der Credentials im Create- und EditApplicationDialog wird noch credentials?limit=999 gefetcht -> hier eher paginierung, aber man kann ruhig 100 fetchen (nur name und id -> + orderBy=name order_direction=asc)
         - siehe Video vom 02.01.
     - ConversationPage
@@ -74,18 +67,16 @@ config:
     - Dashboard
     - ...
 
-- Agent-Service
+- platform-service
     - GET secret endpoint hinzufügen
         - GET /api/v1/platform-service/tenants/{id}/credentials/{id}/secret
+
+- Agent-Service
     - autonomous agents
         - hier API Key generieren lassen, inkl. rotate
             - beim erstellen: werden in VAULT gespeichert und referenz uri in db auf autonomous-agent
             - PUT /api/v1/platform-service/tenants/{id}/autonomous-agents/{id}/keys/1|2/rotate
                 - werden 
-    - traces implementieren
-        - beim messages senden -> in jobQueue nach ende die traces fetchen und speichern (N8N -> traces collection)
-            - traces mit message id ODER autonomous-agent-id speichern 
-        - POST endpoint mit selben service implementieren
 
 11. ZWEI Vaults fixen:
     - app_vault + secrets_vault
@@ -102,11 +93,27 @@ config:
 
 - Frontend-Tests entwickeln
 
+- Tracings Refactoren
+    - Foundry Tracings -> mehr Daten sammeln mit tool calls, etc etc
+        - mehr daten analyiseren und algorithmus anpassen!
+        - aktuell ist foundry algo noch eher fehlerhaft
+
+- Refactoring:
+    - bei POST /messages
+        - geben wir applicationId und extConversationId mit -> beides bekommen wir über die Conversation!
+            - applicationId vielleicht okay
+            - aber extConversationId brauchen wir nicht!
+
+- Foundry Agent -> MCP Call Confirmation
+    - wenn man MCP Server aufruft (siehe Word), muss noch im chat confirmt werden -> wie machen wir das dann?
+
 ## Future
 
 - Backend
     - Agent-Integration
-        - reasoning?...
+        - file upload
+        - reasoning / tool calls etc
+            - in foundry mit tools etc arbeiten und entsprechend im UI anzeigen
 
 - Frontend
     - /refresh von identity implementieren
@@ -119,3 +126,69 @@ config:
     - language-support einbauen
         - erstmal alles in englisch
         - als zweites: über url /de-de /en-us übersetzen (default -> /en-us)
+
+- Copilot anbinden
+    - Integration:
+        - API via `DirectLine` ODER
+        - python sdk -> FastAPI Copilot Chat service
+            - trigger über agent-service
+            - FastAPI nur für Copilot-Anbindung -> alles sonst in GO agent-service
+    - Integration testen (postman)
+    - Config im Frontend implementieren
+    - Agent im Frontend testen
+
+- Langchain und Langgraph REST API Service
+    - mit eigenem ReACT Chat Agent verknüpfen!
+        - fürs streaming und tracing geben wir je zwei klassen vor mit to_dict()...
+    - einen simplen Langchain Agent bauen -> per REST API exposen
+    - state auch irgendwie senden
+        - einfach als dict?
+    - Integration in GO mit sdk bauen
+    - Integration testen (postman)
+    - Config im Frontend implementieren
+    - Agent im Frontend testen
+
+- Application -> Simple ReAct Chat Agent direkt in unified-ui
+    - PoC [Here](/Users/enricogoerlitz/Developer/repos/unified-ui-agent-service/poc/unified_ui_agent/py/)
+    - dafür müsste man verschiedene LLM-APIs anbinden können
+        - NEIN -> wir nutzen einfach auch Langchain, müssen nur die config speichern und damit das llm bauen
+    - UND! man kann MCP Server je Application anbinden und tools mitgeben!
+
+    - TODOs:
+        - PoC in GO schreiben und nochmal testen
+            - langchain und alle Features müssen auch in GO nutzbar sein!
+                - ansonsten FAST API Service für custom agents...
+        - Update Entities
+            - credentials
+                - type: HTTP_HEADERS UND AZURE_OPENAI
+                - wird als string in secret_value gesendet
+        - Neue Entities:
+            - mcp_servers
+                - id
+                - name
+                - description
+                - type: "SSE"
+                - credential_id
+        - ....
+    - Frontend Config:
+        - agent_version (aktuell nur ["v1"])
+        - agent_type (aktuell nur ["ReACT_AGENT", "MULTI_AGENT_ORCHESTRATOR"])
+        - instructions
+        - Geeting message (Message, die zum start gesendet wird und als Gruß oder als Einleitung in die Konversation dient)
+        - default chat history count
+        - llm_credentials_id
+            - neuen Credential Type: "AZURE_OPENAI"
+                - type
+                - api_version
+                - endpoint
+                - api_key
+        - llm_deployment_name
+        - tools[]:
+            - type: mcp_server
+            - mcp_server_id
+            - allowed_tools: [liste aus strings]
+        - sub_agents[]:
+            - agent (Chat Agent)
+            - 
+        - tools > Log Tool-Output to Message
+        - *zukünftig: Playground!
