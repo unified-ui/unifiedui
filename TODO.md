@@ -165,21 +165,51 @@
                         - wenn selected -> shadow hinzufügen
                     - item connections
                         - mit pfeil verbunden (wie zB in N8N Workflows)
-                        - können horizental oder vertikal angeordnet werden
-                        - wenn man sub-nodes nutzt
-                            - dann wird ein abgerundeter pfeil nach (horizontal:oben->rechts / vertikal: rechts->unten) auf das nächste item "ausgefahren"
-                                - wenn der subnode wiederum subnodes verwenden -> selbe logik (sollte hier rekursiv ermittelt werden)
-                            - wenn ein node oder subnode mehrere subitems hat, muss der ausfahr-abstand (der standardisiert ist) für das erste item "Mal Anzahl subitems" genommen werden
-                                - der erste wird ausgefahren zu beginn des parent items -> viel abstand
-                                - der zweite wird mit etwas abstand zum ersten pfeil (auf dem item) ausgefahren, dann aber mit Abstand = "Mal Anzahl subitems - 1" und so weiter
-                                    - bzw musst du ermitteln, wenn innerhlab eines subitems auch noch ganz viele subitems bestehen, muss der erste richtig weiß nach außen und so weiter
-                                    - du musst also beim erstellen die abstände jeweils berechnen, damit keine items überlappen -> vielleicht gibt es noch eine sauberere lösung?
-                                - ah und wichtig: auf den pfeilen zu den subitems soll in der mitte ein IconButton zum collaps und expand sein
-                                    - bei collaps soll der arm eingefahren werden und nicht mehr angezeigt werden 
-                                        - dann muss sich entsprechend die view sauber anpassen
-                                        - bei expand wird der arm ausgefahren und die view muss wieder sauber angepasst werden
-                                        - default: ausgefahren!
-                                        - auf allen subnode pfleiden muss das sein, sodass ich auch zum einen den ersten subnode collapsen kann und alles unter diesem ebenfalls ausgeblendet wird, aber ich kann auch den subnode im subnode im subnode ... collapsen und dann soll dieses subnode + die darunter collapst werden -> du verstehst schon
+                        ### Canvas Layout Architecture (using xyflow/react)
+
+                        #### Node Types
+                        1. **Root Nodes**: Main execution steps, arranged in primary flow direction
+                        2. **Sub-Nodes**: Nested execution details, branching off from parent nodes
+
+                        #### Layout Strategy
+                        - **Primary Flow**: Horizontal (left-to-right) or vertical (top-to-bottom), user-toggleable
+                        - **Sub-Node Branching**: Always perpendicular to primary flow
+                            - Horizontal mode: sub-nodes branch downward
+                            - Vertical mode: sub-nodes branch rightward
+
+                        #### Edge Connection Pattern
+                        ```
+                        ┌──────────┐    ┌──────────┐    ┌──────────┐
+                        │  Node 1  │───▶│  Node 2  │───▶│  Node 3  │   ← Primary flow
+                        └──────────┘    └──────────┘    └──────────┘
+                                                                 │
+                                                                 ├──[1]──▶ SubNode A
+                                                                 │              │
+                                                                 │              └──[1]──▶ SubSubNode X
+                                                                 │
+                                                                 └──[2]──▶ SubNode B
+                        ```
+
+                        #### Sub-Node Branching Rules
+                        1. **Branch Origin**: Edges exit from the bottom (horizontal) or right (vertical) of parent node
+                        2. **Index Labels**: Each branch edge displays a small numbered badge (1, 2, 3...) at the branch point
+                        3. **Spacing Calculation**: 
+                             - Fixed vertical/horizontal gap between sibling sub-nodes
+                             - Parent node reserves space based on total descendant count (recursive)
+                        4. **Curved Edges**: Use smooth bezier curves for branch edges (xyflow `smoothstep` or `bezier` edge type)
+
+                        #### Collapse/Expand Behavior
+                        - **Toggle Button**: Circular icon button centered on the branch edge
+                            - Collapsed: `+` icon, edge hidden, sub-tree hidden
+                            - Expanded: `−` icon, edge visible, sub-tree visible
+                        - **State Propagation**: Collapsing a node hides all descendants; expanding reveals immediate children only
+                        - **Layout Recalculation**: Use xyflow's `fitView()` or custom layout algorithm to smoothly reposition nodes after toggle
+
+                        #### Implementation Notes
+                        - Use xyflow's `useNodesState` and `useEdgesState` for reactive updates
+                        - Custom node component with status indicator (border color + icon)
+                        - Custom edge component with collapse/expand button
+                        - Calculate node positions using recursive depth-first traversal, accumulating offsets based on subtree sizes
                 - Data Section (unten, initial ca 1/3 hoch)
                     - höhenanpassbar
                     - Links: Logs anzeigen
