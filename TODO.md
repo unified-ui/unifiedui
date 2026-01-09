@@ -235,7 +235,7 @@
                     - zum start navigeren und "zentrieren"
                     - vergrößern
                     - verkleinern
-                    - view: horizental, vertikal -> wie die items angeordnet werden
+                    - view: horizental, vertikal -> wie die items angeordnet werden (default horizontal!)
 
 Für die Entwicklung der traces-visualisierung, bauen mir bitte die page `TracingDialogDevelopment`, welche unter `/dev/tracing` aufrufbar ist.
 Default soll der Dialog direkt aufgehen und über query params will ich steuern, welche traces du holst:
@@ -259,7 +259,9 @@ entweder:
 
 Sollten noch weitere UI Libraries nötig sein, gerne diskutiere mit dir, welche am besten passen würde.
 
-
+**Aktuelisieren**
+- Subnodes lieber in einer Baumstruktur aufgehen lassen
+    - siehe [Image Video von xyflow](https://xyflow.com/)
 
 - Frontend Refactoring 1
     - Credentials raus aus Sidebar und in Tenant-Settings rein
