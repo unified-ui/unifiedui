@@ -236,7 +236,29 @@
                     - vergrößern
                     - verkleinern
                     - view: horizental, vertikal -> wie die items angeordnet werden
-        - 
+
+Für die Entwicklung der traces-visualisierung, bauen mir bitte die page `TracingDialogDevelopment`, welche unter `/dev/tracing` aufrufbar ist.
+Default soll der Dialog direkt aufgehen und über query params will ich steuern, welche traces du holst:
+entweder:
+    - ?conversationId={"CONVERSATION_ID"} => dann fetchst du `{{host_agent_service}}/api/v1/agent-service/tenants/{{tenant_id}}/conversations/{{conversation_id}}/traces`
+        - returns : {"traces": [...]}
+        - siehe api client; wenn noch nicht implementiert, schaue in die routes.go und response schema und implementiere den client.ts und types.ts für diese route
+    - ?autonomousAgentId={"AUTO_AGENT_ID"} => dann fetchst du `{{host_agent_service}}/api/v1/agent-service/tenants/{{tenant_id}}/autonomous-agents/{{autonomous_agent_id}}/traces`
+        - returns : {"traces": [...]}
+        - siehe api client; wenn noch nicht implementiert, schaue in die routes.go und response schema und implementiere den client.ts und types.ts für diese route
+        - => ja, hier bekommst du dann mehrere von auto agent traces, aber auch das sollte ja kein problem sien, da selbe response!
+
+**Diene Aufgaben**
+1. Analysiere meine Anforderungen und definiere für dich optimierte Anfordeurngen, mit denen du super arbeiten kannst
+2. Analysiere die tracing struktur (siehe, wie N8N und foundry traces entsprechend importiert werden)
+3. Analyisere die "unifiedui.traces.json" datei, um verschiedene Daten zu sehen, die du bekommen kannst
+4. Analysiere die Projektstruktur des Frontend-services; insbesondere die design farben
+5. Baue mir die Page `TracingDialogDevelopment` und erstelle im route die route `/dev/tracing`
+6. Plane die Implementierung des `TracingVisualDialog` entsprechend modular (ich will im chat auch in einer quick view zB nur die hierarchie verwenden etc)
+7. Implementiere die module für den `TracingVisualDialog` und letztendlich den dialog, der auch direkt aufgehen soll auf /dev/tracing?...
+
+Sollten noch weitere UI Libraries nötig sein, gerne diskutiere mit dir, welche am besten passen würde.
+
 
 
 - Frontend Refactoring 1

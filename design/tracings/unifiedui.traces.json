@@ -1,0 +1,4385 @@
+[{
+  "_id": "edd9749d-2143-4e71-a562-05c3ea1a4171",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "applicationId": "1ed84421-ab33-4a02-878a-9f6d6ff3c799",
+  "conversationId": "cb229fcb-8fd2-464f-a624-6daffa632781",
+  "contextType": "conversation",
+  "referenceId": "conv_eca4f45f4a3b023500MJdgWIaLrBC171Xf85Iz35rRRY8FAeFx",
+  "referenceName": "ConversationFromFoundry",
+  "referenceMetadata": {
+    "empty": "dict"
+  },
+  "logs": [
+    "{\"log\":1}",
+    "{\"log\":\"2\"}"
+  ],
+  "nodes": [
+    {
+      "id": "node-001",
+      "name": "LLM Call",
+      "type": "llm",
+      "referenceId": "resp_id",
+      "startAt": {
+        "$date": "2025-01-01T15:04:05.000Z"
+      },
+      "endAt": {
+        "$date": "2025-01-01T15:04:06.000Z"
+      },
+      "duration": 1.5,
+      "status": "completed",
+      "logs": [
+        "log-1",
+        "log-2"
+      ],
+      "data": {
+        "input": {
+          "text": "Hello, how are you?",
+          "extraData": {
+            "tokens": 5
+          },
+          "metadata": {
+            "model": "gpt-4"
+          }
+        },
+        "output": {
+          "text": "I'm doing great, thanks!",
+          "extraData": {
+            "tokens": 6
+          },
+          "metadata": {
+            "finishReason": "stop"
+          }
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-06T23:40:05.321Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-06T23:40:05.321Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-06T23:40:05.321Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-06T23:40:05.321Z"
+  },
+  "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+  "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+},
+{
+  "_id": "cc884b12-b8af-44a5-a265-9c141e5b06e4",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "741776fc-e59a-4d81-8ca0-129acacaeab2",
+  "contextType": "autonomous_agent",
+  "referenceMetadata": {
+    "empty": "dict"
+  },
+  "logs": [
+    "{\"log\":1}",
+    "{\"log\":\"2\"}"
+  ],
+  "nodes": [
+    {
+      "id": "node-001",
+      "name": "LLM Call",
+      "type": "llm",
+      "referenceId": "resp_id",
+      "startAt": {
+        "$date": "2025-01-01T15:04:05.000Z"
+      },
+      "endAt": {
+        "$date": "2025-01-01T15:04:06.000Z"
+      },
+      "duration": 1.5,
+      "status": "completed",
+      "logs": [
+        "log-1",
+        "log-2"
+      ],
+      "data": {
+        "input": {
+          "text": "Hello, how are you?",
+          "extraData": {
+            "tokens": 5
+          },
+          "metadata": {
+            "model": "gpt-4"
+          }
+        },
+        "output": {
+          "text": "I'm doing great, thanks!",
+          "extraData": {
+            "tokens": 6
+          },
+          "metadata": {
+            "finishReason": "stop"
+          }
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-06T23:42:12.427Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-06T23:42:12.427Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-06T23:42:12.427Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-06T23:42:12.427Z"
+  },
+  "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+  "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+},
+{
+  "_id": "4760fcd0-db8c-4f51-b018-5bfa6e3abcca",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "741776fc-e59a-4d81-8ca0-129acacaeab2",
+  "contextType": "autonomous_agent",
+  "referenceMetadata": {
+    "empty": "dict"
+  },
+  "logs": [
+    "{\"log\":1}",
+    "{\"log\":\"2\"}"
+  ],
+  "nodes": [
+    {
+      "id": "node-001",
+      "name": "LLM Call",
+      "type": "llm",
+      "referenceId": "resp_id",
+      "startAt": {
+        "$date": "2025-01-01T15:04:05.000Z"
+      },
+      "endAt": {
+        "$date": "2025-01-01T15:04:06.000Z"
+      },
+      "duration": 1.5,
+      "status": "completed",
+      "logs": [
+        "log-1",
+        "log-2"
+      ],
+      "data": {
+        "input": {
+          "text": "Hello, how are you?",
+          "extraData": {
+            "tokens": 5
+          },
+          "metadata": {
+            "model": "gpt-4"
+          }
+        },
+        "output": {
+          "text": "I'm doing great, thanks!",
+          "extraData": {
+            "tokens": 6
+          },
+          "metadata": {
+            "finishReason": "stop"
+          }
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-06T23:42:13.416Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-06T23:42:13.416Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-06T23:42:13.416Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-06T23:42:13.416Z"
+  },
+  "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+  "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+},
+{
+  "_id": "trace_86c02124-4ce5-4248-a044-2ee1d8e7cdde",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "applicationId": "1ed84421-ab33-4a02-878a-9f6d6ff3c799",
+  "conversationId": "c1b6281c-9fa3-4b62-9fc1-e3689a60eb04",
+  "contextType": "conversation",
+  "referenceId": "conv_d470e95d2519176900GG4yWE3Ah2Ca2D6mVDueJO7MIrrfjxdR",
+  "referenceName": "Microsoft Foundry Conversation",
+  "referenceMetadata": {
+    "foundry_conversation_id": "conv_d470e95d2519176900GG4yWE3Ah2Ca2D6mVDueJO7MIrrfjxdR",
+    "project_endpoint": "https://engo-foundry.services.ai.azure.com/api/projects/proj-default-2",
+    "api_version": "2025-11-15-preview",
+    "imported_at": "2026-01-07T10:46:56Z",
+    "item_count": 4
+  },
+  "logs": [],
+  "nodes": [
+    {
+      "id": "node_01383ba5-ff42-4873-93f1-25df0d10c11e",
+      "name": "User Message",
+      "type": "llm",
+      "referenceId": "msg_d470e95d2519176900EB8HH6OjwDKI0dgem09fRXxjJrV91STz",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "text": "My name is Teddy :)",
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        },
+        "output": {
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": ""
+      },
+      "createdAt": {
+        "$date": "2026-01-07T10:46:56.244Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-07T10:46:56.244Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    },
+    {
+      "id": "node_0873c163-ca65-4dd8-98f8-b7081af292ed",
+      "name": "Assistant Response",
+      "type": "llm",
+      "referenceId": "msg_d470e95d25191769002XdTKU2sapwDdLtIvteS9r02hqULSYI7",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        },
+        "output": {
+          "text": "Hey du!",
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "",
+        "response_id": "wfresp_d470e95d2519176900DB1KsVSPIwjWmLmO2Sx04i3LCoku2wED",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicWorkflow",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-07T10:46:56.244Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-07T10:46:56.244Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    },
+    {
+      "id": "node_0df90f80-a99b-4524-a184-a2a10d549e36",
+      "name": "Send Activity",
+      "type": "workflow",
+      "referenceId": "wfa_d470e95d2519176900gAtAEkxgLXvTaMkIpI0CVKut1664em8W",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "kind": "SendActivity",
+            "action_id": "action-1767653509477",
+            "parent_action_id": "trigger_wf",
+            "previous_action_id": "trigger_wf"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "action_id": "action-1767653509477",
+        "parent_action_id": "trigger_wf",
+        "previous_action_id": "trigger_wf",
+        "kind": "SendActivity",
+        "response_id": "wfresp_d470e95d2519176900DB1KsVSPIwjWmLmO2Sx04i3LCoku2wED",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicWorkflow",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-07T10:46:56.244Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-07T10:46:56.244Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    },
+    {
+      "id": "node_acaaf57e-7070-47a6-853d-5871629af053",
+      "name": "Assistant Response",
+      "type": "llm",
+      "referenceId": "msg_d470e95d2519176900nlk4Jc4c9XLbyEbD3wMIXhY6cxDO1vuL",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "type": "message",
+            "role": "assistant"
+          }
+        },
+        "output": {
+          "text": "What is your name?",
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "",
+        "response_id": "wfresp_d470e95d2519176900DB1KsVSPIwjWmLmO2Sx04i3LCoku2wED",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicWorkflow",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-07T10:46:56.244Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-07T10:46:56.244Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-07T10:02:54.486Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-07T10:46:56.247Z"
+  },
+  "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+  "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+},
+{
+  "_id": "trace_4ca1e4d1-e102-4e90-ad3e-918033b6192c",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "applicationId": "1ed84421-ab33-4a02-878a-9f6d6ff3c799",
+  "conversationId": "fe8f3138-3745-4879-b91b-6a3cb5d03303",
+  "contextType": "conversation",
+  "referenceId": "conv_c671246113e78fe700QvxJVpUm1OlmSlm4N81oS4QPxhQ2Og1b",
+  "referenceName": "Microsoft Foundry Conversation",
+  "referenceMetadata": {
+    "imported_at": "2026-01-07T11:40:44Z",
+    "item_count": 10,
+    "foundry_conversation_id": "conv_c671246113e78fe700QvxJVpUm1OlmSlm4N81oS4QPxhQ2Og1b",
+    "project_endpoint": "https://engo-foundry.services.ai.azure.com/api/projects/proj-default-2",
+    "api_version": "2025-11-15-preview"
+  },
+  "logs": [],
+  "nodes": [
+    {
+      "id": "node_dfb9d830-89b2-4b21-a7fd-444f18fec50e",
+      "name": "User Message",
+      "type": "llm",
+      "referenceId": "msg_c671246113e78fe700V0y1LDtA5WqBeNL9hykHa1lZ6RfOG9PR",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "text": "hi",
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        },
+        "output": {
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": ""
+      },
+      "createdAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    },
+    {
+      "id": "node_0689118d-9cdb-4680-b6aa-d25ddde15117",
+      "name": "SendActivity",
+      "type": "workflow",
+      "referenceId": "wfa_c671246113e78fe700sZgPyNeeaaBwWLgcU4mX6o2NAXG3ol4Z",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "output": {
+          "metadata": {
+            "kind": "SendActivity",
+            "action_id": "action-1767653509477",
+            "previous_action_id": "trigger_wf",
+            "created_by": {
+              "agent": {
+                "type": "agent_id",
+                "name": "BasicWorkflow",
+                "version": "2"
+              },
+              "response_id": "wfresp_c671246113e78fe700wqCxyJPVYb6zEzZvDMVuDv0QEgv6WcHj"
+            }
+          }
+        }
+      },
+      "nodes": [
+        {
+          "id": "node_1e252f8e-cd0a-4732-a5a4-cc25425096fd",
+          "name": "Assistant Response",
+          "type": "llm",
+          "referenceId": "msg_c671246113e78fe700UxfUIQulKHJst9tQkSNVJK3vQXqltAk9",
+          "status": "completed",
+          "logs": [],
+          "data": {
+            "input": {
+              "metadata": {
+                "role": "assistant",
+                "type": "message"
+              }
+            },
+            "output": {
+              "text": "Hey du!",
+              "metadata": {
+                "type": "message",
+                "role": "assistant"
+              }
+            }
+          },
+          "nodes": [],
+          "metadata": {
+            "partition_key": "",
+            "response_id": "wfresp_c671246113e78fe700wqCxyJPVYb6zEzZvDMVuDv0QEgv6WcHj",
+            "agent": {
+              "type": "agent_id",
+              "name": "BasicWorkflow",
+              "version": "2"
+            }
+          },
+          "createdAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "updatedAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+          "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+        },
+        {
+          "id": "node_9ecb4fe4-ecec-47a7-8509-3f8a3ff332a6",
+          "name": "Assistant Response",
+          "type": "llm",
+          "referenceId": "msg_c671246113e78fe7001hPdL2XbqDlJeuhfq3jdG6dPMTe8hcy3",
+          "status": "completed",
+          "logs": [],
+          "data": {
+            "input": {
+              "metadata": {
+                "role": "assistant",
+                "type": "message"
+              }
+            },
+            "output": {
+              "text": "What is your name?",
+              "metadata": {
+                "type": "message",
+                "role": "assistant"
+              }
+            }
+          },
+          "nodes": [],
+          "metadata": {
+            "partition_key": "",
+            "response_id": "wfresp_c671246113e78fe700wqCxyJPVYb6zEzZvDMVuDv0QEgv6WcHj",
+            "agent": {
+              "type": "agent_id",
+              "name": "BasicWorkflow",
+              "version": "2"
+            }
+          },
+          "createdAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "updatedAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+          "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+        }
+      ],
+      "metadata": {
+        "action_id": "action-1767653509477",
+        "parent_action_id": "trigger_wf",
+        "previous_action_id": "trigger_wf",
+        "kind": "SendActivity",
+        "response_id": "wfresp_c671246113e78fe700wqCxyJPVYb6zEzZvDMVuDv0QEgv6WcHj",
+        "agent": {
+          "version": "2",
+          "type": "agent_id",
+          "name": "BasicWorkflow"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    },
+    {
+      "id": "node_633e2d2f-6c75-4835-8ca8-02caf0054e3a",
+      "name": "User Message",
+      "type": "llm",
+      "referenceId": "msg_c671246113e78fe700eBheif6U4jYuXLEnXaASYdlhfHedKZ9x",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "text": "My name is teddy. what is your name?",
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        },
+        "output": {
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": ""
+      },
+      "createdAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    },
+    {
+      "id": "node_2f6dd768-63af-4383-aa7d-0918ba081604",
+      "name": "Assistant Response",
+      "type": "llm",
+      "referenceId": "msg_c671246113e78fe7009W4aFLmbSXoUwYe46hkrOKex2SLSGusK",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        },
+        "output": {
+          "text": "Hello, Teddy! My name is ChatGPT. I’m here to help you with any questions or tasks you have. How can I assist you today?",
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": ""
+      },
+      "createdAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    },
+    {
+      "id": "node_e77b076f-1c3f-40d4-acb6-6d91f7ba2773",
+      "name": "SendActivity",
+      "type": "workflow",
+      "referenceId": "wfa_c671246113e78fe700MAT0NNTM58tuHRAbng6SgJ7om6Ny2JFS",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "output": {
+          "metadata": {
+            "action_id": "action-1767634451682",
+            "previous_action_id": "action-1767634350800_Post",
+            "created_by": {
+              "agent": {
+                "name": "BasicWorkflow",
+                "version": "2",
+                "type": "agent_id"
+              },
+              "response_id": "wfresp_c671246113e78fe700OW9Wl3B4CcPqhTQebhsmIQPrOncO4YaH"
+            },
+            "kind": "SendActivity"
+          }
+        }
+      },
+      "nodes": [
+        {
+          "id": "node_7a331f8b-24b1-4cbb-8b71-a52236538497",
+          "name": "Invoke Azure Agent",
+          "type": "workflow",
+          "referenceId": "wfa_c671246113e78fe700rpz3UHsyKbAmJ2YMASx9A3j0kSVxlivO",
+          "status": "completed",
+          "logs": [],
+          "data": {
+            "input": {
+              "metadata": {
+                "kind": "InvokeAzureAgent",
+                "action_id": "action-1767634350800",
+                "parent_action_id": "trigger_wf",
+                "previous_action_id": "action-1767634216505_Post"
+              }
+            }
+          },
+          "nodes": [],
+          "metadata": {
+            "parent_action_id": "trigger_wf",
+            "previous_action_id": "action-1767634216505_Post",
+            "kind": "InvokeAzureAgent",
+            "response_id": "wfresp_c671246113e78fe700OW9Wl3B4CcPqhTQebhsmIQPrOncO4YaH",
+            "agent": {
+              "version": "2",
+              "type": "agent_id",
+              "name": "BasicWorkflow"
+            },
+            "action_id": "action-1767634350800"
+          },
+          "createdAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "updatedAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+          "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+        },
+        {
+          "id": "node_c7104814-1c08-48e1-b519-29c5023bdffc",
+          "name": "Assistant Response",
+          "type": "llm",
+          "referenceId": "msg_c671246113e78fe700XPx5NXJrPlj3aEKF7I8nKqgpHMjycHHt",
+          "status": "completed",
+          "logs": [],
+          "data": {
+            "input": {
+              "metadata": {
+                "role": "assistant",
+                "type": "message"
+              }
+            },
+            "output": {
+              "text": "Conversation is ending here.",
+              "metadata": {
+                "role": "assistant",
+                "type": "message"
+              }
+            }
+          },
+          "nodes": [],
+          "metadata": {
+            "partition_key": "",
+            "response_id": "wfresp_c671246113e78fe700OW9Wl3B4CcPqhTQebhsmIQPrOncO4YaH",
+            "agent": {
+              "name": "BasicWorkflow",
+              "version": "2",
+              "type": "agent_id"
+            }
+          },
+          "createdAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "updatedAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+          "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+        },
+        {
+          "id": "node_a4e8a6bb-d46a-49dd-a14a-117336334c2a",
+          "name": "End Conversation",
+          "type": "workflow",
+          "referenceId": "wfa_c671246113e78fe7007UD5QuGdkBrj8uospJJcTJQcvSaPsacS",
+          "status": "completed",
+          "logs": [],
+          "data": {
+            "input": {
+              "metadata": {
+                "parent_action_id": "trigger_wf",
+                "previous_action_id": "action-1767634451682",
+                "kind": "EndConversation",
+                "action_id": "action-1767634464332"
+              }
+            }
+          },
+          "nodes": [],
+          "metadata": {
+            "response_id": "wfresp_c671246113e78fe700OW9Wl3B4CcPqhTQebhsmIQPrOncO4YaH",
+            "agent": {
+              "name": "BasicWorkflow",
+              "version": "2",
+              "type": "agent_id"
+            },
+            "action_id": "action-1767634464332",
+            "parent_action_id": "trigger_wf",
+            "previous_action_id": "action-1767634451682",
+            "kind": "EndConversation"
+          },
+          "createdAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "updatedAt": {
+            "$date": "2026-01-07T11:40:44.277Z"
+          },
+          "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+          "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+        }
+      ],
+      "metadata": {
+        "action_id": "action-1767634451682",
+        "parent_action_id": "trigger_wf",
+        "previous_action_id": "action-1767634350800_Post",
+        "kind": "SendActivity",
+        "response_id": "wfresp_c671246113e78fe700OW9Wl3B4CcPqhTQebhsmIQPrOncO4YaH",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicWorkflow",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-07T11:40:44.277Z"
+      },
+      "createdBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0",
+      "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-07T11:08:41.994Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-07T11:40:44.281Z"
+  },
+  "updatedBy": "4e76b1bb-39a1-4e67-b3fc-c85e3cb0b9b0"
+},
+{
+  "_id": "trace_be27db27-f2f0-42fa-8967-5c43fb9c581b",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "contextType": "autonomous_agent",
+  "referenceId": "120",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "node_count": 4,
+    "n8n_execution_id": "120",
+    "workflow_id": "01V4K8pjRhOVncdg",
+    "workflow_name": "001 Chat Response Workflow",
+    "execution_status": "success",
+    "imported_at": "2026-01-09T17:16:05Z",
+    "started_at": "2026-01-08T23:45:05.204Z",
+    "stopped_at": "2026-01-08T23:45:07.016Z",
+    "n8n_session_id": "",
+    "n8n_base_url": "http://localhost:5678",
+    "execution_mode": "webhook"
+  },
+  "nodes": [
+    {
+      "id": "n8n_node_c4270ae4-1836-494d-93b1-070022851453",
+      "name": "When chat message received",
+      "type": "workflow",
+      "referenceId": "When chat message received",
+      "startAt": {
+        "$date": "2026-01-08T23:45:05.207Z"
+      },
+      "status": "completed",
+      "data": {
+        "input": {
+          "text": "hi"
+        },
+        "output": {
+          "extraData": {
+            "chatInput": "hi",
+            "sessionId": "052e3b3f-f3ab-453d-9f22-e36f06293fef"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:16:05.895Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:16:05.895Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_4313e143-c17a-4901-a1ec-ba2b86749445",
+      "name": "Respond to Webhook",
+      "type": "custom",
+      "referenceId": "Respond to Webhook",
+      "startAt": {
+        "$date": "2026-01-08T23:45:05.208Z"
+      },
+      "endAt": {
+        "$date": "2026-01-08T23:45:05.212Z"
+      },
+      "duration": 0.004,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "chatInput": "hi",
+            "sessionId": "052e3b3f-f3ab-453d-9f22-e36f06293fef"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.respondToWebhook",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_output": 0,
+            "previous_node": "When chat message received",
+            "previous_node_run": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:16:05.895Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:16:05.895Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_85ed8795-cff1-4271-90e9-7ecf22f74a40",
+      "name": "AI Agent",
+      "type": "agent",
+      "referenceId": "AI Agent",
+      "startAt": {
+        "$date": "2026-01-08T23:45:05.212Z"
+      },
+      "endAt": {
+        "$date": "2026-01-08T23:45:07.016Z"
+      },
+      "duration": 1.804,
+      "status": "completed",
+      "data": {
+        "output": {
+          "text": "Hi — how can I help you today?"
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.agent",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_run": 0,
+            "previous_node_output": 0,
+            "previous_node": "Respond to Webhook"
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:16:05.895Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:16:05.895Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_d0afa017-7c1a-4507-a40b-6345f57f8590",
+      "name": "Azure OpenAI Chat Model",
+      "type": "llm",
+      "referenceId": "Azure OpenAI Chat Model",
+      "startAt": {
+        "$date": "2026-01-08T23:45:05.547Z"
+      },
+      "endAt": {
+        "$date": "2026-01-08T23:45:06.994Z"
+      },
+      "duration": 1.447,
+      "status": "completed",
+      "data": {
+        "input": {
+          "extraData": {
+            "ai_languageModel": [
+              [
+                {
+                  "json": {
+                    "messages": [
+                      "Human: hi"
+                    ],
+                    "estimatedTokens": 3,
+                    "options": {
+                      "model": "gpt-5-mini",
+                      "timeout": 60000,
+                      "max_retries": 2,
+                      "configuration": {
+                        "fetchOptions": {}
+                      },
+                      "model_kwargs": {}
+                    }
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "AI Agent",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:16:05.895Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:16:05.895Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T15:35:58.045Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T17:16:05.896Z"
+  },
+  "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+},
+{
+  "_id": "trace_d787c3b0-268d-4d6c-b498-268a28bc4c39",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "contextType": "autonomous_agent",
+  "referenceId": "120",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "stopped_at": "2026-01-08T23:45:07.016Z",
+    "n8n_session_id": "",
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_id": "01V4K8pjRhOVncdg",
+    "execution_mode": "webhook",
+    "n8n_execution_id": "120",
+    "workflow_name": "001 Chat Response Workflow",
+    "execution_status": "success",
+    "imported_at": "2026-01-09T15:35:58Z",
+    "node_count": 4,
+    "started_at": "2026-01-08T23:45:05.204Z"
+  },
+  "nodes": [
+    {
+      "id": "n8n_node_55477402-1cbb-4ecc-b82e-110640676eae",
+      "name": "When chat message received",
+      "type": "workflow",
+      "referenceId": "When chat message received",
+      "startAt": {
+        "$date": "2026-01-08T23:45:05.207Z"
+      },
+      "status": "completed",
+      "data": {
+        "input": {
+          "text": "hi"
+        },
+        "output": {
+          "extraData": {
+            "chatInput": "hi",
+            "sessionId": "052e3b3f-f3ab-453d-9f22-e36f06293fef"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T15:35:58.791Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T15:35:58.791Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_3de89092-e5a9-4623-b995-12d83eec6260",
+      "name": "Respond to Webhook",
+      "type": "custom",
+      "referenceId": "Respond to Webhook",
+      "startAt": {
+        "$date": "2026-01-08T23:45:05.208Z"
+      },
+      "endAt": {
+        "$date": "2026-01-08T23:45:05.212Z"
+      },
+      "duration": 0.004,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "chatInput": "hi",
+            "sessionId": "052e3b3f-f3ab-453d-9f22-e36f06293fef"
+          }
+        }
+      },
+      "metadata": {
+        "sources": [
+          {
+            "previous_node": "When chat message received",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ],
+        "n8n_node_type": "n8n-nodes-base.respondToWebhook",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T15:35:58.791Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T15:35:58.791Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_1ce35ff5-1e25-4a2a-8a05-4bbbec39f337",
+      "name": "AI Agent",
+      "type": "agent",
+      "referenceId": "AI Agent",
+      "startAt": {
+        "$date": "2026-01-08T23:45:05.212Z"
+      },
+      "endAt": {
+        "$date": "2026-01-08T23:45:07.016Z"
+      },
+      "duration": 1.804,
+      "status": "completed",
+      "data": {
+        "output": {
+          "text": "Hi — how can I help you today?"
+        }
+      },
+      "metadata": {
+        "sources": [
+          {
+            "previous_node_run": 0,
+            "previous_node_output": 0,
+            "previous_node": "Respond to Webhook"
+          }
+        ],
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.agent",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T15:35:58.791Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T15:35:58.791Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_061698d8-c7d1-48ce-9c50-6de880714bb1",
+      "name": "Azure OpenAI Chat Model",
+      "type": "llm",
+      "referenceId": "Azure OpenAI Chat Model",
+      "startAt": {
+        "$date": "2026-01-08T23:45:05.547Z"
+      },
+      "endAt": {
+        "$date": "2026-01-08T23:45:06.994Z"
+      },
+      "duration": 1.447,
+      "status": "completed",
+      "data": {
+        "input": {
+          "extraData": {
+            "ai_languageModel": [
+              [
+                {
+                  "json": {
+                    "options": {
+                      "model_kwargs": {},
+                      "model": "gpt-5-mini",
+                      "timeout": 60000,
+                      "max_retries": 2,
+                      "configuration": {
+                        "fetchOptions": {}
+                      }
+                    },
+                    "messages": [
+                      "Human: hi"
+                    ],
+                    "estimatedTokens": 3
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "AI Agent",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T15:35:58.791Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T15:35:58.791Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T15:35:58.791Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T15:35:58.791Z"
+  },
+  "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+},
+{
+  "_id": "trace_71ae9633-cca3-4aa1-9503-9ee37136be61",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "contextType": "autonomous_agent",
+  "referenceId": "131",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "execution_mode": "manual",
+    "n8n_session_id": "null",
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_id": "1vm5ftPxpKU0g2Oi",
+    "execution_status": "success",
+    "imported_at": "2026-01-09T17:22:36Z",
+    "node_count": 4,
+    "started_at": "2026-01-09T11:35:47.248Z",
+    "stopped_at": "2026-01-09T11:35:47.575Z",
+    "n8n_execution_id": "131",
+    "workflow_name": "AutoAgent1"
+  },
+  "nodes": [
+    {
+      "id": "n8n_node_4255c210-1e45-48c9-9e23-c2769a64530f",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "workflow",
+      "referenceId": "When clicking ‘Execute workflow’",
+      "startAt": {
+        "$date": "2026-01-09T11:35:47.249Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:35:47.250Z"
+      },
+      "duration": 0.001,
+      "status": "completed",
+      "metadata": {
+        "run_index": 0,
+        "n8n_node_type": "n8n-nodes-base.manualTrigger"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_2be17e38-f0b0-442a-8cec-98db20dcec63",
+      "name": "HTTP Request",
+      "type": "http",
+      "referenceId": "HTTP Request",
+      "startAt": {
+        "$date": "2026-01-09T11:35:47.251Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:35:47.553Z"
+      },
+      "duration": 0.302,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "planets": [
+              "https://swapi.info/api/planets/1",
+              "https://swapi.info/api/planets/2",
+              "https://swapi.info/api/planets/5",
+              "https://swapi.info/api/planets/8",
+              "https://swapi.info/api/planets/9",
+              "https://swapi.info/api/planets/12",
+              "https://swapi.info/api/planets/13",
+              "https://swapi.info/api/planets/14",
+              "https://swapi.info/api/planets/15",
+              "https://swapi.info/api/planets/16",
+              "https://swapi.info/api/planets/17",
+              "https://swapi.info/api/planets/18",
+              "https://swapi.info/api/planets/19"
+            ],
+            "starships": [
+              "https://swapi.info/api/starships/2",
+              "https://swapi.info/api/starships/32",
+              "https://swapi.info/api/starships/48",
+              "https://swapi.info/api/starships/59",
+              "https://swapi.info/api/starships/61",
+              "https://swapi.info/api/starships/63",
+              "https://swapi.info/api/starships/64",
+              "https://swapi.info/api/starships/65",
+              "https://swapi.info/api/starships/66",
+              "https://swapi.info/api/starships/68",
+              "https://swapi.info/api/starships/74",
+              "https://swapi.info/api/starships/75"
+            ],
+            "species": [
+              "https://swapi.info/api/species/1",
+              "https://swapi.info/api/species/2",
+              "https://swapi.info/api/species/3",
+              "https://swapi.info/api/species/6",
+              "https://swapi.info/api/species/15",
+              "https://swapi.info/api/species/19",
+              "https://swapi.info/api/species/20",
+              "https://swapi.info/api/species/23",
+              "https://swapi.info/api/species/24",
+              "https://swapi.info/api/species/25",
+              "https://swapi.info/api/species/26",
+              "https://swapi.info/api/species/27",
+              "https://swapi.info/api/species/28",
+              "https://swapi.info/api/species/29",
+              "https://swapi.info/api/species/30",
+              "https://swapi.info/api/species/33",
+              "https://swapi.info/api/species/34",
+              "https://swapi.info/api/species/35",
+              "https://swapi.info/api/species/36",
+              "https://swapi.info/api/species/37"
+            ],
+            "created": "2014-12-20T18:49:38.403000Z",
+            "title": "Revenge of the Sith",
+            "opening_crawl": "War! The Republic is crumbling\r\nunder attacks by the ruthless\r\nSith Lord, Count Dooku.\r\nThere are heroes on both sides.\r\nEvil is everywhere.\r\n\r\nIn a stunning move, the\r\nfiendish droid leader, General\r\nGrievous, has swept into the\r\nRepublic capital and kidnapped\r\nChancellor Palpatine, leader of\r\nthe Galactic Senate.\r\n\r\nAs the Separatist Droid Army\r\nattempts to flee the besieged\r\ncapital with their valuable\r\nhostage, two Jedi Knights lead a\r\ndesperate mission to rescue the\r\ncaptive Chancellor....",
+            "vehicles": [
+              "https://swapi.info/api/vehicles/33",
+              "https://swapi.info/api/vehicles/50",
+              "https://swapi.info/api/vehicles/53",
+              "https://swapi.info/api/vehicles/56",
+              "https://swapi.info/api/vehicles/60",
+              "https://swapi.info/api/vehicles/62",
+              "https://swapi.info/api/vehicles/67",
+              "https://swapi.info/api/vehicles/69",
+              "https://swapi.info/api/vehicles/70",
+              "https://swapi.info/api/vehicles/71",
+              "https://swapi.info/api/vehicles/72",
+              "https://swapi.info/api/vehicles/73",
+              "https://swapi.info/api/vehicles/76"
+            ],
+            "url": "https://swapi.info/api/films/6",
+            "episode_id": 3,
+            "director": "George Lucas",
+            "producer": "Rick McCallum",
+            "edited": "2014-12-20T20:47:52.073000Z",
+            "release_date": "2005-05-19",
+            "characters": [
+              "https://swapi.info/api/people/1",
+              "https://swapi.info/api/people/2",
+              "https://swapi.info/api/people/3",
+              "https://swapi.info/api/people/4",
+              "https://swapi.info/api/people/5",
+              "https://swapi.info/api/people/6",
+              "https://swapi.info/api/people/7",
+              "https://swapi.info/api/people/10",
+              "https://swapi.info/api/people/11",
+              "https://swapi.info/api/people/12",
+              "https://swapi.info/api/people/13",
+              "https://swapi.info/api/people/20",
+              "https://swapi.info/api/people/21",
+              "https://swapi.info/api/people/33",
+              "https://swapi.info/api/people/35",
+              "https://swapi.info/api/people/46",
+              "https://swapi.info/api/people/51",
+              "https://swapi.info/api/people/52",
+              "https://swapi.info/api/people/53",
+              "https://swapi.info/api/people/54",
+              "https://swapi.info/api/people/55",
+              "https://swapi.info/api/people/56",
+              "https://swapi.info/api/people/58",
+              "https://swapi.info/api/people/63",
+              "https://swapi.info/api/people/64",
+              "https://swapi.info/api/people/67",
+              "https://swapi.info/api/people/68",
+              "https://swapi.info/api/people/75",
+              "https://swapi.info/api/people/78",
+              "https://swapi.info/api/people/79",
+              "https://swapi.info/api/people/80",
+              "https://swapi.info/api/people/81",
+              "https://swapi.info/api/people/82",
+              "https://swapi.info/api/people/83"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.httpRequest",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "When clicking ‘Execute workflow’",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_ca93c7a3-add4-4094-bf30-b0101ba9f934",
+      "name": "Set AutonomousAgentId",
+      "type": "custom",
+      "referenceId": "Set AutonomousAgentId",
+      "startAt": {
+        "$date": "2026-01-09T11:35:47.555Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:35:47.557Z"
+      },
+      "duration": 0.002,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.set",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_run": 0,
+            "previous_node_output": 0,
+            "previous_node": "HTTP Request"
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_b264ca9e-44ee-43ca-bff3-778550850b5d",
+      "name": "Send to unified-ui",
+      "type": "custom",
+      "referenceId": "Send to unified-ui",
+      "startAt": {
+        "$date": "2026-01-09T11:35:47.558Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:35:47.575Z"
+      },
+      "duration": 0.017,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "workflowName": "AutoAgent1",
+            "updatedAt": "2026-01-09T11:35:47.574Z",
+            "executionId": "131",
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+            "status": "pending",
+            "createdAt": "2026-01-09T11:35:47.574Z",
+            "id": 23,
+            "is_imported": false,
+            "msg": "Ready for pick up",
+            "imported_timestamp": null,
+            "workflowId": "1vm5ftPxpKU0g2Oi"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.dataTable",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "Set AutonomousAgentId",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T17:22:30.829Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T17:22:36.343Z"
+  },
+  "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+},
+{
+  "_id": "trace_a15f5bc3-d55a-4949-a52c-e2633dddee6d",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "contextType": "autonomous_agent",
+  "referenceId": "129",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "execution_mode": "manual",
+    "imported_at": "2026-01-09T17:22:36Z",
+    "stopped_at": "2026-01-09T11:31:25.030Z",
+    "n8n_session_id": "null",
+    "workflow_name": "AutoAgent1",
+    "execution_status": "success",
+    "node_count": 4,
+    "started_at": "2026-01-09T11:31:24.874Z",
+    "n8n_execution_id": "129",
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_id": "1vm5ftPxpKU0g2Oi"
+  },
+  "nodes": [
+    {
+      "id": "n8n_node_258118d9-803e-438d-a39c-922830fe3f7a",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "workflow",
+      "referenceId": "When clicking ‘Execute workflow’",
+      "startAt": {
+        "$date": "2026-01-09T11:31:24.877Z"
+      },
+      "status": "completed",
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.manualTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_e64e0250-a05b-40ef-a030-b1930bb945e0",
+      "name": "HTTP Request",
+      "type": "http",
+      "referenceId": "HTTP Request",
+      "startAt": {
+        "$date": "2026-01-09T11:31:24.879Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:31:25.015Z"
+      },
+      "duration": 0.136,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "species": [
+              "https://swapi.info/api/species/1",
+              "https://swapi.info/api/species/2",
+              "https://swapi.info/api/species/3",
+              "https://swapi.info/api/species/6",
+              "https://swapi.info/api/species/15",
+              "https://swapi.info/api/species/19",
+              "https://swapi.info/api/species/20",
+              "https://swapi.info/api/species/23",
+              "https://swapi.info/api/species/24",
+              "https://swapi.info/api/species/25",
+              "https://swapi.info/api/species/26",
+              "https://swapi.info/api/species/27",
+              "https://swapi.info/api/species/28",
+              "https://swapi.info/api/species/29",
+              "https://swapi.info/api/species/30",
+              "https://swapi.info/api/species/33",
+              "https://swapi.info/api/species/34",
+              "https://swapi.info/api/species/35",
+              "https://swapi.info/api/species/36",
+              "https://swapi.info/api/species/37"
+            ],
+            "url": "https://swapi.info/api/films/6",
+            "producer": "Rick McCallum",
+            "release_date": "2005-05-19",
+            "planets": [
+              "https://swapi.info/api/planets/1",
+              "https://swapi.info/api/planets/2",
+              "https://swapi.info/api/planets/5",
+              "https://swapi.info/api/planets/8",
+              "https://swapi.info/api/planets/9",
+              "https://swapi.info/api/planets/12",
+              "https://swapi.info/api/planets/13",
+              "https://swapi.info/api/planets/14",
+              "https://swapi.info/api/planets/15",
+              "https://swapi.info/api/planets/16",
+              "https://swapi.info/api/planets/17",
+              "https://swapi.info/api/planets/18",
+              "https://swapi.info/api/planets/19"
+            ],
+            "vehicles": [
+              "https://swapi.info/api/vehicles/33",
+              "https://swapi.info/api/vehicles/50",
+              "https://swapi.info/api/vehicles/53",
+              "https://swapi.info/api/vehicles/56",
+              "https://swapi.info/api/vehicles/60",
+              "https://swapi.info/api/vehicles/62",
+              "https://swapi.info/api/vehicles/67",
+              "https://swapi.info/api/vehicles/69",
+              "https://swapi.info/api/vehicles/70",
+              "https://swapi.info/api/vehicles/71",
+              "https://swapi.info/api/vehicles/72",
+              "https://swapi.info/api/vehicles/73",
+              "https://swapi.info/api/vehicles/76"
+            ],
+            "edited": "2014-12-20T20:47:52.073000Z",
+            "episode_id": 3,
+            "director": "George Lucas",
+            "characters": [
+              "https://swapi.info/api/people/1",
+              "https://swapi.info/api/people/2",
+              "https://swapi.info/api/people/3",
+              "https://swapi.info/api/people/4",
+              "https://swapi.info/api/people/5",
+              "https://swapi.info/api/people/6",
+              "https://swapi.info/api/people/7",
+              "https://swapi.info/api/people/10",
+              "https://swapi.info/api/people/11",
+              "https://swapi.info/api/people/12",
+              "https://swapi.info/api/people/13",
+              "https://swapi.info/api/people/20",
+              "https://swapi.info/api/people/21",
+              "https://swapi.info/api/people/33",
+              "https://swapi.info/api/people/35",
+              "https://swapi.info/api/people/46",
+              "https://swapi.info/api/people/51",
+              "https://swapi.info/api/people/52",
+              "https://swapi.info/api/people/53",
+              "https://swapi.info/api/people/54",
+              "https://swapi.info/api/people/55",
+              "https://swapi.info/api/people/56",
+              "https://swapi.info/api/people/58",
+              "https://swapi.info/api/people/63",
+              "https://swapi.info/api/people/64",
+              "https://swapi.info/api/people/67",
+              "https://swapi.info/api/people/68",
+              "https://swapi.info/api/people/75",
+              "https://swapi.info/api/people/78",
+              "https://swapi.info/api/people/79",
+              "https://swapi.info/api/people/80",
+              "https://swapi.info/api/people/81",
+              "https://swapi.info/api/people/82",
+              "https://swapi.info/api/people/83"
+            ],
+            "created": "2014-12-20T18:49:38.403000Z",
+            "title": "Revenge of the Sith",
+            "opening_crawl": "War! The Republic is crumbling\r\nunder attacks by the ruthless\r\nSith Lord, Count Dooku.\r\nThere are heroes on both sides.\r\nEvil is everywhere.\r\n\r\nIn a stunning move, the\r\nfiendish droid leader, General\r\nGrievous, has swept into the\r\nRepublic capital and kidnapped\r\nChancellor Palpatine, leader of\r\nthe Galactic Senate.\r\n\r\nAs the Separatist Droid Army\r\nattempts to flee the besieged\r\ncapital with their valuable\r\nhostage, two Jedi Knights lead a\r\ndesperate mission to rescue the\r\ncaptive Chancellor....",
+            "starships": [
+              "https://swapi.info/api/starships/2",
+              "https://swapi.info/api/starships/32",
+              "https://swapi.info/api/starships/48",
+              "https://swapi.info/api/starships/59",
+              "https://swapi.info/api/starships/61",
+              "https://swapi.info/api/starships/63",
+              "https://swapi.info/api/starships/64",
+              "https://swapi.info/api/starships/65",
+              "https://swapi.info/api/starships/66",
+              "https://swapi.info/api/starships/68",
+              "https://swapi.info/api/starships/74",
+              "https://swapi.info/api/starships/75"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "sources": [
+          {
+            "previous_node_output": 0,
+            "previous_node": "When clicking ‘Execute workflow’",
+            "previous_node_run": 0
+          }
+        ],
+        "n8n_node_type": "n8n-nodes-base.httpRequest",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_c11bda8a-64dd-4cd1-a7d0-6bc0e424de9b",
+      "name": "Set AutonomousAgentId",
+      "type": "custom",
+      "referenceId": "Set AutonomousAgentId",
+      "startAt": {
+        "$date": "2026-01-09T11:31:25.016Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:31:25.017Z"
+      },
+      "duration": 0.001,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.set",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "HTTP Request",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_9ac72f64-752a-4fe2-b65e-18d8a0d34fd3",
+      "name": "Send to unified-ui",
+      "type": "custom",
+      "referenceId": "Send to unified-ui",
+      "startAt": {
+        "$date": "2026-01-09T11:31:25.018Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:31:25.030Z"
+      },
+      "duration": 0.012,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+            "status": "pending",
+            "createdAt": "2026-01-09T11:31:25.028Z",
+            "is_imported": false,
+            "msg": "Ready for pick up",
+            "updatedAt": "2026-01-09T11:31:25.028Z",
+            "id": 22,
+            "executionId": "129",
+            "imported_timestamp": null
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.dataTable",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_run": 0,
+            "previous_node_output": 0,
+            "previous_node": "Set AutonomousAgentId"
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.341Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T17:22:30.845Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T17:22:36.343Z"
+  },
+  "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+},
+{
+  "_id": "trace_9fa489dd-a31e-437f-b903-82ee7608cf33",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "contextType": "autonomous_agent",
+  "referenceId": "133",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "execution_mode": "manual",
+    "imported_at": "2026-01-09T17:22:36Z",
+    "n8n_execution_id": "133",
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_id": "1vm5ftPxpKU0g2Oi",
+    "execution_status": "success",
+    "node_count": 4,
+    "started_at": "2026-01-09T11:35:49.392Z",
+    "stopped_at": "2026-01-09T11:35:49.515Z",
+    "n8n_session_id": "null",
+    "workflow_name": "AutoAgent1"
+  },
+  "nodes": [
+    {
+      "id": "n8n_node_ddf955b2-74a0-4ba2-8294-e96f4f0f2e33",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "workflow",
+      "referenceId": "When clicking ‘Execute workflow’",
+      "startAt": {
+        "$date": "2026-01-09T11:35:49.394Z"
+      },
+      "status": "completed",
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.manualTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.350Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.350Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_aa085de4-cb2a-43e3-b64b-6cb668f5632b",
+      "name": "HTTP Request",
+      "type": "http",
+      "referenceId": "HTTP Request",
+      "startAt": {
+        "$date": "2026-01-09T11:35:49.395Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:35:49.508Z"
+      },
+      "duration": 0.113,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "title": "Revenge of the Sith",
+            "opening_crawl": "War! The Republic is crumbling\r\nunder attacks by the ruthless\r\nSith Lord, Count Dooku.\r\nThere are heroes on both sides.\r\nEvil is everywhere.\r\n\r\nIn a stunning move, the\r\nfiendish droid leader, General\r\nGrievous, has swept into the\r\nRepublic capital and kidnapped\r\nChancellor Palpatine, leader of\r\nthe Galactic Senate.\r\n\r\nAs the Separatist Droid Army\r\nattempts to flee the besieged\r\ncapital with their valuable\r\nhostage, two Jedi Knights lead a\r\ndesperate mission to rescue the\r\ncaptive Chancellor....",
+            "starships": [
+              "https://swapi.info/api/starships/2",
+              "https://swapi.info/api/starships/32",
+              "https://swapi.info/api/starships/48",
+              "https://swapi.info/api/starships/59",
+              "https://swapi.info/api/starships/61",
+              "https://swapi.info/api/starships/63",
+              "https://swapi.info/api/starships/64",
+              "https://swapi.info/api/starships/65",
+              "https://swapi.info/api/starships/66",
+              "https://swapi.info/api/starships/68",
+              "https://swapi.info/api/starships/74",
+              "https://swapi.info/api/starships/75"
+            ],
+            "edited": "2014-12-20T20:47:52.073000Z",
+            "url": "https://swapi.info/api/films/6",
+            "characters": [
+              "https://swapi.info/api/people/1",
+              "https://swapi.info/api/people/2",
+              "https://swapi.info/api/people/3",
+              "https://swapi.info/api/people/4",
+              "https://swapi.info/api/people/5",
+              "https://swapi.info/api/people/6",
+              "https://swapi.info/api/people/7",
+              "https://swapi.info/api/people/10",
+              "https://swapi.info/api/people/11",
+              "https://swapi.info/api/people/12",
+              "https://swapi.info/api/people/13",
+              "https://swapi.info/api/people/20",
+              "https://swapi.info/api/people/21",
+              "https://swapi.info/api/people/33",
+              "https://swapi.info/api/people/35",
+              "https://swapi.info/api/people/46",
+              "https://swapi.info/api/people/51",
+              "https://swapi.info/api/people/52",
+              "https://swapi.info/api/people/53",
+              "https://swapi.info/api/people/54",
+              "https://swapi.info/api/people/55",
+              "https://swapi.info/api/people/56",
+              "https://swapi.info/api/people/58",
+              "https://swapi.info/api/people/63",
+              "https://swapi.info/api/people/64",
+              "https://swapi.info/api/people/67",
+              "https://swapi.info/api/people/68",
+              "https://swapi.info/api/people/75",
+              "https://swapi.info/api/people/78",
+              "https://swapi.info/api/people/79",
+              "https://swapi.info/api/people/80",
+              "https://swapi.info/api/people/81",
+              "https://swapi.info/api/people/82",
+              "https://swapi.info/api/people/83"
+            ],
+            "planets": [
+              "https://swapi.info/api/planets/1",
+              "https://swapi.info/api/planets/2",
+              "https://swapi.info/api/planets/5",
+              "https://swapi.info/api/planets/8",
+              "https://swapi.info/api/planets/9",
+              "https://swapi.info/api/planets/12",
+              "https://swapi.info/api/planets/13",
+              "https://swapi.info/api/planets/14",
+              "https://swapi.info/api/planets/15",
+              "https://swapi.info/api/planets/16",
+              "https://swapi.info/api/planets/17",
+              "https://swapi.info/api/planets/18",
+              "https://swapi.info/api/planets/19"
+            ],
+            "vehicles": [
+              "https://swapi.info/api/vehicles/33",
+              "https://swapi.info/api/vehicles/50",
+              "https://swapi.info/api/vehicles/53",
+              "https://swapi.info/api/vehicles/56",
+              "https://swapi.info/api/vehicles/60",
+              "https://swapi.info/api/vehicles/62",
+              "https://swapi.info/api/vehicles/67",
+              "https://swapi.info/api/vehicles/69",
+              "https://swapi.info/api/vehicles/70",
+              "https://swapi.info/api/vehicles/71",
+              "https://swapi.info/api/vehicles/72",
+              "https://swapi.info/api/vehicles/73",
+              "https://swapi.info/api/vehicles/76"
+            ],
+            "producer": "Rick McCallum",
+            "episode_id": 3,
+            "director": "George Lucas",
+            "release_date": "2005-05-19",
+            "species": [
+              "https://swapi.info/api/species/1",
+              "https://swapi.info/api/species/2",
+              "https://swapi.info/api/species/3",
+              "https://swapi.info/api/species/6",
+              "https://swapi.info/api/species/15",
+              "https://swapi.info/api/species/19",
+              "https://swapi.info/api/species/20",
+              "https://swapi.info/api/species/23",
+              "https://swapi.info/api/species/24",
+              "https://swapi.info/api/species/25",
+              "https://swapi.info/api/species/26",
+              "https://swapi.info/api/species/27",
+              "https://swapi.info/api/species/28",
+              "https://swapi.info/api/species/29",
+              "https://swapi.info/api/species/30",
+              "https://swapi.info/api/species/33",
+              "https://swapi.info/api/species/34",
+              "https://swapi.info/api/species/35",
+              "https://swapi.info/api/species/36",
+              "https://swapi.info/api/species/37"
+            ],
+            "created": "2014-12-20T18:49:38.403000Z"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.httpRequest",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_output": 0,
+            "previous_node": "When clicking ‘Execute workflow’",
+            "previous_node_run": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.350Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.350Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_42906be0-893b-4276-8793-fa0bd44ab802",
+      "name": "Set AutonomousAgentId",
+      "type": "custom",
+      "referenceId": "Set AutonomousAgentId",
+      "startAt": {
+        "$date": "2026-01-09T11:35:49.509Z"
+      },
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.set",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "HTTP Request",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.350Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.350Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_43554af7-4bcd-4afb-a6e8-974412e7fa7c",
+      "name": "Send to unified-ui",
+      "type": "custom",
+      "referenceId": "Send to unified-ui",
+      "startAt": {
+        "$date": "2026-01-09T11:35:49.509Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:35:49.514Z"
+      },
+      "duration": 0.005,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "workflowName": "AutoAgent1",
+            "executionId": "133",
+            "msg": "Ready for pick up",
+            "workflowId": "1vm5ftPxpKU0g2Oi",
+            "createdAt": "2026-01-09T11:35:49.513Z",
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+            "status": "pending",
+            "updatedAt": "2026-01-09T11:35:49.513Z",
+            "is_imported": false,
+            "id": 25,
+            "imported_timestamp": null
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.dataTable",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_output": 0,
+            "previous_node": "Set AutonomousAgentId",
+            "previous_node_run": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.350Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.350Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T17:22:30.872Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T17:22:36.351Z"
+  },
+  "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+},
+{
+  "_id": "trace_84655be6-545f-4ea2-a14f-168ecb035c91",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "contextType": "autonomous_agent",
+  "referenceId": "136",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "execution_status": "success",
+    "execution_mode": "manual",
+    "imported_at": "2026-01-09T17:22:36Z",
+    "node_count": 3,
+    "started_at": "2026-01-09T11:37:57.270Z",
+    "n8n_execution_id": "136",
+    "n8n_session_id": "null",
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_name": "AutoAgent1",
+    "stopped_at": "2026-01-09T11:37:57.411Z",
+    "workflow_id": "1vm5ftPxpKU0g2Oi"
+  },
+  "nodes": [
+    {
+      "id": "n8n_node_99e34e78-2ec4-4c0e-b116-b9cc3f7b8659",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "workflow",
+      "referenceId": "When clicking ‘Execute workflow’",
+      "startAt": {
+        "$date": "2026-01-09T11:37:57.271Z"
+      },
+      "status": "completed",
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.manualTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.355Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.355Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_4c22f160-0b1e-4888-a8eb-1a5ccc16e96f",
+      "name": "HTTP Request",
+      "type": "http",
+      "referenceId": "HTTP Request",
+      "startAt": {
+        "$date": "2026-01-09T11:37:57.272Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:37:57.402Z"
+      },
+      "duration": 0.13,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "director": "George Lucas",
+            "producer": "Rick McCallum",
+            "planets": [
+              "https://swapi.info/api/planets/1",
+              "https://swapi.info/api/planets/2",
+              "https://swapi.info/api/planets/5",
+              "https://swapi.info/api/planets/8",
+              "https://swapi.info/api/planets/9",
+              "https://swapi.info/api/planets/12",
+              "https://swapi.info/api/planets/13",
+              "https://swapi.info/api/planets/14",
+              "https://swapi.info/api/planets/15",
+              "https://swapi.info/api/planets/16",
+              "https://swapi.info/api/planets/17",
+              "https://swapi.info/api/planets/18",
+              "https://swapi.info/api/planets/19"
+            ],
+            "species": [
+              "https://swapi.info/api/species/1",
+              "https://swapi.info/api/species/2",
+              "https://swapi.info/api/species/3",
+              "https://swapi.info/api/species/6",
+              "https://swapi.info/api/species/15",
+              "https://swapi.info/api/species/19",
+              "https://swapi.info/api/species/20",
+              "https://swapi.info/api/species/23",
+              "https://swapi.info/api/species/24",
+              "https://swapi.info/api/species/25",
+              "https://swapi.info/api/species/26",
+              "https://swapi.info/api/species/27",
+              "https://swapi.info/api/species/28",
+              "https://swapi.info/api/species/29",
+              "https://swapi.info/api/species/30",
+              "https://swapi.info/api/species/33",
+              "https://swapi.info/api/species/34",
+              "https://swapi.info/api/species/35",
+              "https://swapi.info/api/species/36",
+              "https://swapi.info/api/species/37"
+            ],
+            "created": "2014-12-20T18:49:38.403000Z",
+            "release_date": "2005-05-19",
+            "edited": "2014-12-20T20:47:52.073000Z",
+            "url": "https://swapi.info/api/films/6",
+            "episode_id": 3,
+            "characters": [
+              "https://swapi.info/api/people/1",
+              "https://swapi.info/api/people/2",
+              "https://swapi.info/api/people/3",
+              "https://swapi.info/api/people/4",
+              "https://swapi.info/api/people/5",
+              "https://swapi.info/api/people/6",
+              "https://swapi.info/api/people/7",
+              "https://swapi.info/api/people/10",
+              "https://swapi.info/api/people/11",
+              "https://swapi.info/api/people/12",
+              "https://swapi.info/api/people/13",
+              "https://swapi.info/api/people/20",
+              "https://swapi.info/api/people/21",
+              "https://swapi.info/api/people/33",
+              "https://swapi.info/api/people/35",
+              "https://swapi.info/api/people/46",
+              "https://swapi.info/api/people/51",
+              "https://swapi.info/api/people/52",
+              "https://swapi.info/api/people/53",
+              "https://swapi.info/api/people/54",
+              "https://swapi.info/api/people/55",
+              "https://swapi.info/api/people/56",
+              "https://swapi.info/api/people/58",
+              "https://swapi.info/api/people/63",
+              "https://swapi.info/api/people/64",
+              "https://swapi.info/api/people/67",
+              "https://swapi.info/api/people/68",
+              "https://swapi.info/api/people/75",
+              "https://swapi.info/api/people/78",
+              "https://swapi.info/api/people/79",
+              "https://swapi.info/api/people/80",
+              "https://swapi.info/api/people/81",
+              "https://swapi.info/api/people/82",
+              "https://swapi.info/api/people/83"
+            ],
+            "opening_crawl": "War! The Republic is crumbling\r\nunder attacks by the ruthless\r\nSith Lord, Count Dooku.\r\nThere are heroes on both sides.\r\nEvil is everywhere.\r\n\r\nIn a stunning move, the\r\nfiendish droid leader, General\r\nGrievous, has swept into the\r\nRepublic capital and kidnapped\r\nChancellor Palpatine, leader of\r\nthe Galactic Senate.\r\n\r\nAs the Separatist Droid Army\r\nattempts to flee the besieged\r\ncapital with their valuable\r\nhostage, two Jedi Knights lead a\r\ndesperate mission to rescue the\r\ncaptive Chancellor....",
+            "starships": [
+              "https://swapi.info/api/starships/2",
+              "https://swapi.info/api/starships/32",
+              "https://swapi.info/api/starships/48",
+              "https://swapi.info/api/starships/59",
+              "https://swapi.info/api/starships/61",
+              "https://swapi.info/api/starships/63",
+              "https://swapi.info/api/starships/64",
+              "https://swapi.info/api/starships/65",
+              "https://swapi.info/api/starships/66",
+              "https://swapi.info/api/starships/68",
+              "https://swapi.info/api/starships/74",
+              "https://swapi.info/api/starships/75"
+            ],
+            "vehicles": [
+              "https://swapi.info/api/vehicles/33",
+              "https://swapi.info/api/vehicles/50",
+              "https://swapi.info/api/vehicles/53",
+              "https://swapi.info/api/vehicles/56",
+              "https://swapi.info/api/vehicles/60",
+              "https://swapi.info/api/vehicles/62",
+              "https://swapi.info/api/vehicles/67",
+              "https://swapi.info/api/vehicles/69",
+              "https://swapi.info/api/vehicles/70",
+              "https://swapi.info/api/vehicles/71",
+              "https://swapi.info/api/vehicles/72",
+              "https://swapi.info/api/vehicles/73",
+              "https://swapi.info/api/vehicles/76"
+            ],
+            "title": "Revenge of the Sith"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.httpRequest",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "When clicking ‘Execute workflow’",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.355Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.355Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_24b02254-852d-4154-95e7-f14b8051cf39",
+      "name": "Send to unified-ui",
+      "type": "custom",
+      "referenceId": "Send to unified-ui",
+      "startAt": {
+        "$date": "2026-01-09T11:37:57.403Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:37:57.411Z"
+      },
+      "duration": 0.008,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "workflowId": "1vm5ftPxpKU0g2Oi",
+            "workflowName": "AutoAgent1",
+            "createdAt": "2026-01-09T11:37:57.409Z",
+            "status": "pending",
+            "msg": "Ready for pick up",
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+            "updatedAt": "2026-01-09T11:37:57.409Z",
+            "executionId": "136",
+            "imported_timestamp": null,
+            "id": 26,
+            "is_imported": false
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.dataTable",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "HTTP Request",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.355Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.355Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T17:22:30.876Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T17:22:36.356Z"
+  },
+  "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+},
+{
+  "_id": "trace_5e00d1b8-9a11-467c-ac6c-fbaf2de7d0c5",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "contextType": "autonomous_agent",
+  "referenceId": "132",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "started_at": "2026-01-09T11:35:48.517Z",
+    "workflow_id": "1vm5ftPxpKU0g2Oi",
+    "workflow_name": "AutoAgent1",
+    "node_count": 4,
+    "stopped_at": "2026-01-09T11:35:48.638Z",
+    "n8n_execution_id": "132",
+    "n8n_session_id": "null",
+    "n8n_base_url": "http://localhost:5678",
+    "execution_status": "success",
+    "execution_mode": "manual",
+    "imported_at": "2026-01-09T17:22:36Z"
+  },
+  "nodes": [
+    {
+      "id": "n8n_node_5a42f93c-5816-4fce-a703-4d7830baf697",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "workflow",
+      "referenceId": "When clicking ‘Execute workflow’",
+      "startAt": {
+        "$date": "2026-01-09T11:35:48.520Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:35:48.521Z"
+      },
+      "duration": 0.001,
+      "status": "completed",
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.manualTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.297Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.297Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_3aab0625-b275-40d1-bda7-f6b00b5f14ff",
+      "name": "HTTP Request",
+      "type": "http",
+      "referenceId": "HTTP Request",
+      "startAt": {
+        "$date": "2026-01-09T11:35:48.522Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:35:48.631Z"
+      },
+      "duration": 0.109,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "species": [
+              "https://swapi.info/api/species/1",
+              "https://swapi.info/api/species/2",
+              "https://swapi.info/api/species/3",
+              "https://swapi.info/api/species/6",
+              "https://swapi.info/api/species/15",
+              "https://swapi.info/api/species/19",
+              "https://swapi.info/api/species/20",
+              "https://swapi.info/api/species/23",
+              "https://swapi.info/api/species/24",
+              "https://swapi.info/api/species/25",
+              "https://swapi.info/api/species/26",
+              "https://swapi.info/api/species/27",
+              "https://swapi.info/api/species/28",
+              "https://swapi.info/api/species/29",
+              "https://swapi.info/api/species/30",
+              "https://swapi.info/api/species/33",
+              "https://swapi.info/api/species/34",
+              "https://swapi.info/api/species/35",
+              "https://swapi.info/api/species/36",
+              "https://swapi.info/api/species/37"
+            ],
+            "title": "Revenge of the Sith",
+            "characters": [
+              "https://swapi.info/api/people/1",
+              "https://swapi.info/api/people/2",
+              "https://swapi.info/api/people/3",
+              "https://swapi.info/api/people/4",
+              "https://swapi.info/api/people/5",
+              "https://swapi.info/api/people/6",
+              "https://swapi.info/api/people/7",
+              "https://swapi.info/api/people/10",
+              "https://swapi.info/api/people/11",
+              "https://swapi.info/api/people/12",
+              "https://swapi.info/api/people/13",
+              "https://swapi.info/api/people/20",
+              "https://swapi.info/api/people/21",
+              "https://swapi.info/api/people/33",
+              "https://swapi.info/api/people/35",
+              "https://swapi.info/api/people/46",
+              "https://swapi.info/api/people/51",
+              "https://swapi.info/api/people/52",
+              "https://swapi.info/api/people/53",
+              "https://swapi.info/api/people/54",
+              "https://swapi.info/api/people/55",
+              "https://swapi.info/api/people/56",
+              "https://swapi.info/api/people/58",
+              "https://swapi.info/api/people/63",
+              "https://swapi.info/api/people/64",
+              "https://swapi.info/api/people/67",
+              "https://swapi.info/api/people/68",
+              "https://swapi.info/api/people/75",
+              "https://swapi.info/api/people/78",
+              "https://swapi.info/api/people/79",
+              "https://swapi.info/api/people/80",
+              "https://swapi.info/api/people/81",
+              "https://swapi.info/api/people/82",
+              "https://swapi.info/api/people/83"
+            ],
+            "created": "2014-12-20T18:49:38.403000Z",
+            "edited": "2014-12-20T20:47:52.073000Z",
+            "url": "https://swapi.info/api/films/6",
+            "episode_id": 3,
+            "producer": "Rick McCallum",
+            "release_date": "2005-05-19",
+            "planets": [
+              "https://swapi.info/api/planets/1",
+              "https://swapi.info/api/planets/2",
+              "https://swapi.info/api/planets/5",
+              "https://swapi.info/api/planets/8",
+              "https://swapi.info/api/planets/9",
+              "https://swapi.info/api/planets/12",
+              "https://swapi.info/api/planets/13",
+              "https://swapi.info/api/planets/14",
+              "https://swapi.info/api/planets/15",
+              "https://swapi.info/api/planets/16",
+              "https://swapi.info/api/planets/17",
+              "https://swapi.info/api/planets/18",
+              "https://swapi.info/api/planets/19"
+            ],
+            "opening_crawl": "War! The Republic is crumbling\r\nunder attacks by the ruthless\r\nSith Lord, Count Dooku.\r\nThere are heroes on both sides.\r\nEvil is everywhere.\r\n\r\nIn a stunning move, the\r\nfiendish droid leader, General\r\nGrievous, has swept into the\r\nRepublic capital and kidnapped\r\nChancellor Palpatine, leader of\r\nthe Galactic Senate.\r\n\r\nAs the Separatist Droid Army\r\nattempts to flee the besieged\r\ncapital with their valuable\r\nhostage, two Jedi Knights lead a\r\ndesperate mission to rescue the\r\ncaptive Chancellor....",
+            "director": "George Lucas",
+            "starships": [
+              "https://swapi.info/api/starships/2",
+              "https://swapi.info/api/starships/32",
+              "https://swapi.info/api/starships/48",
+              "https://swapi.info/api/starships/59",
+              "https://swapi.info/api/starships/61",
+              "https://swapi.info/api/starships/63",
+              "https://swapi.info/api/starships/64",
+              "https://swapi.info/api/starships/65",
+              "https://swapi.info/api/starships/66",
+              "https://swapi.info/api/starships/68",
+              "https://swapi.info/api/starships/74",
+              "https://swapi.info/api/starships/75"
+            ],
+            "vehicles": [
+              "https://swapi.info/api/vehicles/33",
+              "https://swapi.info/api/vehicles/50",
+              "https://swapi.info/api/vehicles/53",
+              "https://swapi.info/api/vehicles/56",
+              "https://swapi.info/api/vehicles/60",
+              "https://swapi.info/api/vehicles/62",
+              "https://swapi.info/api/vehicles/67",
+              "https://swapi.info/api/vehicles/69",
+              "https://swapi.info/api/vehicles/70",
+              "https://swapi.info/api/vehicles/71",
+              "https://swapi.info/api/vehicles/72",
+              "https://swapi.info/api/vehicles/73",
+              "https://swapi.info/api/vehicles/76"
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.httpRequest",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "When clicking ‘Execute workflow’",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.297Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.297Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_250188e3-2227-441a-81ce-9cf7e371091b",
+      "name": "Set AutonomousAgentId",
+      "type": "custom",
+      "referenceId": "Set AutonomousAgentId",
+      "startAt": {
+        "$date": "2026-01-09T11:35:48.632Z"
+      },
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.set",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "HTTP Request",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.297Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.297Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_4779f83d-55cf-4d93-a7a4-9d996093f1b6",
+      "name": "Send to unified-ui",
+      "type": "custom",
+      "referenceId": "Send to unified-ui",
+      "startAt": {
+        "$date": "2026-01-09T11:35:48.632Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T11:35:48.638Z"
+      },
+      "duration": 0.006,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "updatedAt": "2026-01-09T11:35:48.637Z",
+            "executionId": "132",
+            "is_imported": false,
+            "imported_timestamp": null,
+            "workflowName": "AutoAgent1",
+            "msg": "Ready for pick up",
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+            "status": "pending",
+            "workflowId": "1vm5ftPxpKU0g2Oi",
+            "id": 24,
+            "createdAt": "2026-01-09T11:35:48.637Z"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.dataTable",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_run": 0,
+            "previous_node_output": 0,
+            "previous_node": "Set AutonomousAgentId"
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:22:36.297Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:22:36.297Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T17:22:30.883Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T17:22:36.297Z"
+  },
+  "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+},
+{
+  "_id": "trace_8f546c84-8e4f-4cd3-9f82-bc23b40d1f96",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "contextType": "autonomous_agent",
+  "referenceId": "155",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "workflow_name": "AutoAgent1",
+    "execution_status": "success",
+    "execution_mode": "manual",
+    "imported_at": "2026-01-09T17:27:46Z",
+    "node_count": 3,
+    "started_at": "2026-01-09T17:24:24.918Z",
+    "stopped_at": "2026-01-09T17:24:25.156Z",
+    "n8n_execution_id": "155",
+    "n8n_session_id": "null",
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_id": "1vm5ftPxpKU0g2Oi"
+  },
+  "nodes": [
+    {
+      "id": "n8n_node_1aa84549-96db-47fb-bfe5-d800c02e7202",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "workflow",
+      "referenceId": "When clicking ‘Execute workflow’",
+      "startAt": {
+        "$date": "2026-01-09T17:24:24.920Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T17:24:24.921Z"
+      },
+      "duration": 0.001,
+      "status": "completed",
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.manualTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:27:46.183Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:27:46.183Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_b52b7dd9-cebd-4f0b-8cba-4425a5f21b2d",
+      "name": "HTTP Request",
+      "type": "http",
+      "referenceId": "HTTP Request",
+      "startAt": {
+        "$date": "2026-01-09T17:24:24.922Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T17:24:25.131Z"
+      },
+      "duration": 0.209,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "characters": [
+              "https://swapi.info/api/people/1",
+              "https://swapi.info/api/people/2",
+              "https://swapi.info/api/people/3",
+              "https://swapi.info/api/people/4",
+              "https://swapi.info/api/people/5",
+              "https://swapi.info/api/people/6",
+              "https://swapi.info/api/people/7",
+              "https://swapi.info/api/people/10",
+              "https://swapi.info/api/people/11",
+              "https://swapi.info/api/people/12",
+              "https://swapi.info/api/people/13",
+              "https://swapi.info/api/people/20",
+              "https://swapi.info/api/people/21",
+              "https://swapi.info/api/people/33",
+              "https://swapi.info/api/people/35",
+              "https://swapi.info/api/people/46",
+              "https://swapi.info/api/people/51",
+              "https://swapi.info/api/people/52",
+              "https://swapi.info/api/people/53",
+              "https://swapi.info/api/people/54",
+              "https://swapi.info/api/people/55",
+              "https://swapi.info/api/people/56",
+              "https://swapi.info/api/people/58",
+              "https://swapi.info/api/people/63",
+              "https://swapi.info/api/people/64",
+              "https://swapi.info/api/people/67",
+              "https://swapi.info/api/people/68",
+              "https://swapi.info/api/people/75",
+              "https://swapi.info/api/people/78",
+              "https://swapi.info/api/people/79",
+              "https://swapi.info/api/people/80",
+              "https://swapi.info/api/people/81",
+              "https://swapi.info/api/people/82",
+              "https://swapi.info/api/people/83"
+            ],
+            "planets": [
+              "https://swapi.info/api/planets/1",
+              "https://swapi.info/api/planets/2",
+              "https://swapi.info/api/planets/5",
+              "https://swapi.info/api/planets/8",
+              "https://swapi.info/api/planets/9",
+              "https://swapi.info/api/planets/12",
+              "https://swapi.info/api/planets/13",
+              "https://swapi.info/api/planets/14",
+              "https://swapi.info/api/planets/15",
+              "https://swapi.info/api/planets/16",
+              "https://swapi.info/api/planets/17",
+              "https://swapi.info/api/planets/18",
+              "https://swapi.info/api/planets/19"
+            ],
+            "starships": [
+              "https://swapi.info/api/starships/2",
+              "https://swapi.info/api/starships/32",
+              "https://swapi.info/api/starships/48",
+              "https://swapi.info/api/starships/59",
+              "https://swapi.info/api/starships/61",
+              "https://swapi.info/api/starships/63",
+              "https://swapi.info/api/starships/64",
+              "https://swapi.info/api/starships/65",
+              "https://swapi.info/api/starships/66",
+              "https://swapi.info/api/starships/68",
+              "https://swapi.info/api/starships/74",
+              "https://swapi.info/api/starships/75"
+            ],
+            "producer": "Rick McCallum",
+            "title": "Revenge of the Sith",
+            "director": "George Lucas",
+            "vehicles": [
+              "https://swapi.info/api/vehicles/33",
+              "https://swapi.info/api/vehicles/50",
+              "https://swapi.info/api/vehicles/53",
+              "https://swapi.info/api/vehicles/56",
+              "https://swapi.info/api/vehicles/60",
+              "https://swapi.info/api/vehicles/62",
+              "https://swapi.info/api/vehicles/67",
+              "https://swapi.info/api/vehicles/69",
+              "https://swapi.info/api/vehicles/70",
+              "https://swapi.info/api/vehicles/71",
+              "https://swapi.info/api/vehicles/72",
+              "https://swapi.info/api/vehicles/73",
+              "https://swapi.info/api/vehicles/76"
+            ],
+            "opening_crawl": "War! The Republic is crumbling\r\nunder attacks by the ruthless\r\nSith Lord, Count Dooku.\r\nThere are heroes on both sides.\r\nEvil is everywhere.\r\n\r\nIn a stunning move, the\r\nfiendish droid leader, General\r\nGrievous, has swept into the\r\nRepublic capital and kidnapped\r\nChancellor Palpatine, leader of\r\nthe Galactic Senate.\r\n\r\nAs the Separatist Droid Army\r\nattempts to flee the besieged\r\ncapital with their valuable\r\nhostage, two Jedi Knights lead a\r\ndesperate mission to rescue the\r\ncaptive Chancellor....",
+            "species": [
+              "https://swapi.info/api/species/1",
+              "https://swapi.info/api/species/2",
+              "https://swapi.info/api/species/3",
+              "https://swapi.info/api/species/6",
+              "https://swapi.info/api/species/15",
+              "https://swapi.info/api/species/19",
+              "https://swapi.info/api/species/20",
+              "https://swapi.info/api/species/23",
+              "https://swapi.info/api/species/24",
+              "https://swapi.info/api/species/25",
+              "https://swapi.info/api/species/26",
+              "https://swapi.info/api/species/27",
+              "https://swapi.info/api/species/28",
+              "https://swapi.info/api/species/29",
+              "https://swapi.info/api/species/30",
+              "https://swapi.info/api/species/33",
+              "https://swapi.info/api/species/34",
+              "https://swapi.info/api/species/35",
+              "https://swapi.info/api/species/36",
+              "https://swapi.info/api/species/37"
+            ],
+            "created": "2014-12-20T18:49:38.403000Z",
+            "edited": "2014-12-20T20:47:52.073000Z",
+            "url": "https://swapi.info/api/films/6",
+            "episode_id": 3,
+            "release_date": "2005-05-19"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.httpRequest",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "When clicking ‘Execute workflow’",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:27:46.183Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:27:46.183Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_3f8232b2-ce48-41e2-9307-9288a994670a",
+      "name": "Send to unified-ui",
+      "type": "custom",
+      "referenceId": "Send to unified-ui",
+      "startAt": {
+        "$date": "2026-01-09T17:24:25.132Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T17:24:25.155Z"
+      },
+      "duration": 0.023,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "is_imported": false,
+            "imported_timestamp": null,
+            "status": "pending",
+            "workflowName": "AutoAgent1",
+            "id": 27,
+            "executionId": "155",
+            "msg": "Ready for pick up",
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+            "workflowId": "1vm5ftPxpKU0g2Oi",
+            "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+            "createdAt": "2026-01-09T17:24:25.152Z",
+            "updatedAt": "2026-01-09T17:24:25.152Z"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.dataTable",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_run": 0,
+            "previous_node_output": 0,
+            "previous_node": "HTTP Request"
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:27:46.183Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:27:46.183Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T17:24:52.745Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T17:27:46.184Z"
+  },
+  "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+},
+{
+  "_id": "trace_353066d4-1030-4740-823c-d1ab365ebb72",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "contextType": "autonomous_agent",
+  "referenceId": "157",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "workflow_id": "1vm5ftPxpKU0g2Oi",
+    "workflow_name": "AutoAgent1",
+    "execution_mode": "manual",
+    "node_count": 3,
+    "started_at": "2026-01-09T17:27:33.520Z",
+    "stopped_at": "2026-01-09T17:27:33.662Z",
+    "n8n_execution_id": "157",
+    "n8n_session_id": "null",
+    "n8n_base_url": "http://localhost:5678",
+    "execution_status": "success",
+    "imported_at": "2026-01-09T17:27:46Z"
+  },
+  "nodes": [
+    {
+      "id": "n8n_node_7453ae7b-0361-4437-9167-779922be4381",
+      "name": "When clicking ‘Execute workflow’",
+      "type": "workflow",
+      "referenceId": "When clicking ‘Execute workflow’",
+      "startAt": {
+        "$date": "2026-01-09T17:27:33.522Z"
+      },
+      "status": "completed",
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.manualTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:27:46.171Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:27:46.171Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_fe9d29aa-300a-4dcd-a2a6-1e2586d87098",
+      "name": "HTTP Request",
+      "type": "http",
+      "referenceId": "HTTP Request",
+      "startAt": {
+        "$date": "2026-01-09T17:27:33.523Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T17:27:33.646Z"
+      },
+      "duration": 0.123,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "episode_id": 3,
+            "release_date": "2005-05-19",
+            "planets": [
+              "https://swapi.info/api/planets/1",
+              "https://swapi.info/api/planets/2",
+              "https://swapi.info/api/planets/5",
+              "https://swapi.info/api/planets/8",
+              "https://swapi.info/api/planets/9",
+              "https://swapi.info/api/planets/12",
+              "https://swapi.info/api/planets/13",
+              "https://swapi.info/api/planets/14",
+              "https://swapi.info/api/planets/15",
+              "https://swapi.info/api/planets/16",
+              "https://swapi.info/api/planets/17",
+              "https://swapi.info/api/planets/18",
+              "https://swapi.info/api/planets/19"
+            ],
+            "director": "George Lucas",
+            "starships": [
+              "https://swapi.info/api/starships/2",
+              "https://swapi.info/api/starships/32",
+              "https://swapi.info/api/starships/48",
+              "https://swapi.info/api/starships/59",
+              "https://swapi.info/api/starships/61",
+              "https://swapi.info/api/starships/63",
+              "https://swapi.info/api/starships/64",
+              "https://swapi.info/api/starships/65",
+              "https://swapi.info/api/starships/66",
+              "https://swapi.info/api/starships/68",
+              "https://swapi.info/api/starships/74",
+              "https://swapi.info/api/starships/75"
+            ],
+            "vehicles": [
+              "https://swapi.info/api/vehicles/33",
+              "https://swapi.info/api/vehicles/50",
+              "https://swapi.info/api/vehicles/53",
+              "https://swapi.info/api/vehicles/56",
+              "https://swapi.info/api/vehicles/60",
+              "https://swapi.info/api/vehicles/62",
+              "https://swapi.info/api/vehicles/67",
+              "https://swapi.info/api/vehicles/69",
+              "https://swapi.info/api/vehicles/70",
+              "https://swapi.info/api/vehicles/71",
+              "https://swapi.info/api/vehicles/72",
+              "https://swapi.info/api/vehicles/73",
+              "https://swapi.info/api/vehicles/76"
+            ],
+            "created": "2014-12-20T18:49:38.403000Z",
+            "opening_crawl": "War! The Republic is crumbling\r\nunder attacks by the ruthless\r\nSith Lord, Count Dooku.\r\nThere are heroes on both sides.\r\nEvil is everywhere.\r\n\r\nIn a stunning move, the\r\nfiendish droid leader, General\r\nGrievous, has swept into the\r\nRepublic capital and kidnapped\r\nChancellor Palpatine, leader of\r\nthe Galactic Senate.\r\n\r\nAs the Separatist Droid Army\r\nattempts to flee the besieged\r\ncapital with their valuable\r\nhostage, two Jedi Knights lead a\r\ndesperate mission to rescue the\r\ncaptive Chancellor....",
+            "producer": "Rick McCallum",
+            "characters": [
+              "https://swapi.info/api/people/1",
+              "https://swapi.info/api/people/2",
+              "https://swapi.info/api/people/3",
+              "https://swapi.info/api/people/4",
+              "https://swapi.info/api/people/5",
+              "https://swapi.info/api/people/6",
+              "https://swapi.info/api/people/7",
+              "https://swapi.info/api/people/10",
+              "https://swapi.info/api/people/11",
+              "https://swapi.info/api/people/12",
+              "https://swapi.info/api/people/13",
+              "https://swapi.info/api/people/20",
+              "https://swapi.info/api/people/21",
+              "https://swapi.info/api/people/33",
+              "https://swapi.info/api/people/35",
+              "https://swapi.info/api/people/46",
+              "https://swapi.info/api/people/51",
+              "https://swapi.info/api/people/52",
+              "https://swapi.info/api/people/53",
+              "https://swapi.info/api/people/54",
+              "https://swapi.info/api/people/55",
+              "https://swapi.info/api/people/56",
+              "https://swapi.info/api/people/58",
+              "https://swapi.info/api/people/63",
+              "https://swapi.info/api/people/64",
+              "https://swapi.info/api/people/67",
+              "https://swapi.info/api/people/68",
+              "https://swapi.info/api/people/75",
+              "https://swapi.info/api/people/78",
+              "https://swapi.info/api/people/79",
+              "https://swapi.info/api/people/80",
+              "https://swapi.info/api/people/81",
+              "https://swapi.info/api/people/82",
+              "https://swapi.info/api/people/83"
+            ],
+            "species": [
+              "https://swapi.info/api/species/1",
+              "https://swapi.info/api/species/2",
+              "https://swapi.info/api/species/3",
+              "https://swapi.info/api/species/6",
+              "https://swapi.info/api/species/15",
+              "https://swapi.info/api/species/19",
+              "https://swapi.info/api/species/20",
+              "https://swapi.info/api/species/23",
+              "https://swapi.info/api/species/24",
+              "https://swapi.info/api/species/25",
+              "https://swapi.info/api/species/26",
+              "https://swapi.info/api/species/27",
+              "https://swapi.info/api/species/28",
+              "https://swapi.info/api/species/29",
+              "https://swapi.info/api/species/30",
+              "https://swapi.info/api/species/33",
+              "https://swapi.info/api/species/34",
+              "https://swapi.info/api/species/35",
+              "https://swapi.info/api/species/36",
+              "https://swapi.info/api/species/37"
+            ],
+            "edited": "2014-12-20T20:47:52.073000Z",
+            "url": "https://swapi.info/api/films/6",
+            "title": "Revenge of the Sith"
+          }
+        }
+      },
+      "metadata": {
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_output": 0,
+            "previous_node": "When clicking ‘Execute workflow’",
+            "previous_node_run": 0
+          }
+        ],
+        "n8n_node_type": "n8n-nodes-base.httpRequest"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:27:46.171Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:27:46.171Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    },
+    {
+      "id": "n8n_node_f815a7a6-5e4a-4531-84cb-01ffc5d1ce98",
+      "name": "Send to unified-ui",
+      "type": "custom",
+      "referenceId": "Send to unified-ui",
+      "startAt": {
+        "$date": "2026-01-09T17:27:33.647Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T17:27:33.662Z"
+      },
+      "duration": 0.015,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "executionId": "157",
+            "imported_timestamp": null,
+            "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+            "updatedAt": "2026-01-09T17:27:33.658Z",
+            "createdAt": "2026-01-09T17:27:33.658Z",
+            "is_imported": false,
+            "workflowId": "1vm5ftPxpKU0g2Oi",
+            "workflowName": "AutoAgent1",
+            "msg": "Ready for pick up",
+            "autonomousAgentId": "69d924b5-66fb-4c23-808b-a01a9c989a03",
+            "status": "pending",
+            "id": 28
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.dataTable",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "HTTP Request",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T17:27:46.171Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T17:27:46.171Z"
+      },
+      "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+      "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T17:27:46.171Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T17:27:46.171Z"
+  },
+  "createdBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03",
+  "updatedBy": "autonomous-agent-69d924b5-66fb-4c23-808b-a01a9c989a03"
+},
+{
+  "_id": "trace_8df2a3f1-fb59-4738-ada6-a4f650392ced",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "applicationId": "2268b448-4cc5-4aba-a124-9dc77b2d02de",
+  "conversationId": "f40a7437-a773-4ce6-b3cf-65c5e97d83a6",
+  "contextType": "conversation",
+  "referenceId": "163",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "started_at": "2026-01-09T19:23:55.579Z",
+    "stopped_at": "2026-01-09T19:23:59.174Z",
+    "n8n_session_id": "f40a7437-a773-4ce6-b3cf-65c5e97d83a6",
+    "workflow_name": "001 Chat Response Workflow",
+    "execution_status": "success",
+    "execution_mode": "webhook",
+    "imported_at": "2026-01-09T19:23:59Z",
+    "node_count": 4,
+    "n8n_execution_id": "163",
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_id": "01V4K8pjRhOVncdg"
+  },
+  "logs": [],
+  "nodes": [
+    {
+      "id": "n8n_node_35db65a7-59fd-4cf4-a364-35677b0c5b45",
+      "name": "When chat message received",
+      "type": "workflow",
+      "referenceId": "When chat message received",
+      "startAt": {
+        "$date": "2026-01-09T19:23:55.580Z"
+      },
+      "status": "completed",
+      "data": {
+        "input": {
+          "text": "<history>\n[2026-01-09 19:23:43|user]: dont be so bad at me. please tell me how you are\n[2026-01-09 19:23:45|assistant]: Sorry — I didn’t mean to come off that way. I don’t have feelings the way people do, but I’m working fine and ready to help. If it helps, you can picture me as friendly and focused. How are you doing, and what can I do for you right now?\n</history>\n<current>\n[2026-01-09 20:23:55|user]: what is you goal?\n</current>"
+        },
+        "output": {
+          "extraData": {
+            "chatInput": "<history>\n[2026-01-09 19:23:43|user]: dont be so bad at me. please tell me how you are\n[2026-01-09 19:23:45|assistant]: Sorry — I didn’t mean to come off that way. I don’t have feelings the way people do, but I’m working fine and ready to help. If it helps, you can picture me as friendly and focused. How are you doing, and what can I do for you right now?\n</history>\n<current>\n[2026-01-09 20:23:55|user]: what is you goal?\n</current>",
+            "sessionId": "f40a7437-a773-4ce6-b3cf-65c5e97d83a6"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:23:59.197Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:23:59.197Z"
+      }
+    },
+    {
+      "id": "n8n_node_5e297c3a-9237-4d0c-98f2-a935806b6dac",
+      "name": "Respond to Webhook",
+      "type": "custom",
+      "referenceId": "Respond to Webhook",
+      "startAt": {
+        "$date": "2026-01-09T19:23:55.580Z"
+      },
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "chatInput": "<history>\n[2026-01-09 19:23:43|user]: dont be so bad at me. please tell me how you are\n[2026-01-09 19:23:45|assistant]: Sorry — I didn’t mean to come off that way. I don’t have feelings the way people do, but I’m working fine and ready to help. If it helps, you can picture me as friendly and focused. How are you doing, and what can I do for you right now?\n</history>\n<current>\n[2026-01-09 20:23:55|user]: what is you goal?\n</current>",
+            "sessionId": "f40a7437-a773-4ce6-b3cf-65c5e97d83a6"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.respondToWebhook",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "When chat message received",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:23:59.197Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:23:59.197Z"
+      }
+    },
+    {
+      "id": "n8n_node_854fa21c-eb0b-48a2-8284-c2a6d7fd4227",
+      "name": "AI Agent",
+      "type": "agent",
+      "referenceId": "AI Agent",
+      "startAt": {
+        "$date": "2026-01-09T19:23:55.580Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T19:23:59.174Z"
+      },
+      "duration": 3.594,
+      "status": "completed",
+      "data": {
+        "output": {
+          "text": "I don’t have personal desires or goals. I’m a tool designed to help you achieve yours. Broadly my purpose is to:\n\n- provide accurate, clear information and explanations  \n- help with tasks (writing, coding, planning, summarizing, brainstorming, tutoring, translation, etc.)  \n- follow your instructions while staying safe, legal, and respectful of privacy  \n\nTell me what you want to get done or learn, and I’ll do my best to help. What’s your goal right now?"
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.agent",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_output": 0,
+            "previous_node": "Respond to Webhook",
+            "previous_node_run": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:23:59.197Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:23:59.197Z"
+      }
+    },
+    {
+      "id": "n8n_node_17b268bc-4d92-48bd-8e30-1c1e95efd370",
+      "name": "Azure OpenAI Chat Model",
+      "type": "llm",
+      "referenceId": "Azure OpenAI Chat Model",
+      "startAt": {
+        "$date": "2026-01-09T19:23:55.585Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T19:23:59.172Z"
+      },
+      "duration": 3.587,
+      "status": "completed",
+      "data": {
+        "input": {
+          "extraData": {
+            "ai_languageModel": [
+              [
+                {
+                  "json": {
+                    "messages": [
+                      "Human: <history>\n[2026-01-09 19:23:43|user]: dont be so bad at me. please tell me how you are\n[2026-01-09 19:23:45|assistant]: Sorry — I didn’t mean to come off that way. I don’t have feelings the way people do, but I’m working fine and ready to help. If it helps, you can picture me as friendly and focused. How are you doing, and what can I do for you right now?\n</history>\n<current>\n[2026-01-09 20:23:55|user]: what is you goal?\n</current>"
+                    ],
+                    "estimatedTokens": 141,
+                    "options": {
+                      "model_kwargs": {},
+                      "model": "gpt-5-mini",
+                      "timeout": 60000,
+                      "max_retries": 2,
+                      "configuration": {
+                        "fetchOptions": {}
+                      }
+                    }
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "AI Agent",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ],
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:23:59.197Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:23:59.197Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T19:17:33.762Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T19:23:59.197Z"
+  }
+},
+{
+  "_id": "trace_18c38ca3-1c04-44b1-a5a1-f41cb320eaf1",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "applicationId": "08bf4b4d-be03-4a7b-ac8d-bb8124b8b84d",
+  "conversationId": "1b22f92d-28c6-4424-bdb9-267738387c05",
+  "contextType": "conversation",
+  "referenceId": "conv_3fae9ac3abf7640700vrFiQCI4JdYMcCRey6HjzUlgsAMTDRv3",
+  "referenceName": "Microsoft Foundry Conversation",
+  "referenceMetadata": {
+    "foundry_conversation_id": "conv_3fae9ac3abf7640700vrFiQCI4JdYMcCRey6HjzUlgsAMTDRv3",
+    "project_endpoint": "https://engo-foundry.services.ai.azure.com/api/projects/proj-default-2",
+    "api_version": "2025-11-15-preview",
+    "imported_at": "2026-01-09T19:22:44Z",
+    "item_count": 12
+  },
+  "logs": [],
+  "nodes": [
+    {
+      "id": "node_df876933-559c-4226-ae62-2701e5a7eb99",
+      "name": "User Message",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf7640700696155436df48190b5510542ca387adc",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "text": "hi",
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        },
+        "output": {
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_7c0b7190-f0d3-4b60-956c-32b535e93722",
+      "name": "Assistant Response",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf764070069615543e0208190a84c96b69bbebb33",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        },
+        "output": {
+          "text": "Hello! How can I help you today?",
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700",
+        "response_id": "resp_3fae9ac3abf7640700696155434d088190a9cabe5b736d7700",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicAssistantAgent",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_ec8f6b73-f478-4bf2-8c65-0bb2d6466925",
+      "name": "User Message",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf764070069615549ac648190bfdeebd6b9d957ff",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "text": "how are you?",
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        },
+        "output": {
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_35af1658-e2da-4300-bbfe-02640d70f2d0",
+      "name": "Assistant Response",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf76407006961554a10fc81909d00222364bb77f2",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        },
+        "output": {
+          "text": "I'm just a computer program, so I don't have feelings, but I'm here and ready to help you! How are you doing today?",
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700",
+        "response_id": "resp_3fae9ac3abf76407006961554989508190bc609b418fd9cf0e",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicAssistantAgent",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_08a33a9c-01d7-4f7e-b4a0-88cb468acc61",
+      "name": "User Message",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf76407006961556213c08190a015fb91970e3152",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "text": "dont be so bad to me. how are you?",
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        },
+        "output": {
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_d9edd2cf-2a4c-40a7-af2a-d15676101dc6",
+      "name": "Assistant Response",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf7640700696155625d188190bb68f67cca5d55df",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "type": "message",
+            "role": "assistant"
+          }
+        },
+        "output": {
+          "text": "You're right! I should be friendly. 😊  \nI'm doing well, thanks for asking! How about you?",
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700",
+        "response_id": "resp_3fae9ac3abf764070069615561f54481908ebc706f3182c6f2",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicAssistantAgent",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_a7fe2803-362a-4f47-bd54-815daf3ed1cd",
+      "name": "User Message",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf76407006961556f45fc81908e7a5a6e47f7bf21",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "text": "i like you",
+          "metadata": {
+            "type": "message",
+            "role": "user"
+          }
+        },
+        "output": {
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_49bffd46-9b7c-47ad-aa2b-0428b4261e0c",
+      "name": "Assistant Response",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf76407006961556fac5c8190b82ce1ba4e62bf9f",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        },
+        "output": {
+          "text": "Thank you! That means a lot. I like chatting with you too. 😊  \nIs there anything you'd like to talk about or ask?",
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700",
+        "response_id": "resp_3fae9ac3abf76407006961556f1ff48190b59da5897906b9cb",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicAssistantAgent",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_b20cd57a-ad38-40e4-a14b-bce8a3fc2b81",
+      "name": "User Message",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf7640700696155785a14819081b55a6522f1e66c",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "text": "you are very helpful",
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        },
+        "output": {
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_11138c8c-6a04-4ce6-b675-80ff99080fa2",
+      "name": "Assistant Response",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf764070069615578bb74819092b815d074b6e982",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        },
+        "output": {
+          "text": "Thank you so much! I’m glad I can help. If you ever need anything—answers, advice, or just someone to talk to—I’m here for you. 😊",
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700",
+        "response_id": "resp_3fae9ac3abf764070069615578339481909cb47ade9aa3b1f8",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicAssistantAgent",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_88d33055-69f7-482c-a57b-9190272dac72",
+      "name": "User Message",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf764070069615582ea348190b802f0909c4d064f",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "text": "what can i do for you?",
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        },
+        "output": {
+          "metadata": {
+            "role": "user",
+            "type": "message"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    },
+    {
+      "id": "node_0be1e6c2-1417-48a2-a9ca-611d768b143d",
+      "name": "Assistant Response",
+      "type": "llm",
+      "referenceId": "msg_3fae9ac3abf76407006961558337a48190a0c5e5ddef9c0c4f",
+      "status": "completed",
+      "logs": [],
+      "data": {
+        "input": {
+          "metadata": {
+            "role": "assistant",
+            "type": "message"
+          }
+        },
+        "output": {
+          "text": "That's very kind of you to ask!  \nI don’t need anything, but if you’d like, you can keep chatting with me, ask questions, or let me know how I can help you further.  \nIs there anything you’re curious about or something you want to talk about?",
+          "metadata": {
+            "type": "message",
+            "role": "assistant"
+          }
+        }
+      },
+      "nodes": [],
+      "metadata": {
+        "partition_key": "3fae9ac3abf7640700",
+        "response_id": "resp_3fae9ac3abf764070069615582a37081909c2ad263f15aed93",
+        "agent": {
+          "type": "agent_id",
+          "name": "BasicAssistantAgent",
+          "version": "2"
+        }
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:22:44.211Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T19:21:41.008Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T19:22:44.214Z"
+  }
+},
+{
+  "_id": "trace_a3203ec4-f0ba-46ad-8083-b5d11504a9f3",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "applicationId": "2268b448-4cc5-4aba-a124-9dc77b2d02de",
+  "conversationId": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d",
+  "contextType": "conversation",
+  "referenceId": "164",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_id": "01V4K8pjRhOVncdg",
+    "workflow_name": "001 Chat Response Workflow",
+    "execution_status": "success",
+    "node_count": 4,
+    "started_at": "2026-01-09T19:42:13.617Z",
+    "n8n_execution_id": "164",
+    "n8n_session_id": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d",
+    "execution_mode": "webhook",
+    "imported_at": "2026-01-09T19:42:14Z",
+    "stopped_at": "2026-01-09T19:42:14.402Z"
+  },
+  "logs": [],
+  "nodes": [
+    {
+      "id": "n8n_node_945a9b9d-5872-4685-84ae-8f8e9fcac057",
+      "name": "When chat message received",
+      "type": "workflow",
+      "referenceId": "When chat message received",
+      "startAt": {
+        "$date": "2026-01-09T19:42:13.619Z"
+      },
+      "status": "completed",
+      "data": {
+        "input": {
+          "text": "hi"
+        },
+        "output": {
+          "extraData": {
+            "chatInput": "hi",
+            "sessionId": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:14.434Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:14.434Z"
+      }
+    },
+    {
+      "id": "n8n_node_c71e3cf3-b0cb-4071-8b9c-e39591054912",
+      "name": "Respond to Webhook",
+      "type": "custom",
+      "referenceId": "Respond to Webhook",
+      "startAt": {
+        "$date": "2026-01-09T19:42:13.619Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T19:42:13.620Z"
+      },
+      "duration": 0.001,
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "sessionId": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d",
+            "chatInput": "hi"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.respondToWebhook",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "When chat message received",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:14.434Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:14.434Z"
+      }
+    },
+    {
+      "id": "n8n_node_f796655e-c039-4d28-b124-3974c9234e6c",
+      "name": "AI Agent",
+      "type": "agent",
+      "referenceId": "AI Agent",
+      "startAt": {
+        "$date": "2026-01-09T19:42:13.620Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T19:42:14.402Z"
+      },
+      "duration": 0.782,
+      "status": "completed",
+      "data": {
+        "output": {
+          "text": "Hi — how can I help you today?"
+        }
+      },
+      "metadata": {
+        "sources": [
+          {
+            "previous_node": "Respond to Webhook",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ],
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.agent",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:14.434Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:14.434Z"
+      }
+    },
+    {
+      "id": "n8n_node_d2e87f3f-6890-4ad3-974a-3de19b423405",
+      "name": "Azure OpenAI Chat Model",
+      "type": "llm",
+      "referenceId": "Azure OpenAI Chat Model",
+      "startAt": {
+        "$date": "2026-01-09T19:42:13.626Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T19:42:14.398Z"
+      },
+      "duration": 0.772,
+      "status": "completed",
+      "data": {
+        "input": {
+          "extraData": {
+            "ai_languageModel": [
+              [
+                {
+                  "json": {
+                    "messages": [
+                      "Human: hi"
+                    ],
+                    "estimatedTokens": 3,
+                    "options": {
+                      "model": "gpt-5-mini",
+                      "timeout": 60000,
+                      "max_retries": 2,
+                      "configuration": {
+                        "fetchOptions": {}
+                      },
+                      "model_kwargs": {}
+                    }
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "AI Agent",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:14.434Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:14.434Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T19:42:14.435Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T19:42:14.435Z"
+  }
+},
+{
+  "_id": "trace_23f8e15b-e9ea-46d1-9611-383af0196df2",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "applicationId": "2268b448-4cc5-4aba-a124-9dc77b2d02de",
+  "conversationId": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d",
+  "contextType": "conversation",
+  "referenceId": "165",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_name": "001 Chat Response Workflow",
+    "execution_status": "success",
+    "imported_at": "2026-01-09T19:42:23Z",
+    "node_count": 4,
+    "started_at": "2026-01-09T19:42:20.893Z",
+    "stopped_at": "2026-01-09T19:42:23.168Z",
+    "n8n_execution_id": "165",
+    "workflow_id": "01V4K8pjRhOVncdg",
+    "execution_mode": "webhook",
+    "n8n_session_id": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d"
+  },
+  "logs": [],
+  "nodes": [
+    {
+      "id": "n8n_node_cf2fba9e-4819-4bed-aa1d-1f7b2b0f4d94",
+      "name": "When chat message received",
+      "type": "workflow",
+      "referenceId": "When chat message received",
+      "startAt": {
+        "$date": "2026-01-09T19:42:20.895Z"
+      },
+      "status": "completed",
+      "data": {
+        "input": {
+          "text": "<history>\n[2026-01-09 19:42:13|user]: hi\n[2026-01-09 19:42:14|assistant]: Hi — how can I help you today?\n</history>\n<current>\n[2026-01-09 20:42:20|user]: how are you\n</current>"
+        },
+        "output": {
+          "extraData": {
+            "chatInput": "<history>\n[2026-01-09 19:42:13|user]: hi\n[2026-01-09 19:42:14|assistant]: Hi — how can I help you today?\n</history>\n<current>\n[2026-01-09 20:42:20|user]: how are you\n</current>",
+            "sessionId": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:23.195Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:23.195Z"
+      }
+    },
+    {
+      "id": "n8n_node_ff3458ab-68a7-44a4-92d2-0a3c570c594e",
+      "name": "Respond to Webhook",
+      "type": "custom",
+      "referenceId": "Respond to Webhook",
+      "startAt": {
+        "$date": "2026-01-09T19:42:20.895Z"
+      },
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "chatInput": "<history>\n[2026-01-09 19:42:13|user]: hi\n[2026-01-09 19:42:14|assistant]: Hi — how can I help you today?\n</history>\n<current>\n[2026-01-09 20:42:20|user]: how are you\n</current>",
+            "sessionId": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d"
+          }
+        }
+      },
+      "metadata": {
+        "sources": [
+          {
+            "previous_node": "When chat message received",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ],
+        "n8n_node_type": "n8n-nodes-base.respondToWebhook",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:23.195Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:23.195Z"
+      }
+    },
+    {
+      "id": "n8n_node_f64f75f6-0400-4789-898e-ee3e8dafacf2",
+      "name": "AI Agent",
+      "type": "agent",
+      "referenceId": "AI Agent",
+      "startAt": {
+        "$date": "2026-01-09T19:42:20.895Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T19:42:23.168Z"
+      },
+      "duration": 2.273,
+      "status": "completed",
+      "data": {
+        "output": {
+          "text": "I don't have feelings, but I'm here and ready to help. What can I do for you today?"
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.agent",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_output": 0,
+            "previous_node": "Respond to Webhook",
+            "previous_node_run": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:23.195Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:23.195Z"
+      }
+    },
+    {
+      "id": "n8n_node_704e16b2-ed9c-4d0c-90db-e78421b06b8d",
+      "name": "Azure OpenAI Chat Model",
+      "type": "llm",
+      "referenceId": "Azure OpenAI Chat Model",
+      "startAt": {
+        "$date": "2026-01-09T19:42:20.898Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T19:42:23.163Z"
+      },
+      "duration": 2.265,
+      "status": "completed",
+      "data": {
+        "input": {
+          "extraData": {
+            "ai_languageModel": [
+              [
+                {
+                  "json": {
+                    "messages": [
+                      "Human: <history>\n[2026-01-09 19:42:13|user]: hi\n[2026-01-09 19:42:14|assistant]: Hi — how can I help you today?\n</history>\n<current>\n[2026-01-09 20:42:20|user]: how are you\n</current>"
+                    ],
+                    "estimatedTokens": 77,
+                    "options": {
+                      "model": "gpt-5-mini",
+                      "timeout": 60000,
+                      "max_retries": 2,
+                      "configuration": {
+                        "fetchOptions": {}
+                      },
+                      "model_kwargs": {}
+                    }
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "AI Agent",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ],
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi"
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:23.195Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:23.195Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T19:42:23.196Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T19:42:23.196Z"
+  }
+},
+{
+  "_id": "trace_852c017b-497e-48a2-bba8-6daf941c0d0a",
+  "tenantId": "896c89ec-b705-4b1c-9095-cdccff7e8db1",
+  "applicationId": "2268b448-4cc5-4aba-a124-9dc77b2d02de",
+  "conversationId": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d",
+  "contextType": "conversation",
+  "referenceId": "166",
+  "referenceName": "N8N Workflow Execution",
+  "referenceMetadata": {
+    "workflow_name": "001 Chat Response Workflow",
+    "execution_status": "success",
+    "imported_at": "2026-01-09T19:42:32Z",
+    "started_at": "2026-01-09T19:42:30.087Z",
+    "stopped_at": "2026-01-09T19:42:32.794Z",
+    "n8n_session_id": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d",
+    "execution_mode": "webhook",
+    "node_count": 4,
+    "n8n_execution_id": "166",
+    "n8n_base_url": "http://localhost:5678",
+    "workflow_id": "01V4K8pjRhOVncdg"
+  },
+  "logs": [],
+  "nodes": [
+    {
+      "id": "n8n_node_11baff60-3685-4edb-8927-a20e254f5ccf",
+      "name": "When chat message received",
+      "type": "workflow",
+      "referenceId": "When chat message received",
+      "startAt": {
+        "$date": "2026-01-09T19:42:30.089Z"
+      },
+      "status": "completed",
+      "data": {
+        "input": {
+          "text": "<history>\n[2026-01-09 19:42:13|user]: hi\n[2026-01-09 19:42:14|assistant]: Hi — how can I help you today?\n[2026-01-09 19:42:20|user]: how are you\n[2026-01-09 19:42:23|assistant]: I don't have feelings, but I'm here and ready to help. What can I do for you today?\n</history>\n<current>\n[2026-01-09 20:42:30|user]: why so mad?\n</current>"
+        },
+        "output": {
+          "extraData": {
+            "chatInput": "<history>\n[2026-01-09 19:42:13|user]: hi\n[2026-01-09 19:42:14|assistant]: Hi — how can I help you today?\n[2026-01-09 19:42:20|user]: how are you\n[2026-01-09 19:42:23|assistant]: I don't have feelings, but I'm here and ready to help. What can I do for you today?\n</history>\n<current>\n[2026-01-09 20:42:30|user]: why so mad?\n</current>",
+            "sessionId": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "run_index": 0
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:32.814Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:32.814Z"
+      }
+    },
+    {
+      "id": "n8n_node_b668ec92-59fd-46d5-8034-77ad1f171a9a",
+      "name": "Respond to Webhook",
+      "type": "custom",
+      "referenceId": "Respond to Webhook",
+      "startAt": {
+        "$date": "2026-01-09T19:42:30.089Z"
+      },
+      "status": "completed",
+      "data": {
+        "output": {
+          "extraData": {
+            "chatInput": "<history>\n[2026-01-09 19:42:13|user]: hi\n[2026-01-09 19:42:14|assistant]: Hi — how can I help you today?\n[2026-01-09 19:42:20|user]: how are you\n[2026-01-09 19:42:23|assistant]: I don't have feelings, but I'm here and ready to help. What can I do for you today?\n</history>\n<current>\n[2026-01-09 20:42:30|user]: why so mad?\n</current>",
+            "sessionId": "aa5b98d3-a44c-4baf-94d6-8a0fd4ca605d"
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "n8n-nodes-base.respondToWebhook",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node_run": 0,
+            "previous_node_output": 0,
+            "previous_node": "When chat message received"
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:32.814Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:32.814Z"
+      }
+    },
+    {
+      "id": "n8n_node_69831607-e77f-4c52-9c2f-113092b82fa2",
+      "name": "AI Agent",
+      "type": "agent",
+      "referenceId": "AI Agent",
+      "startAt": {
+        "$date": "2026-01-09T19:42:30.090Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T19:42:32.794Z"
+      },
+      "duration": 2.704,
+      "status": "completed",
+      "data": {
+        "output": {
+          "text": "I'm not mad — I don't have feelings. If my earlier reply sounded curt, sorry about that. I'm here to help. What made you ask, or what can I do for you?"
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.agent",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "Respond to Webhook",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:32.814Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:32.814Z"
+      }
+    },
+    {
+      "id": "n8n_node_31291164-58f2-4374-b767-20351208956b",
+      "name": "Azure OpenAI Chat Model",
+      "type": "llm",
+      "referenceId": "Azure OpenAI Chat Model",
+      "startAt": {
+        "$date": "2026-01-09T19:42:30.095Z"
+      },
+      "endAt": {
+        "$date": "2026-01-09T19:42:32.790Z"
+      },
+      "duration": 2.695,
+      "status": "completed",
+      "data": {
+        "input": {
+          "extraData": {
+            "ai_languageModel": [
+              [
+                {
+                  "json": {
+                    "estimatedTokens": 134,
+                    "options": {
+                      "model": "gpt-5-mini",
+                      "timeout": 60000,
+                      "max_retries": 2,
+                      "configuration": {
+                        "fetchOptions": {}
+                      },
+                      "model_kwargs": {}
+                    },
+                    "messages": [
+                      "Human: <history>\n[2026-01-09 19:42:13|user]: hi\n[2026-01-09 19:42:14|assistant]: Hi — how can I help you today?\n[2026-01-09 19:42:20|user]: how are you\n[2026-01-09 19:42:23|assistant]: I don't have feelings, but I'm here and ready to help. What can I do for you today?\n</history>\n<current>\n[2026-01-09 20:42:30|user]: why so mad?\n</current>"
+                    ]
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "n8n_node_type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+        "run_index": 0,
+        "sources": [
+          {
+            "previous_node": "AI Agent",
+            "previous_node_run": 0,
+            "previous_node_output": 0
+          }
+        ]
+      },
+      "createdAt": {
+        "$date": "2026-01-09T19:42:32.814Z"
+      },
+      "updatedAt": {
+        "$date": "2026-01-09T19:42:32.814Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-09T19:42:32.815Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-09T19:42:32.815Z"
+  }
+}]
