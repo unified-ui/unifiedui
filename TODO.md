@@ -90,11 +90,154 @@
         - ==> hier lieber ein PUT draus machen!
         - weil wir haben ja die executionId!!!
 
-## Plan
-
 - N8N
     - unified-ui-integration Workflow bauen -> traces übertragen
         - PUT /autonomous-agents/{id}/traces/import
+## Plan
+
+- N8N Application: Workflow Endpoint soll auch noch angegeben werden
+    - dann kann man die workflowId in der Fallback logik nutzen, im besser über /executions zu itterieren!
+    - in config workflowId zurückgeben!
+
+- Konzept für Tracing Visualisierung
+    - Daten:
+        - Root
+            - ReferenceName
+            - ContextType
+            - ReferenceId
+            - Logs
+            - ReferenceMetadata -> einfach als JSON anzeigen
+            - CreatedAt
+        - Nodes
+            - Name
+            - Type
+            - Status
+            - RefrenceId
+            - StartAt
+            - Data
+                - input
+                    - Text
+                    - ExtraData -> als Tab und JSON anzeigen
+                    - Metadata -> als Tab und JSON anzeigen
+                - output
+                    - Text
+                    - ExtraData -> als Tab und JSON anzeigen
+                    - Metadata -> als Tab und JSON anzeigen
+            - Logs
+    - Einsatzgebiete
+        1. im Chat
+            - Anzeige der Hierarchischen Traces in einer Sidebar
+                - Oben eine hierarchische View (primär Type im container und Name)
+            - Für detaiierte View -> kann man Dialog mit Details öffnen
+                - rechts auch die hierarchische view (horizontal größer kleiner ziehen)
+                - links:
+                    - oben Canvas workflow view mit items die connectet sind
+                    - unten (kleiner, vertkakl größer kleiner ziehen)
+        2. Autonomous Agent page -> detaiierte view im Dialog
+    - Konzept:
+        - wir bauen modular ein tracings-visualisierungs-interface
+        - Es wird zwei Hauptkomponenten geben:
+            - [Canvas-View] Ein Canvas, mit Visuellen Items, welche connected sind und einen Workflowartige Visualisierung darstellt
+            - [Hierachie-View] Eine vertikale, hierarchischaufgebaute struktur, die primär text hierarchisch anzeigt und beim klicken informationen in einem unteren fenster anzeigt
+        - Skizze der Gesamt Page:
+            - Header:
+                - Icon + "Tracing for referenceName" + contextType (drunter) schön anzeigen
+                - und schließen icon, klar
+            - Einen Subheader, der aber fixed ist und nur über dem convas liegt
+                - hier gewissen daten anzeigen:
+                    - trace_id
+                    - SelectedItem name (oder root)
+                    - SelectedItem startAt, endAt oder root startat etc (wenn nicht gegeben nicht anzeigen)
+                    - status
+            - Links (3/4 breit):
+                - Canvas View (oben, initial 2/3 hoch):
+                    - Items (nodes aus den daten)
+                        - eher quadratisch mit runden ecken
+                        - erstes item: ecken oben links und unten links mehr rundung
+                        - letztes item: ecken oben rechts und unten rechts mehr rundung
+                        - Im Center ein Icon
+                            - du bekommst daten -> anhand der typen kannst du passende icons auswählen
+                            - ein schönes default icon auswählen
+                        - unter dem icon den name
+                        - wenn success (oder synonym wie compleated etc (du bekommst noch daten dazu))
+                            - border schönes grün
+                            - ein hakchen unten rechts
+                        - wenn selected -> shadow hinzufügen
+                    - item connections
+                        - mit pfeil verbunden (wie zB in N8N Workflows)
+                        - können horizental oder vertikal angeordnet werden
+                        - wenn man sub-nodes nutzt
+                            - dann wird ein abgerundeter pfeil nach (horizontal:oben->rechts / vertikal: rechts->unten) auf das nächste item "ausgefahren"
+                                - wenn der subnode wiederum subnodes verwenden -> selbe logik (sollte hier rekursiv ermittelt werden)
+                            - wenn ein node oder subnode mehrere subitems hat, muss der ausfahr-abstand (der standardisiert ist) für das erste item "Mal Anzahl subitems" genommen werden
+                                - der erste wird ausgefahren zu beginn des parent items -> viel abstand
+                                - der zweite wird mit etwas abstand zum ersten pfeil (auf dem item) ausgefahren, dann aber mit Abstand = "Mal Anzahl subitems - 1" und so weiter
+                                    - bzw musst du ermitteln, wenn innerhlab eines subitems auch noch ganz viele subitems bestehen, muss der erste richtig weiß nach außen und so weiter
+                                    - du musst also beim erstellen die abstände jeweils berechnen, damit keine items überlappen -> vielleicht gibt es noch eine sauberere lösung?
+                                - ah und wichtig: auf den pfeilen zu den subitems soll in der mitte ein IconButton zum collaps und expand sein
+                                    - bei collaps soll der arm eingefahren werden und nicht mehr angezeigt werden 
+                                        - dann muss sich entsprechend die view sauber anpassen
+                                        - bei expand wird der arm ausgefahren und die view muss wieder sauber angepasst werden
+                                        - default: ausgefahren!
+                                        - auf allen subnode pfleiden muss das sein, sodass ich auch zum einen den ersten subnode collapsen kann und alles unter diesem ebenfalls ausgeblendet wird, aber ich kann auch den subnode im subnode im subnode ... collapsen und dann soll dieses subnode + die darunter collapst werden -> du verstehst schon
+                - Data Section (unten, initial ca 1/3 hoch)
+                    - höhenanpassbar
+                    - Links: Logs anzeigen
+                        - Headertitel: Logs (root)
+                        - Wenn kein Item selektiert -> root-logs anzeigen
+                        - Wenn Item selektiert -> node-logs anzeigen
+                        - eher schmal (inital 1/4 breit)
+                    - rechts:
+                        - initial 3/4 breit
+                        - Header
+                            - Tab-Bar
+                                - Input + Output (nicht bei root)
+                                - Metadata (referenceMetadata bei root)
+                        - Input + Output:
+                            - 1/2 und 1/2, breitenanpassbar
+                            - Input:
+                                - Text oben
+                                - metadata (als JSON view)
+                                - extraData (als JSON view)
+                                - alle drei sections ein und ausblendbar
+                                    - initial nur Text eingeblendet und anderen zu
+                            - Output: wie input
+                    - links/rechts breitenanpassbar
+            - rechts (1/4 breit; breite anpassbar)
+                - Oben: Hierarchy-View
+                    - Hierachie view der Items, wie bei foundry (siehe bild)
+                    - diese dient ebenfalls für die navigation und selektierung von items
+                        - wenn conversation mehrere traces hat -> hier default ist die erste ausgewählt (über context kann man auch id angeben)
+                        - man kann aber auch dann eine untere auswählen, dann werden die items der conversation im canvas gerendert, aus der selected conversation (*bei autonom agent wird immer nur ein trace ausgewäht!)
+                    - zur hierarchie:
+                        - root item ist trace oder wenn mehrere traces gegeben (nur bei conversations kann dies der fall sein, aber auch nicht wichtig), werden diese untereinander gerendert
+                        - man kann root und jedes sub item entsprechend collapsen und expanden (defautl alles expandedt)
+                        - item:
+                            - root:
+                                - Im Badge: contextType, daneben referenceName, daneben kleines icon für status
+                            - node (gilt ebenso für subnodes)
+                                - Im Badge: Node.type, danmeben name, daneben kleines icon für status (wenn null oder unbekannt -> einfach weglassen)
+                            - wenn der name zu lang ist, wird dieser einfach abgeschnitten mit "..."
+                                - beim selektieren, wird im sub header ja der name eh angezeigt
+                        - die hierarchie zwischen root, nodes und subnodes wird immer mit einem schönem bogen gekennzeichnet und entsprechend der hierarchie gibt es dann links beim bogen etwas padding (beim ersten nur das icon, dann padding etc; siehe foto foundry)
+                    - wenn man ein item in der hierarchie anklickt, wird dieses selektiert und dies sieht man dann auch ind er canvas view (shadow)
+                        - zudem soll die canvas view dann zu diesem item im canvas navigieren und diesen zentriert zeigen
+                - Unten:
+                    - erstmal nur ein leerer container mit 30px höhe (placeholer)
+                    - ist aber höhenverstellbar
+        - Canvas
+            - Canvas soll
+                - mit Maus navigierbar sein (also linke maustaste gedrück halten und dann mit maus verschieben)
+                - vergrößer und verkleinerbar sein (mit STRG Scroll oder wie auf Mac mit trackpad einfach rein und rausscrollen)
+                - mit zB Mac Trackpad auch verschiebar (also einfach auch mit wischen mit zwei fingern schön im canvas navigieren -> du weißt bescheid)
+                - man kann einzelne items auch margieren mit der Maus -> dann sieht man daten dazu, hier ist aber nur wichtig, dass halt dann um das item die border und viduell hervorgehoben wird (nur shadow?)
+                - so typische buttons:
+                    - zum start navigeren und "zentrieren"
+                    - vergrößern
+                    - verkleinern
+                    - view: horizental, vertikal -> wie die items angeordnet werden
+        - 
+
 
 - Frontend Refactoring 1
     - Credentials raus aus Sidebar und in Tenant-Settings rein
