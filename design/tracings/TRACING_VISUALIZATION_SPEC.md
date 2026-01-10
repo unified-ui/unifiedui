@@ -706,4 +706,475 @@ npm install react-json-view-lite
 
 ---
 
+## 13. Layout-Algorithmus (Spaltenbasiert)
+
+### 13.1 Grundprinzip
+
+Das Canvas wird in **Spalten (Columns)** unterteilt. Jeder Node wird einer Spalte zugewiesen. Die X-Position ergibt sich aus der Spalte, die Y-Position wird **von hinten nach vorne** berechnet (spätere Root-Nodes und deren SubNodes kommen OBEN).
+
+### 13.2 Test-Datenstruktur
+
+```
+N1 (column=0)
+├── S1a (column=1)
+│   ├── S1a1 (column=2)
+│   └── S1a2 (column=2)
+├── S1b (column=1)
+│   ├── S1b1 (column=2)
+│   └── S1b2 (column=2)
+└── S1c (column=1)
+
+N2 (column=1)
+├── S2a (column=2)
+│   ├── S2a1 (column=3)
+│   ├── S2a2 (column=3)
+│   └── S2a3 (column=3)
+└── S2b (column=2)
+
+N3 (column=2)
+├── S3a (column=3)
+└── S3b (column=3)
+```
+
+### 13.3 Spalten-Übersicht
+
+| Spalte 0 | Spalte 1 | Spalte 2 | Spalte 3 |
+|----------|----------|----------|----------|
+| N1       | N2       | N3       | S3a      |
+|          | S1a      | S2a      | S3b      |
+|          | S1b      | S2b      | S2a1     |
+|          | S1c      | S1a1     | S2a2     |
+|          |          | S1a2     | S2a3     |
+|          |          | S1b1     |          |
+|          |          | S1b2     |          |
+
+### 13.4 Erwartetes Layout (Horizontal)
+
+**Kernregel: Von hinten nach vorne → Spätere Root-Zweige oben!**
+
+```
+Spalte 0      Spalte 1      Spalte 2      Spalte 3
+   │             │             │             │
+   │  ┌───┐      │  ┌───┐      │  ┌───┐      │  ┌────┐
+   │  │ N1│──────┼─▶│ N2│──────┼─▶│ N3│──────┼─▶│ S3a│   ← N3 + SubNodes GANZ OBEN
+   │  └───┘      │  └───┘      │  └───┘      │  └────┘
+   │     │       │     │       │     │       │  ┌────┐
+   │     │       │     │       │     └───────┼─▶│ S3b│
+   │     │       │     │       │             │  └────┘
+   │     │       │     │       │  ┌────┐     │  ┌─────┐
+   │     │       │     └───────┼─▶│ S2a│─────┼─▶│S2a1 │   ← N2's SubNodes darunter
+   │     │       │             │  └────┘     │  └─────┘
+   │     │       │             │     │       │  ┌─────┐
+   │     │       │             │     │       │  │S2a2 │
+   │     │       │             │     │       │  └─────┘
+   │     │       │             │     │       │  ┌─────┐
+   │     │       │             │     │       │  │S2a3 │
+   │     │       │             │             │  └─────┘
+   │     │       │             │  ┌────┐     │
+   │     │       │             │  │ S2b│     │
+   │     │       │             │  └────┘     │
+   │     │       │  ┌────┐     │  ┌─────┐    │
+   │     └───────┼─▶│ S1a│─────┼─▶│S1a1 │    │   ← N1's SubNodes ganz unten
+   │             │  └────┘     │  └─────┘    │
+   │             │     │       │  ┌─────┐    │
+   │             │     │       │  │S1a2 │    │
+   │             │             │  └─────┘    │
+   │             │  ┌────┐     │  ┌─────┐    │
+   │             │  │ S1b│─────┼─▶│S1b1 │    │
+   │             │  └────┘     │  └─────┘    │
+   │             │     │       │  ┌─────┐    │
+   │             │     │       │  │S1b2 │    │
+   │             │             │  └─────┘    │
+   │             │  ┌────┐     │             │
+   │             │  │ S1c│     │             │
+   │             │  └────┘     │             │
+   │             │             │             │
+```
+
+### 13.5 Variablen-Definition
+
+```typescript
+// Konstanten
+const HORIZONTAL_GAP = 200;     // Abstand zwischen Spalten (X-Richtung)
+const VERTICAL_GAP = 100;       // Abstand zwischen Nodes in einer Spalte (Y-Richtung)
+const NODE_WIDTH = 120;
+const NODE_HEIGHT = 80;
+const START_X = 50;
+const START_Y = 50;
+
+// Für vertikalen Modus: X ↔ Y tauschen
+```
+
+### 13.6 Algorithmus: Horizontaler Modus
+
+#### Phase 1: Spalten-Zuweisung (Column Assignment)
+
+**Regel:** 
+- Root-Node `Ni` bekommt `column = i`
+- SubNodes bekommen `column = parent.column + 1`
+
+**Rekursive Funktion:**
+```typescript
+function assignColumn(node, columnIndex):
+    node.column = columnIndex
+    
+    for each subNode in node.nodes:
+        assignColumn(subNode, columnIndex + 1)
+
+// Für Root-Nodes:
+for (i = 0; i < trace.nodes.length; i++):
+    assignColumn(trace.nodes[i], i)
+```
+
+**Ergebnis für Test-Daten:**
+```
+N1.column = 0
+  S1a.column = 1
+    S1a1.column = 2
+    S1a2.column = 2
+  S1b.column = 1
+    S1b1.column = 2
+    S1b2.column = 2
+  S1c.column = 1
+
+N2.column = 1
+  S2a.column = 2
+    S2a1.column = 3
+    S2a2.column = 3
+    S2a3.column = 3
+  S2b.column = 2
+
+N3.column = 2
+  S3a.column = 3
+  S3b.column = 3
+```
+
+#### Phase 2: Alle Nodes flach sammeln mit Metadaten
+
+```typescript
+interface FlatNode {
+    node: TraceNodeResponse;
+    column: number;
+    rootIndex: number;      // Index des Root-Ancestors (0=N1, 1=N2, 2=N3)
+    depth: number;          // Tiefe im Baum (0=Root, 1=SubNode, 2=SubSubNode)
+    localIndex: number;     // Index innerhalb der Siblings
+    parentId: string | null;
+}
+
+function collectAllNodes(rootNodes: TraceNodeResponse[]): FlatNode[] {
+    const result: FlatNode[] = [];
+    
+    function traverse(node, rootIndex, depth, localIndex, parentId):
+        result.push({
+            node,
+            column: node.column,
+            rootIndex,
+            depth,
+            localIndex,
+            parentId
+        });
+        
+        for (i, subNode in node.nodes):
+            traverse(subNode, rootIndex, depth + 1, i, node.id)
+    
+    for (i, rootNode in rootNodes):
+        traverse(rootNode, i, 0, i, null)
+    
+    return result;
+}
+```
+
+#### Phase 3: Sortierung innerhalb jeder Spalte
+
+**Sortierkriterien (in dieser Reihenfolge):**
+1. **rootIndex ABSTEIGEND** → Spätere Root-Zweige (N3) kommen OBEN
+2. **depth AUFSTEIGEND** → Root-Nodes vor SubNodes vor SubSubNodes
+3. **localIndex AUFSTEIGEND** → Reihenfolge innerhalb Siblings beibehalten
+
+```typescript
+function sortColumn(nodesInColumn: FlatNode[]): FlatNode[] {
+    return nodesInColumn.sort((a, b) => {
+        // 1. Spätere Root-Zweige zuerst (ABSTEIGEND)
+        if (a.rootIndex !== b.rootIndex) {
+            return b.rootIndex - a.rootIndex;  // N3-Zweig vor N2-Zweig vor N1-Zweig
+        }
+        
+        // 2. Geringere Tiefe zuerst (AUFSTEIGEND)
+        if (a.depth !== b.depth) {
+            return a.depth - b.depth;  // Root vor SubNode vor SubSubNode
+        }
+        
+        // 3. Reihenfolge innerhalb Siblings (AUFSTEIGEND)
+        return a.localIndex - b.localIndex;
+    });
+}
+```
+
+**Beispiel: Sortierung Spalte 2**
+```
+Vor Sortierung:
+  - S2a  (rootIndex=1, depth=1, localIndex=0)
+  - S2b  (rootIndex=1, depth=1, localIndex=1)
+  - N3   (rootIndex=2, depth=0, localIndex=0)
+  - S1a1 (rootIndex=0, depth=2, localIndex=0)
+  - S1a2 (rootIndex=0, depth=2, localIndex=1)
+  - S1b1 (rootIndex=0, depth=2, localIndex=0)
+  - S1b2 (rootIndex=0, depth=2, localIndex=1)
+
+Nach Sortierung (von oben nach unten):
+  1. N3   (rootIndex=2, depth=0) → GANZ OBEN
+  2. S2a  (rootIndex=1, depth=1)
+  3. S2b  (rootIndex=1, depth=1)
+  4. S1a1 (rootIndex=0, depth=2)
+  5. S1a2 (rootIndex=0, depth=2)
+  6. S1b1 (rootIndex=0, depth=2)
+  7. S1b2 (rootIndex=0, depth=2) → GANZ UNTEN
+```
+
+**Beispiel: Sortierung Spalte 3**
+```
+Vor Sortierung:
+  - S3a  (rootIndex=2, depth=1, localIndex=0)
+  - S3b  (rootIndex=2, depth=1, localIndex=1)
+  - S2a1 (rootIndex=1, depth=2, localIndex=0)
+  - S2a2 (rootIndex=1, depth=2, localIndex=1)
+  - S2a3 (rootIndex=1, depth=2, localIndex=2)
+
+Nach Sortierung (von oben nach unten):
+  1. S3a  (rootIndex=2) → N3-Zweig oben
+  2. S3b  (rootIndex=2)
+  3. S2a1 (rootIndex=1) → N2-Zweig darunter
+  4. S2a2 (rootIndex=1)
+  5. S2a3 (rootIndex=1)
+```
+
+#### Phase 4: Positionen berechnen
+
+```typescript
+function calculatePositions(
+    flatNodes: FlatNode[], 
+    direction: 'horizontal' | 'vertical'
+): void {
+    // Gruppiere nach Spalte
+    const columns: Map<number, FlatNode[]> = new Map();
+    for (node of flatNodes):
+        if (!columns.has(node.column)):
+            columns.set(node.column, [])
+        columns.get(node.column).push(node)
+    
+    // Sortiere jede Spalte
+    for ([col, nodes] of columns):
+        columns.set(col, sortColumn(nodes))
+    
+    // Berechne Positionen
+    for ([col, nodes] of columns):
+        for (row = 0; row < nodes.length; row++):
+            node = nodes[row]
+            
+            if (direction === 'horizontal'):
+                node.x = START_X + col * HORIZONTAL_GAP
+                node.y = START_Y + row * VERTICAL_GAP
+            else:  // vertical
+                node.x = START_X + row * VERTICAL_GAP
+                node.y = START_Y + col * HORIZONTAL_GAP
+}
+```
+
+### 13.7 Algorithmus: Vertikaler Modus
+
+**Transformation: X ↔ Y tauschen**
+
+```
+// Horizontaler Modus
+node.x = START_X + column * HORIZONTAL_GAP
+node.y = START_Y + row * VERTICAL_GAP
+
+// Vertikaler Modus  
+node.x = START_X + row * VERTICAL_GAP      // row wird zu X
+node.y = START_Y + column * HORIZONTAL_GAP // column wird zu Y
+```
+
+**Visuell (Vertikaler Modus):**
+```
+             Spalte 0      Spalte 1      Spalte 2      Spalte 3
+Row 0:          N1            N2            N3           S3a
+Row 1:                        S1a           S2a          S3b
+Row 2:                        S1b           S2b          S2a1
+Row 3:                        S1c           S1a1         S2a2
+Row 4:                                      S1a2         S2a3
+Row 5:                                      S1b1
+Row 6:                                      S1b2
+```
+
+### 13.8 Vollständiger Implementierungs-Pseudocode
+
+```typescript
+interface LayoutNode {
+    id: string;
+    column: number;
+    row: number;
+    x: number;
+    y: number;
+    rootIndex: number;
+    depth: number;
+    localIndex: number;
+    parentId: string | null;
+    hasChildren: boolean;
+    originalNode: TraceNodeResponse;
+}
+
+function layoutNodes(
+    rootNodes: TraceNodeResponse[], 
+    direction: 'horizontal' | 'vertical'
+): LayoutNode[] {
+    const allNodes: LayoutNode[] = [];
+    
+    // === PHASE 1: Spalten zuweisen und Nodes sammeln ===
+    function traverse(
+        node: TraceNodeResponse, 
+        column: number, 
+        rootIndex: number, 
+        depth: number, 
+        localIndex: number, 
+        parentId: string | null
+    ): void {
+        allNodes.push({
+            id: node.id,
+            column,
+            row: 0,  // wird später berechnet
+            x: 0,
+            y: 0,
+            rootIndex,
+            depth,
+            localIndex,
+            parentId,
+            hasChildren: (node.nodes?.length ?? 0) > 0,
+            originalNode: node
+        });
+        
+        // SubNodes bekommen column + 1
+        if (node.nodes) {
+            for (let i = 0; i < node.nodes.length; i++) {
+                traverse(node.nodes[i], column + 1, rootIndex, depth + 1, i, node.id);
+            }
+        }
+    }
+    
+    // Root-Nodes: N1=col0, N2=col1, N3=col2, ...
+    for (let i = 0; i < rootNodes.length; i++) {
+        traverse(rootNodes[i], i, i, 0, i, null);
+    }
+    
+    // === PHASE 2: Nach Spalten gruppieren ===
+    const columns: Map<number, LayoutNode[]> = new Map();
+    for (const node of allNodes) {
+        if (!columns.has(node.column)) {
+            columns.set(node.column, []);
+        }
+        columns.get(node.column)!.push(node);
+    }
+    
+    // === PHASE 3: Jede Spalte sortieren ===
+    for (const [col, nodes] of columns) {
+        nodes.sort((a, b) => {
+            // 1. Spätere Root-Zweige ZUERST (N3 vor N2 vor N1)
+            if (a.rootIndex !== b.rootIndex) {
+                return b.rootIndex - a.rootIndex;
+            }
+            
+            // 2. Geringere Tiefe ZUERST (Root vor SubNode vor SubSubNode)
+            if (a.depth !== b.depth) {
+                return a.depth - b.depth;
+            }
+            
+            // 3. Reihenfolge innerhalb Siblings beibehalten
+            return a.localIndex - b.localIndex;
+        });
+        
+        // Row-Index zuweisen
+        nodes.forEach((node, idx) => node.row = idx);
+    }
+    
+    // === PHASE 4: X/Y Positionen berechnen ===
+    for (const node of allNodes) {
+        if (direction === 'horizontal') {
+            node.x = START_X + node.column * HORIZONTAL_GAP;
+            node.y = START_Y + node.row * VERTICAL_GAP;
+        } else {
+            node.x = START_X + node.row * VERTICAL_GAP;
+            node.y = START_Y + node.column * HORIZONTAL_GAP;
+        }
+    }
+    
+    return allNodes;
+}
+```
+
+### 13.9 Edge-Generierung
+
+```typescript
+function generateEdges(layoutNodes: LayoutNode[], direction: 'horizontal' | 'vertical'): Edge[] {
+    const edges: Edge[] = [];
+    const nodeMap = new Map(layoutNodes.map(n => [n.id, n]));
+    
+    // 1. Root-to-Root Chain (N1 → N2 → N3)
+    const rootNodes = layoutNodes.filter(n => n.depth === 0).sort((a, b) => a.rootIndex - b.rootIndex);
+    for (let i = 0; i < rootNodes.length - 1; i++) {
+        edges.push({
+            id: `root-${rootNodes[i].id}->${rootNodes[i+1].id}`,
+            source: rootNodes[i].id,
+            target: rootNodes[i+1].id,
+            type: 'smoothstep',
+            animated: true,
+            style: { stroke: 'var(--color-primary-400)', strokeWidth: 2 },
+            markerEnd: { type: MarkerType.ArrowClosed }
+        });
+    }
+    
+    // 2. Parent → SubNode Edges
+    for (const node of layoutNodes) {
+        if (node.parentId) {
+            edges.push({
+                id: `sub-${node.parentId}->${node.id}`,
+                source: node.parentId,
+                target: node.id,
+                type: 'smoothstep',
+                style: { stroke: 'var(--color-secondary-400)', strokeWidth: 2 },
+                markerEnd: { type: MarkerType.ArrowClosed }
+            });
+        }
+    }
+    
+    return edges;
+}
+```
+
+### 13.10 Handle-Positionen
+
+**Horizontal Mode:**
+```typescript
+sourcePosition: Position.Right   // Edges gehen nach rechts raus
+targetPosition: Position.Left    // Edges kommen von links rein
+```
+
+**Vertical Mode:**
+```typescript
+sourcePosition: Position.Bottom  // Edges gehen nach unten raus
+targetPosition: Position.Top     // Edges kommen von oben rein
+```
+
+### 13.11 Zusammenfassung der Kernlogik
+
+| Schritt | Beschreibung |
+|---------|--------------|
+| 1. Spalten zuweisen | `N[i].column = i`, `SubNode.column = parent.column + 1` |
+| 2. Nodes flach sammeln | Mit `rootIndex`, `depth`, `localIndex`, `parentId` |
+| 3. Sortieren | `rootIndex DESC` → `depth ASC` → `localIndex ASC` |
+| 4. Positionen | `x = col * H_GAP`, `y = row * V_GAP` (horizontal) |
+| 5. Edges | Root-Chain + Parent→SubNode Verbindungen |
+
+**Ergebnis:** Spätere Root-Zweige (N3) sind OBEN, frühere (N1) sind UNTEN.
+
+---
+
 **End of Specification v2**
