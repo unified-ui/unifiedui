@@ -1,6 +1,7 @@
-# Tracing Visualization Dialog - Technical Specification
+# Tracing Visualization Dialog - Technical Specification v2
 
-> **Purpose**: This document serves as a complete implementation specification for a modular Tracing Visualization Dialog in React. It is designed to be used as a prompt for AI-assisted code generation with Claude Opus 4.5.
+> **Purpose**: Complete implementation specification for a modular Tracing Visualization Dialog in React.
+> **Version**: 2.0 - Complete rewrite based on DESIGN.md requirements
 
 ---
 
@@ -10,41 +11,66 @@
 - **Framework**: React 18+ with TypeScript
 - **Build Tool**: Vite
 - **UI Framework**: Mantine v7+
-- **Canvas Library**: `@xyflow/react` (already installed)
-- **Styling**: CSS Modules + CSS Custom Properties (see `src/styles/variables.css`)
-- **Routing**: React Router v6
+- **Canvas Library**: `@xyflow/react` (installed)
+- **Layout Algorithm**: `@dagrejs/dagre` (installed)
+- **Styling**: CSS Modules + CSS Custom Properties
 
-### 1.2 Design System
-All styling MUST use CSS Custom Properties from `src/styles/variables.css`:
-```css
-/* Colors */
---color-primary-{50-900}, --color-gray-{0-900}
---color-success-500, --color-error-500, --color-warning-500
+### 1.2 Design System Reference
 
-/* Semantic */
---bg-app, --bg-paper, --text-primary, --text-secondary, --border-default
+**ALL styling MUST use CSS Custom Properties from `src/styles/variables.css`.**
 
-/* Spacing */
---spacing-xs (4px), --spacing-sm (8px), --spacing-md (16px), --spacing-lg (24px), --spacing-xl (32px)
+Available variables:
+```
+COLORS:
+  Primary:    --color-primary-{50,100,200,300,400,500,600,700,800,900}
+  Secondary:  --color-secondary-{50-900}
+  Success:    --color-success-{50,500,600,700}
+  Warning:    --color-warning-{50,500,600,700}
+  Error:      --color-error-{50,500,600,700}
+  Info:       --color-info-{50,500,600,700}
+  Gray:       --color-gray-{0,50,100,200,300,400,500,600,700,800,900}
 
-/* Other */
---radius-sm/md/lg, --shadow-sm/md/lg, --font-weight-medium/semibold/bold
+SEMANTIC:
+  Backgrounds: --bg-app, --bg-paper, --bg-elevated, --bg-overlay
+  Text:        --text-primary, --text-secondary, --text-disabled, --text-link
+  Borders:     --border-default, --border-light, --border-medium, --border-focus
+
+SPACING:
+  --spacing-xs (4px), --spacing-sm (8px), --spacing-md (16px)
+  --spacing-lg (24px), --spacing-xl (32px), --spacing-2xl (48px)
+
+RADIUS:
+  --radius-xs (2px), --radius-sm (4px), --radius-md (8px)
+  --radius-lg (12px), --radius-xl (16px), --radius-full
+
+SHADOWS:
+  --shadow-xs, --shadow-sm, --shadow-md, --shadow-lg, --shadow-xl
+
+TYPOGRAPHY:
+  --font-size-xs (12px), --font-size-sm (14px), --font-size-md (16px)
+  --font-weight-regular (400), --font-weight-medium (500), --font-weight-semibold (600)
+
+TRANSITIONS:
+  --transition-fast (150ms), --transition-normal (250ms)
+
+Z-INDEX:
+  --z-dropdown (100), --z-sticky (200), --z-overlay (300), --z-modal (400)
 ```
 
 ### 1.3 File Location
-All tracing components go in: `src/components/tracing/`
+```
+src/components/tracing/
+```
 
 ---
 
 ## 2. Data Model
 
-### 2.1 TypeScript Types (already defined in `src/api/types.ts`)
+### 2.1 TypeScript Types (from `src/api/types.ts`)
 
 ```typescript
-// Trace Context Type
 export type TraceContextType = 'conversation' | 'autonomous_agent';
 
-// Node Types
 export const TraceNodeType = {
   AGENT: 'agent',
   TOOL: 'tool',
@@ -60,7 +86,6 @@ export const TraceNodeType = {
   CUSTOM: 'custom',
 } as const;
 
-// Node Status
 export const TraceNodeStatus = {
   PENDING: 'pending',
   RUNNING: 'running',
@@ -70,7 +95,6 @@ export const TraceNodeStatus = {
   CANCELLED: 'cancelled',
 } as const;
 
-// Node Data IO
 export interface TraceNodeDataIO {
   text?: string;
   arguments?: Record<string, unknown>;
@@ -79,13 +103,11 @@ export interface TraceNodeDataIO {
   [key: string]: unknown;
 }
 
-// Node Data
 export interface TraceNodeData {
   input?: TraceNodeDataIO | null;
   output?: TraceNodeDataIO | null;
 }
 
-// Single Node (hierarchical - can have sub-nodes)
 export interface TraceNodeResponse {
   id: string;
   name: string;
@@ -98,13 +120,10 @@ export interface TraceNodeResponse {
   error?: string;
   logs?: string[];
   data?: TraceNodeData;
-  nodes?: TraceNodeResponse[];  // SUB-NODES (hierarchical!)
+  nodes?: TraceNodeResponse[];  // Hierarchical sub-nodes
   metadata?: Record<string, unknown>;
-  createdAt?: string;
-  updatedAt?: string;
 }
 
-// Full Trace Response
 export interface FullTraceResponse {
   id: string;
   tenantId: string;
@@ -120,38 +139,28 @@ export interface FullTraceResponse {
   createdAt: string;
   updatedAt: string;
 }
-
-// API Response
-export interface FullTracesListResponse {
-  traces: FullTraceResponse[];
-  total: number;
-}
 ```
 
-### 2.2 Sample Data Structure
+### 2.2 Data Hierarchy Example
 ```
-Trace (Root)
+FullTraceResponse (Root)
 ├── referenceName: "Microsoft Foundry Conversation"
 ├── contextType: "conversation"
-├── referenceId: "conv_abc123"
+├── logs: ["log1", "log2", ...]
 ├── referenceMetadata: { project_endpoint: "...", ... }
-├── logs: ["log1", "log2"]
 └── nodes: [
-    ├── Node 1 (User Message)
-    │   ├── type: "llm", status: "completed"
+    ├── Node 1 (type: "llm", status: "completed")
     │   ├── data.input.text: "Hello"
-    │   └── nodes: []  (no sub-nodes)
+    │   └── nodes: []
     │
-    ├── Node 2 (SendActivity - Container)
-    │   ├── type: "workflow", status: "completed"
-    │   └── nodes: [  (HAS SUB-NODES!)
-    │       ├── SubNode 2.1 (Assistant Response)
-    │       ├── SubNode 2.2 (Invoke Azure Agent)
-    │       └── SubNode 2.3 (End Conversation)
+    ├── Node 2 (type: "workflow", status: "completed")
+    │   └── nodes: [  <- SUB-NODES
+    │       ├── SubNode 2.1
+    │       ├── SubNode 2.2
+    │       └── SubNode 2.3
     │   ]
     │
-    └── Node 3 (User Message)
-        ├── type: "llm", status: "completed"
+    └── Node 3 (type: "llm")
         └── nodes: []
 ]
 ```
@@ -160,32 +169,24 @@ Trace (Root)
 
 ## 3. Component Architecture
 
-### 3.1 Module Overview
-
+### 3.1 File Structure
 ```
 src/components/tracing/
-├── TracingContext.tsx          # React Context for shared state
-├── TracingVisualDialog.tsx     # Main modal dialog (container)
+├── TracingContext.tsx              # React Context for shared state
+├── TracingVisualDialog.tsx         # Main modal container
 ├── TracingVisualDialog.module.css
-│
-├── TracingCanvasView.tsx       # @xyflow/react based canvas
-├── TracingCanvasView.module.css
-├── CanvasNode.tsx              # Custom xyflow node component
-├── CanvasEdge.tsx              # Custom xyflow edge component (optional)
-│
-├── TracingHierarchyView.tsx    # Tree hierarchy sidebar
-├── TracingHierarchyView.module.css
-│
-├── TracingDataSection.tsx      # Bottom panel (Logs + Input/Output)
-├── TracingDataSection.module.css
-│
-├── TracingSubHeader.tsx        # Fixed info bar above canvas
+├── TracingSubHeader.tsx            # Floating info bar over canvas
 ├── TracingSubHeader.module.css
-│
-└── index.ts                    # Barrel exports
+├── TracingCanvasView.tsx           # @xyflow/react canvas
+├── TracingCanvasView.module.css
+├── TracingHierarchyView.tsx        # Tree sidebar (right)
+├── TracingHierarchyView.module.css
+├── TracingDataSection.tsx          # Logs + Input/Output (bottom)
+├── TracingDataSection.module.css
+└── index.ts
 ```
 
-### 3.2 Context State (TracingContext.tsx)
+### 3.2 Context State
 
 ```typescript
 interface TracingContextState {
@@ -197,172 +198,373 @@ interface TracingContextState {
   // UI State
   layoutDirection: 'horizontal' | 'vertical';
   zoomLevel: number;
-  collapsedNodeIds: Set<string>;
+  hierarchyCollapsed: Set<string>;  // Collapsed nodes in hierarchy view
+  canvasCollapsed: Set<string>;     // Collapsed nodes in canvas view
   
   // Actions
   selectTrace: (traceId: string) => void;
   selectNode: (nodeId: string | null) => void;
-  toggleNodeCollapse: (nodeId: string) => void;
+  toggleHierarchyCollapse: (nodeId: string) => void;
+  toggleCanvasCollapse: (nodeId: string) => void;
   setLayoutDirection: (dir: 'horizontal' | 'vertical') => void;
   setZoomLevel: (level: number) => void;
-  centerOnNode: (nodeId: string) => void;  // For canvas navigation
+  centerOnNode: (nodeId: string) => void;
+  resetCanvasView: () => void;
 }
 ```
 
 ---
 
-## 4. Component Specifications
+## 4. Dialog Layout (TracingVisualDialog)
 
-### 4.1 TracingVisualDialog (Main Container)
+### 4.1 Overall Structure
 
-**Purpose**: Modal dialog containing all tracing visualization components.
-
-**Props**:
-```typescript
-interface TracingVisualDialogProps {
-  opened: boolean;
-  onClose: () => void;
-  traces: FullTraceResponse[];
-  initialTraceId?: string;  // Pre-select a specific trace
-}
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│  HEADER                                                                 │
+│  [Icon] "Tracing for {referenceName}"                          [Close] │
+│         {contextType} Badge                                             │
+├─────────────────────────────────────────────────────────────┬───────────┤
+│                                                             │           │
+│  ┌─ SUBHEADER (floating over canvas) ─────────────────────┐ │ HIERARCHY │
+│  │ trace_id │ node_name │ startAt → endAt │ status        │ │   VIEW    │
+│  └────────────────────────────────────────────────────────┘ │           │
+│                                                             │  (1/4 w)  │
+│  ┌─ CANVAS VIEW ──────────────────────────────────────────┐ │  resize-  │
+│  │                                                        │ │   able    │
+│  │   [Node 1] ───▶ [Node 2] ───▶ [Node 3]                │ │           │
+│  │                     │                                  │ │  - Tree   │
+│  │                     ├──▶ [SubNode A]                   │ │  - Click  │
+│  │                     └──▶ [SubNode B]                   │ │    to     │
+│  │                                                        │ │   select  │
+│  │  (initial 2/3 height, vertically resizable)           │ │           │
+│  └────────────────────────────────────────────────────────┘ │           │
+│                                                             │           │
+│  ┌─ DATA SECTION ─────────────────────────────────────────┐ │           │
+│  │                                                        │ │           │
+│  │  ┌──────────┐  ┌──────────────────────────────────┐   │ │           │
+│  │  │  LOGS    │  │  INPUT / OUTPUT                  │   │ │           │
+│  │  │          │  │                                  │   │ │           │
+│  │  │  - log1  │  │  ┌─────────┬─────────┐          │   │ │           │
+│  │  │  - log2  │  │  │  INPUT  │ OUTPUT  │          │   │ │           │
+│  │  │  - log3  │  │  │         │         │          │   │ │           │
+│  │  │          │  │  │  Text   │  Text   │          │   │ │           │
+│  │  │  (1/4w)  │  │  │ ▸meta   │ ▸meta   │          │   │ │           │
+│  │  │          │  │  │ ▸extra  │ ▸extra  │          │   │ │           │
+│  │  │          │  │  │  (1/2)  │  (1/2)  │          │   │ │           │
+│  │  │          │  │  └─────────┴─────────┘          │   │ │           │
+│  │  └──────────┘  └──────────────────────────────────┘   │ │           │
+│  │                                                        │ │           │
+│  │  (initial 1/3 height, vertically resizable)           │ │           │
+│  └────────────────────────────────────────────────────────┘ │           │
+│                                                             │           │
+│                        (3/4 width)                          │           │
+└─────────────────────────────────────────────────────────────┴───────────┘
 ```
 
-**Layout** (inside Modal):
+### 4.2 Modal Settings
+- **Size**: `calc(100vw - 80px)` width, `calc(100vh - 60px)` height
+- **Radius**: `--radius-lg`
+- **Overlay**: Blur effect (user sees app behind)
+- **NOT fullScreen**
+
+### 4.3 Resizable Panels
+- **Vertical**: Between Canvas View and Data Section (drag border)
+- **Horizontal**: Between Main Area (Canvas+Data) and Hierarchy View
+
+---
+
+## 5. Component Specifications
+
+### 5.1 Header
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│ [TracingIcon]  Tracing for {referenceName}             [Close]│
+│                [contextType Badge]                             │
+└────────────────────────────────────────────────────────────────┘
+```
+
+- **Icon**: `IconChartDots` or similar from @tabler/icons-react
+- **Title**: "Tracing for {trace.referenceName}"
+- **Subtitle/Badge**: Shows `contextType` (e.g., "conversation" or "autonomous_agent")
+- **Close Button**: Top-right corner
+
+---
+
+### 5.2 TracingSubHeader (Floating)
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ [Header] Icon + "Tracing for {referenceName}" + Close Button   │
-├─────────────────────────────────────────────────────────────────┤
-│ [SubHeader] trace_id | node_name | startAt-endAt | status      │
-├───────────────────────────────────────┬─────────────────────────┤
-│                                       │                         │
-│  ┌─────────────────────────────────┐  │   [Hierarchy View]     │
-│  │                                 │  │   - Tree structure      │
-│  │       [Canvas View]             │  │   - Collapsible items   │
-│  │       @xyflow/react             │  │   - Click to select     │
-│  │                                 │  │                         │
-│  │       (2/3 height)              │  │   (Full height, 1/4     │
-│  │                                 │  │    width, resizable)    │
-│  └─────────────────────────────────┘  │                         │
-│  ┌─────────────────────────────────┐  │                         │
-│  │       [Data Section]            │  │                         │
-│  │       Logs | Input | Output     │  │                         │
-│  │       (1/3 height, resizable)   │  │                         │
-│  └─────────────────────────────────┘  │                         │
-│                                       │                         │
-│              (3/4 width)              │                         │
-└───────────────────────────────────────┴─────────────────────────┘
+│ ID: abc123...  │  Node: User Message  │  12:45:00 → 12:45:01  │  ✓ completed │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-**Note**: SubHeader is more a floating label over the canvas view, not a real sub header und not over the [Hierarchy View].
+**Position**: Fixed, floating OVER the canvas (not over Hierarchy View)
 
-**Modal Settings**:
-- Size: `calc(100vw - 80px)` width, `calc(100vh - 60px)` height
-- Rounded corners: `radius="lg"`
-- Overlay: Blur effect
-- NOT fullScreen (user can see app behind)
+**Content when NO node selected (Root)**:
+- `trace.id` (shortened with ...)
+- "Root"
+- `trace.createdAt` (formatted)
+- `contextType`
 
-**Resizable Panels**:
-- Vertical resize between Canvas and Data Section
-- Horizontal resize between Main Area and Hierarchy
+**Content when node IS selected**:
+- `trace.id` (shortened)
+- `selectedNode.name`
+- `selectedNode.startAt` → `selectedNode.endAt` (if exists)
+- `selectedNode.status` with icon
+
+**Status Icons**:
+- completed: ✓ (green)
+- failed: ✗ (red)
+- running: spinner (orange)
+- pending: clock (gray)
+- skipped/cancelled: dash (gray)
 
 ---
 
-### 4.2 TracingCanvasView (@xyflow/react)
+### 5.3 TracingCanvasView (@xyflow/react)
 
-**Purpose**: Visual workflow canvas showing nodes and their connections.
+**Purpose**: Visual workflow canvas with connected nodes.
 
-**Implementation with @xyflow/react**:
-```typescript
-import {
-  ReactFlow,
-  Background,
-  Controls,
-  MiniMap,
-  useNodesState,
-  useEdgesState,
-  MarkerType,
-  type Node,
-  type Edge,
-} from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
+#### Node Appearance
+```
+┌────────────────────────────┐
+│                            │
+│         [Icon]             │
+│                            │
+│      {node.name}           │
+│                            │
+│              [StatusIcon]  │
+└────────────────────────────┘
 ```
 
-**Node Transformation**:
-Convert `TraceNodeResponse[]` to xyflow `Node[]`:
+**Node Styling**:
+- Shape: Rectangular with rounded corners (`--radius-md`)
+- Size: ~120px wide, ~80px tall
+- Center: Icon based on `node.type`
+- Below icon: `node.name` (truncated if too long)
+- Bottom-right: Status icon (✓, ✗, spinner, etc.)
+
+**Special Rounding Rules**:
+- First node in sequence: Extra rounded on LEFT side (`--radius-xl`)
+- Last node in sequence: Extra rounded on RIGHT side (`--radius-xl`)
+- Other nodes: Standard rounding (`--radius-md`)
+
+**Border Colors by Status**:
+- `completed`: `--color-success-500` (green)
+- `failed`: `--color-error-500` (red)
+- `running`: `--color-warning-500` (orange, animated)
+- `pending`: `--color-gray-400`
+- `skipped`/`cancelled`: `--color-gray-500`
+
+**Selected State**: Add `--shadow-md`
+
+#### Node Connections (Edges)
+
+```
+[Node 1] ───▶ [Node 2] ───▶ [Node 3]    ← Primary flow (horizontal)
+                  │
+                  ├──[1]──▶ [SubNode A]  ← Sub-node branch
+                  │              │
+                  │              └──[1]──▶ [SubSubNode X]
+                  │
+                  └──[2]──▶ [SubNode B]
+```
+
+**Edge Properties**:
+- Type: `smoothstep` or `bezier`
+- Arrow: `MarkerType.ArrowClosed`
+- Color: `--color-primary-400` (#42a5f5)
+- Width: 2px
+- Animated: true for `running` status
+
+**Branch Labels**: Small numbered badge at branch point (1, 2, 3...)
+
+#### Layout Modes
+
+**Horizontal (default)**:
+- Root nodes: Left → Right
+- Sub-nodes: Branch downward
+
+**Vertical**:
+- Root nodes: Top → Bottom
+- Sub-nodes: Branch rightward
+
+**Layout Algorithm**: Use `@dagrejs/dagre` for automatic positioning
+
+#### Canvas Controls
+- **Zoom In/Out**: Buttons + scroll wheel + trackpad pinch
+- **Pan**: Click-drag on canvas OR two-finger swipe on trackpad
+- **Reset View**: Button to center and fit all nodes
+- **Layout Toggle**: Button to switch horizontal/vertical
+- **MiniMap**: Optional, bottom-right corner
+
+#### Collapse/Expand for Sub-Nodes
+
+**Implementation**: Button is placed **on the parent node itself** (not on the edge).
+
+```
+┌────────────────────────────┐
+│                            │
+│         [Icon]             │
+│                            │
+│      {node.name}           │
+│                            │
+│              [StatusIcon]  │
+└────────────────────────────┘──[−]
+                                 ↑
+                            Collapse button
+                            (positioned based on sourcePosition)
+```
+
+**Button Positioning**:
+- **Horizontal Layout** (sourcePosition = Right): Button appears to the RIGHT of the node
+- **Vertical Layout** (sourcePosition = Bottom): Button appears BELOW the node
+- Position offset: ~30px from node edge
+
+**Button Appearance**:
+- Shape: Circular, 22px diameter
+- Background: `--bg-paper` (white/dark based on theme)
+- Border: 2px solid `--color-gray-400`
+- Icon: `IconMinus` when expanded, `IconPlus` when collapsed
+- Hover: Border changes to `--color-primary-500`, slight scale (1.15x)
+
+**Behavior**:
+- **Click on (−)**: Hides all child nodes and edges → Button changes to (+)
+- **Click on (+)**: Shows all child nodes and edges → Button changes to (−)
+- Collapse state is tracked per-node in `canvasCollapsed: Set<string>`
+- Collapsing a parent automatically hides entire sub-tree (recursive)
+- Button is ALWAYS visible on the node (even when children are hidden)
+
+**Node Data Interface**:
 ```typescript
-interface CanvasNodeData {
-  name: string;
-  type: TraceNodeType | string;
-  status: TraceNodeStatus | string;
-  duration?: number;
-  hasSubNodes: boolean;
-  isCollapsed: boolean;
+interface TraceNodeData {
+  label: string;
+  type: string;
+  status: string;
+  // ... other props
+  
+  // Collapse functionality
+  hasChildren?: boolean;        // true if node has sub-nodes
+  isCollapsed?: boolean;        // true if children are hidden
+  onToggleCollapse?: () => void; // callback to toggle collapse state
 }
-
-// Each TraceNodeResponse becomes a Node
-// Sub-nodes become separate nodes with edges from parent
 ```
 
-**Edge Transformation**:
-```typescript
-// Sequential edges: Node[i] → Node[i+1] (for root nodes)
-// Parent-Child edges: Parent → Child (for sub-nodes)
+**CSS Class**: `.collapseButton` in `TracingCanvasView.module.css`
 
-const edge: Edge = {
-  id: `${sourceId}-${targetId}`,
-  source: sourceId,
-  target: targetId,
-  type: 'smoothstep',  // or 'bezier'
-  markerEnd: {
-    type: MarkerType.ArrowClosed,
-    color: '#42a5f5',  // primary blue
-  },
-  style: { stroke: '#42a5f5', strokeWidth: 2 },
-  animated: false,  // true for 'running' status
-};
+---
+
+### 5.4 TracingHierarchyView (Right Sidebar)
+
+**Purpose**: Tree-structured navigation of traces and nodes.
+
+```
+┌─────────────────────────────────────┐
+│ ▾ [conversation] Microsoft Foundry ✓│  ← Trace (collapsible)
+│   │                                 │
+│   ├──[llm] User Message         ✓   │  ← Node with type badge
+│   │                                 │
+│   ├──▾ [workflow] SendActivity  ✓   │  ← Node with children
+│   │   │                             │
+│   │   ├──[llm] Assistant...     ✓   │  ← Sub-node
+│   │   └──[llm] Assistant...     ✓   │
+│   │                                 │
+│   └──[llm] User Message         ✓   │
+│                                     │
+│ ▾ [conversation] Trace 2        ✓   │  ← Multiple traces
+│   └── ...                           │     (only for conversations)
+└─────────────────────────────────────┘
 ```
 
-**Layout Algorithm**:
-```typescript
-// Horizontal mode (default):
-// - Root nodes: left-to-right
-// - Sub-nodes: branch downward from parent
+**Features**:
+- **Curved connecting lines**: Like VSCode/Foundry tree (see reference image)
+- **Indentation**: ~20px per hierarchy level
+- **Type Badge**: Shows `node.type` or `contextType` for root
+- **Name**: Truncated with "..." if too long
+- **Status Icon**: Checkmark, X, spinner based on status
+- **Click**: Selects item → Updates Canvas + Data Section
+- **Expand/Collapse**: For nodes with children
 
-// Vertical mode:
-// - Root nodes: top-to-bottom
-// - Sub-nodes: branch rightward from parent
-
-// Use dagre or elkjs for automatic layout:
-// npm install @dagrejs/dagre
+**Item Structure**:
+```
+[▾] [Badge: type] {name}  [StatusIcon]
 ```
 
-**Custom Node Component (CanvasNode)**:
-```typescript
-interface CanvasNodeProps {
-  data: CanvasNodeData;
-  selected: boolean;
-}
+**Tree Connectors**:
+- Vertical line from parent
+- Curved corner (L-shaped with rounded bottom-left)
+- Connects to child item
 
-// Visual:
-// ┌────────────────────────────┐
-// │ [StatusDot] [Icon] Name    │
-// │                   Duration │
-// └────────────────────────────┘
-//
-// - Width: ~180px, Height: ~50px
-// - Rounded corners (more rounded on first/last)
-// - Border color based on status:
-//   - completed: green (--color-success-500)
-//   - failed: red (--color-error-500)
-//   - running: orange (--color-warning-500)
-//   - pending: gray (--color-gray-400)
-// - Selected: Add shadow
-// - Icon based on node.type
+**Selection**:
+- Selected item: Highlighted background (`--color-primary-50`)
+- Canvas navigates to selected node and centers it
+
+---
+
+### 5.5 TracingDataSection (Bottom Panel)
+
+**Purpose**: Display logs and input/output data.
+
+```
+┌────────────────────┬────────────────────────────────────────────────────┐
+│                    │  [Tabs: Input/Output | Metadata (only for root)]  │
+│      LOGS          ├────────────────────────────────────────────────────┤
+│                    │                                                    │
+│  - Log entry 1     │  ┌─────────────────┬─────────────────┐            │
+│  - Log entry 2     │  │     INPUT       │     OUTPUT      │            │
+│  - Log entry 3     │  │                 │                 │            │
+│  - Log entry 4     │  │  Text:          │  Text:          │            │
+│                    │  │  "Hello world"  │  "Response..."  │            │
+│                    │  │                 │                 │            │
+│  (1/4 width)       │  │  ▸ metadata     │  ▸ metadata     │  (expand.) │
+│  (resizable)       │  │  ▸ extraData    │  ▸ extraData    │            │
+│                    │  │                 │                 │            │
+│                    │  │    (1/2 each, resizable)          │            │
+│                    │  └─────────────────┴─────────────────┘            │
+│                    │                                                    │
+│                    │                 (3/4 width)                        │
+└────────────────────┴────────────────────────────────────────────────────┘
 ```
 
-**Icon Mapping**:
+#### State-Dependent Content
+
+**When NO node selected (Root)**:
+- **Logs**: `trace.logs`
+- **Tabs**: Show "Metadata" tab only
+- **Metadata Tab**: `trace.referenceMetadata` as JSON tree
+
+**When node IS selected**:
+- **Logs**: `selectedNode.logs` (or empty if none)
+- **Tabs**: Show "Input/Output" tab (default) + "Metadata" tab
+- **Input/Output Tab**: Split view with Input left, Output right
+- **Metadata Tab**: `selectedNode.metadata` as JSON tree
+
+#### Logs Panel (Left)
+- Header: "Logs" 
+- Scrollable list of log entries
+- Log entry format: Simple text or expandable JSON
+
+#### Input/Output Panel (Right)
+**For each (Input and Output)**:
+1. **Text**: Prominently displayed at top (if exists)
+2. **▸ metadata**: Collapsible JSON viewer
+3. **▸ extraData**: Collapsible JSON viewer
+4. **▸ arguments**: Collapsible JSON viewer (if exists)
+
+**Default state**: Text expanded, metadata/extraData collapsed
+
+#### Resizable
+- Horizontal: Between Logs and Input/Output
+- Vertical: Between Input and Output (optional)
+
+---
+
+## 6. Icon Mapping
+
 ```typescript
-const nodeTypeIcons = {
+const nodeTypeIcons: Record<string, TablerIcon> = {
   agent: IconRobot,
   tool: IconTool,
   llm: IconBrain,
@@ -371,421 +573,137 @@ const nodeTypeIcons = {
   http: IconWorldWww,
   code: IconCode,
   function: IconCode,
+  retriever: IconDatabase,
+  conditional: IconGitBranch,
+  loop: IconRepeat,
   custom: IconForms,
+};
+
+const statusIcons: Record<string, { icon: TablerIcon; color: string }> = {
+  completed: { icon: IconCheck, color: 'var(--color-success-500)' },
+  failed: { icon: IconX, color: 'var(--color-error-500)' },
+  running: { icon: IconLoader, color: 'var(--color-warning-500)' },
+  pending: { icon: IconClock, color: 'var(--color-gray-400)' },
+  skipped: { icon: IconPlayerSkipForward, color: 'var(--color-gray-500)' },
+  cancelled: { icon: IconBan, color: 'var(--color-gray-600)' },
 };
 ```
 
-**Controls**:
-- Zoom In/Out buttons
-- Reset view button
-- Layout toggle (horizontal/vertical)
-- Mini-map (optional, bottom-right)
-
-**Interactions**:
-- Pan: Click and drag on canvas
-- Zoom: Scroll wheel or pinch (trackpad)
-- Select node: Click on node → updates context → Data Section shows node details
-- Center on node: When node selected in Hierarchy, canvas navigates to it
-
 ---
 
-### 4.3 TracingHierarchyView
+## 7. API Integration
 
-**Purpose**: Tree-structured navigation of traces and nodes.
+### 7.1 Endpoints
 
-**Layout**:
-```
-┌─────────────────────────────────┐
-│ [Trace 1 - referenceName]   ▾  │  ← Collapsible
-│   │                            │
-│   ├─[llm] User Message     ✓   │  ← Status icon
-│   │                            │
-│   ├─[workflow] SendActivity ✓  │  ← Has children, collapsible
-│   │   │                        │
-│   │   ├─[llm] Assistant... ✓   │
-│   │   └─[llm] Assistant... ✓   │
-│   │                            │
-│   └─[llm] User Message     ✓   │
-│                                │
-│ [Trace 2 - referenceName]   ▾  │  ← Only for conversations
-│   └─ ...                       │     with multiple traces
-└─────────────────────────────────┘
-```
-
-**Features**:
-- Curved connecting lines (like Foundry/VSCode tree)
-- Indentation per hierarchy level (~20px)
-- Badge showing `node.type`
-- Name (truncated with `...` if too long)
-- Status icon (checkmark, X, spinner, etc.)
-- Click to select (updates Canvas + Data Section)
-- Expand/Collapse for nodes with sub-nodes
-
-**Styling**:
-```css
-.hierarchyItem {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-}
-
-.hierarchyItem:hover {
-  background: var(--bg-hover);
-}
-
-.hierarchyItem.selected {
-  background: var(--color-primary-50);
-}
-
-.connector {
-  /* Curved line connecting to parent */
-  border-left: 1px solid var(--border-default);
-  border-bottom: 1px solid var(--border-default);
-  border-radius: 0 0 0 8px;
-}
-```
-
----
-
-### 4.4 TracingDataSection
-
-**Purpose**: Display details for selected node (or root trace).
-
-**Layout**:
-```
-┌──────────────┬──────────────────────────────────────────┐
-│              │  [Tabs: Input/Output | Metadata]         │
-│   [Logs]     ├──────────────────────────────────────────┤
-│              │  ┌──────────────┬──────────────┐         │
-│   - log 1    │  │   [Input]    │   [Output]   │         │
-│   - log 2    │  │              │              │         │
-│   - log 3    │  │  Text:       │  Text:       │         │
-│              │  │  "Hello"     │  "Hi there"  │         │
-│   (1/4 w)    │  │              │              │         │
-│              │  │  ▸ metadata  │  ▸ metadata  │         │
-│              │  │  ▸ extraData │  ▸ extraData │         │
-│              │  │              │              │         │
-│              │  │   (1/2)      │    (1/2)     │         │
-│              │  └──────────────┴──────────────┘         │
-│              │              (3/4 width)                 │
-└──────────────┴──────────────────────────────────────────┘
-```
-
-**State-dependent content**:
-```typescript
-if (selectedNode === null) {
-  // Show ROOT data:
-  // - Logs: trace.logs
-  // - Metadata tab: trace.referenceMetadata as JSON
-  // - No Input/Output tab
-} else {
-  // Show NODE data:
-  // - Logs: selectedNode.logs
-  // - Input: selectedNode.data?.input
-  // - Output: selectedNode.data?.output
-  // - Metadata: selectedNode.metadata
-}
-```
-
-**Input/Output Display**:
-```typescript
-// For each (input/output):
-// 1. Text (if exists) - displayed prominently
-// 2. metadata - collapsible JSON viewer
-// 3. extraData - collapsible JSON viewer
-// 4. Any other fields - collapsible JSON viewer
-
-// Use Mantine's JsonInput or a custom JSON tree viewer
-// Or use react-json-view-lite for collapsible JSON
-```
-
-**Resizable**:
-- Horizontal resize between Logs and Input/Output panels
-- Vertical resize between Input and Output (optional)
-
----
-
-### 4.5 TracingSubHeader
-
-**Purpose**: Fixed info bar showing current selection details.
-
-**Layout**:
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ TraceID: abc123  │  Node: User Message  │  12:45:00 → 12:45:01  │  ✓ completed  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-**Content**:
-```typescript
-// Always show:
-// - trace.id (shortened)
-
-// If node selected:
-// - node.name
-// - node.startAt → node.endAt (formatted time)
-// - node.status with icon
-
-// If no node selected:
-// - "Root"
-// - trace.createdAt
-// - contextType badge
-```
-
----
-
-## 5. API Integration
-
-### 5.1 Endpoints
-
-**Conversation Traces**:
 ```
 GET /api/v1/agent-service/tenants/{tenantId}/conversations/{conversationId}/traces
-Response: { traces: FullTraceResponse[], total: number }
-```
-
-**Autonomous Agent Traces**:
-```
 GET /api/v1/agent-service/tenants/{tenantId}/autonomous-agents/{autonomousAgentId}/traces
+
 Response: { traces: FullTraceResponse[], total: number }
 ```
 
-### 5.2 API Client Methods (add to `src/api/client.ts`)
+### 7.2 API Client Methods
 
 ```typescript
-// In UnifiedUIAPIClient class:
-
-async getConversationTraces(
-  tenantId: string,
-  conversationId: string
-): Promise<FullTracesListResponse> {
-  return this.request('GET', 
-    `/agent-service/tenants/${tenantId}/conversations/${conversationId}/traces`
-  );
-}
-
-async getAutonomousAgentTraces(
-  tenantId: string,
-  autonomousAgentId: string
-): Promise<FullTracesListResponse> {
-  return this.request('GET',
-    `/agent-service/tenants/${tenantId}/autonomous-agents/${autonomousAgentId}/traces`
-  );
-}
+// Already implemented in src/api/client.ts
+async getConversationTraces(tenantId: string, conversationId: string): Promise<FullTracesListResponse>
+async getAutonomousAgentTraces(tenantId: string, autonomousAgentId: string): Promise<FullTracesListResponse>
 ```
 
 ---
 
-## 6. Development Page
+## 8. Development Page
 
-### 6.1 Route
+### 8.1 Route
 ```
 /dev/tracing?conversationId={id}
 /dev/tracing?autonomousAgentId={id}
 ```
 
-### 6.2 TracingDialogDevelopmentPage
-
-```typescript
-// src/pages/TracingDialogDevelopmentPage/TracingDialogDevelopmentPage.tsx
-
-export const TracingDialogDevelopmentPage: FC = () => {
-  const [searchParams] = useSearchParams();
-  const { apiClient, selectedTenant } = useIdentity();
-  
-  const conversationId = searchParams.get('conversationId');
-  const autonomousAgentId = searchParams.get('autonomousAgentId');
-  
-  const [traces, setTraces] = useState<FullTraceResponse[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [dialogOpened, setDialogOpened] = useState(false);
-
-  useEffect(() => {
-    const fetchTraces = async () => {
-      if (!apiClient || !selectedTenant) return;
-      
-      try {
-        let response: FullTracesListResponse;
-        if (conversationId) {
-          response = await apiClient.getConversationTraces(
-            selectedTenant.id, conversationId
-          );
-        } else if (autonomousAgentId) {
-          response = await apiClient.getAutonomousAgentTraces(
-            selectedTenant.id, autonomousAgentId
-          );
-        } else {
-          return;
-        }
-        
-        setTraces(response.traces);
-        setDialogOpened(true);  // Open dialog when data loaded
-      } catch (error) {
-        console.error('Failed to fetch traces:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchTraces();
-  }, [apiClient, selectedTenant, conversationId, autonomousAgentId]);
-
-  return (
-    <MainLayout>
-      <Container>
-        {loading && <Loader />}
-        {!loading && traces.length === 0 && (
-          <Alert>No traces found. Provide ?conversationId= or ?autonomousAgentId=</Alert>
-        )}
-      </Container>
-      
-      <TracingVisualDialog
-        opened={dialogOpened}
-        onClose={() => setDialogOpened(false)}
-        traces={traces}
-      />
-    </MainLayout>
-  );
-};
-```
-
-### 6.3 Add Route
-In `src/routes/index.tsx`:
-```typescript
-{
-  path: '/dev/tracing',
-  element: <TracingDialogDevelopmentPage />,
-}
-```
+### 8.2 Behavior
+1. Parse query parameters
+2. Fetch traces from API
+3. Open TracingVisualDialog automatically when data loaded
+4. Pre-select first trace
 
 ---
 
-## 7. Modular Reuse Scenarios
+## 9. Keyboard Shortcuts (Optional Enhancement)
 
-### 7.1 In Chat View (Quick Hierarchy Only)
-```tsx
-// Just the hierarchy, no canvas
-<TracingProvider traces={traces}>
-  <TracingHierarchyView compact />
-</TracingProvider>
-```
-
-### 7.2 In Autonomous Agent Page (Full Dialog)
-```tsx
-<TracingVisualDialog
-  opened={showTracing}
-  onClose={() => setShowTracing(false)}
-  traces={agentTraces}
-/>
-```
-
-### 7.3 Embedded Canvas Only
-```tsx
-<TracingProvider traces={traces}>
-  <TracingCanvasView width="100%" height={400} />
-</TracingProvider>
-```
+- `Escape`: Close dialog / Deselect node
+- `Arrow Up/Down`: Navigate hierarchy
+- `Enter`: Select highlighted item
+- `+/-`: Zoom in/out
+- `0`: Reset zoom
+- `H/V`: Toggle horizontal/vertical layout
 
 ---
 
-## 8. Implementation Checklist
+## 10. Implementation Priority
 
-### Phase 1: Foundation
-- [ ] Create `TracingContext.tsx` with state management
-- [ ] Create basic `TracingVisualDialog.tsx` with layout structure
-- [ ] Add API client methods for fetching traces
-- [ ] Create development page with route
+### Phase 1: Core Structure
+1. [ ] TracingContext with full state management
+2. [ ] TracingVisualDialog layout with resizable panels
+3. [ ] Header with title and close button
 
 ### Phase 2: Canvas (Priority)
-- [ ] Install/configure @xyflow/react
-- [ ] Create `CanvasNode.tsx` custom node component
-- [ ] Implement node/edge transformation from trace data
-- [ ] Add layout algorithm (dagre or custom)
-- [ ] Implement pan/zoom controls
-- [ ] Add layout direction toggle
+4. [ ] TracingCanvasView with @xyflow/react
+5. [ ] Custom node component with status styling
+6. [ ] Edge transformation with arrows
+7. [ ] Dagre layout (horizontal/vertical)
+8. [ ] Pan/zoom controls
 
-### Phase 3: Hierarchy
-- [ ] Create `TracingHierarchyView.tsx`
-- [ ] Implement tree structure with curved connectors
-- [ ] Add expand/collapse functionality
-- [ ] Connect to context (selection sync)
+### Phase 3: SubHeader
+9. [ ] TracingSubHeader floating component
+10. [ ] Dynamic content based on selection
 
-### Phase 4: Data Section
-- [ ] Create `TracingDataSection.tsx`
-- [ ] Implement Logs panel
-- [ ] Implement Input/Output display with JSON viewers
-- [ ] Add tab switching (Input/Output vs Metadata)
-- [ ] Add resizable panels
+### Phase 4: Hierarchy
+11. [ ] TracingHierarchyView tree structure
+12. [ ] Curved connectors
+13. [ ] Expand/collapse
+14. [ ] Selection sync with canvas
 
-### Phase 5: Polish
-- [ ] Add SubHeader component
-- [ ] Implement center-on-node navigation
-- [ ] Add keyboard shortcuts
-- [ ] Add loading/error states
-- [ ] Performance optimization (virtualization for large traces)
+### Phase 5: Data Section
+15. [ ] TracingDataSection layout
+16. [ ] Logs panel
+17. [ ] Input/Output with tabs
+18. [ ] Collapsible JSON viewers
+19. [ ] Resizable panels
+
+### Phase 6: Polish
+20. [ ] Center-on-node navigation
+21. [ ] Keyboard shortcuts
+22. [ ] Loading/error states
+23. [ ] Performance optimization
 
 ---
 
-## 9. Testing Data
+## 11. Testing URLs
 
-Use the following query parameters for testing:
 ```
-# Conversation with multiple nodes
 /dev/tracing?conversationId=fe8f3138-3745-4879-b91b-6a3cb5d03303
-
-# Autonomous agent traces
 /dev/tracing?autonomousAgentId=741776fc-e59a-4d81-8ca0-129acacaeab2
 ```
 
 ---
 
-## 10. Dependencies
+## 12. Dependencies
 
-### Required
+**Required** (already installed):
 ```json
 {
   "@xyflow/react": "^12.x",
+  "@dagrejs/dagre": "^1.x",
   "@mantine/core": "^7.x",
   "@tabler/icons-react": "^3.x"
 }
 ```
 
-### Recommended for Layout
-```bash
-npm install @dagrejs/dagre
-# OR
-npm install elkjs
-```
-
-### Recommended for JSON Display
+**Recommended for JSON display**:
 ```bash
 npm install react-json-view-lite
-# OR use Mantine's JsonInput in read-only mode
 ```
 
 ---
 
-## 11. Notes for Implementation
-
-1. **@xyflow/react is the source of truth for canvas** - Do not manually calculate node positions or draw SVG lines. Use xyflow's built-in layout, edges, and markers.
-
-2. **Context is key** - All components share state via `TracingContext`. Selection in Hierarchy → updates Canvas + Data Section.
-
-3. **Hierarchical data** - Nodes can have `nodes[]` sub-nodes. Transform these into separate xyflow nodes with parent-child edges.
-
-4. **Status colors** - Use consistent colors from CSS variables:
-   - completed: `--color-success-500`
-   - failed: `--color-error-500`
-   - running: `--color-warning-500`
-   - pending/skipped/cancelled: `--color-gray-400/500/600`
-
-5. **Resizable panels** - Use CSS `resize` property or a library like `react-resizable-panels`.
-
-6. **Performance** - For traces with 100+ nodes, consider virtualization in the Hierarchy view.
-
----
-
-**End of Specification**
+**End of Specification v2**
