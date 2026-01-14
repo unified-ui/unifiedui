@@ -1,5 +1,9 @@
 # TODOs unified-ui
 
+## Checkout:
+
+- https://github.com/Chainlit/chainlit
+
 ## Done
 
 - Agent-Service
@@ -96,11 +100,52 @@
 - N8N Application: Workflow Endpoint soll auch noch angegeben werden
     - dann kann man die workflowId in der Fallback logik nutzen, im besser über /executions zu itterieren!
     - in config workflowId zurückgeben!
+
+
+## emtec Plan
+
+1. v1 fertigstellen
+    - definieren, welche Features in v1 vorhanden sein sollen
+2. v2
+    - Langchain + Langgraph integration
+        - per REST API
+        - python-unified-ui-sdk für Streaming und Tracing
+            - track_langchain_traces(lc_agent=lc_agent)
+            - ...
+    - anhand des Typecode Research Chats Features ableiten
+        - Real-Time Updates von
+            - Reasoning
+            - Tool Calls wie Web-Search etc
+    - einfache Chat-Widgets im Chat einbinden
+        - Standard Chat Widgets können Application hinzugefügt werden
+            - spezielle Zwischen Response notwendig
+        - Single-Select
+        - Multi-Select
+3. v3
+    - MS Copilot integration
+    - Formulare als Chat Widgets supporten
+    - Simple ReACT Agent entwickeln
+        - + Chat-Playground
+        - + MCP Server Support für ReACT Agent
+        - neue Entitäten:
+            - MCP Servers
+            - Credentials.Type: LLM > Azure, Anthropic etc (via Langchain)
+
 ## Plan
+
+- Foundry IMT Agent
+    - Tool, welches AI-Search abfragt und auf device_id == {ID} filtert!
+    - Prompt entsprechend anpassen -> auc <context>device_id={ID}</context> holen
+    - in tool übergeben (soll agent machen)
+    - sollte in unified-ui funktionieren
 
 - Tracing Design ausarbeiten
     - Tracing Dialog designen
-    - Chat Tracing-Hierarchie einbauen
+    - tracing im Chat einbauen -> beim draufklicken Hierarchische Struktur
+        - klick auf message -> Rechte Sidebar für tracing einbauen und anzeigen
+        - oben am Chat: Icon, bei dem man sich alle traces zu der conversation anschauen kann.
+            - auch rechts als Sidebar
+                - wenn man auf message in sidebar klickt, soll man zu dieser geführt werden
 
 - Frontend Refactoring 1
     - Credentials raus aus Sidebar und in Tenant-Settings rein
@@ -122,12 +167,6 @@
 - agent-service
     - N8N Traces refactoren
     - Foundry Traces refactoren
-
-- tracing im Chat einbauen -> beim draufklicken Hierarchische Struktur
-    - klick auf message -> Rechte Sidebar für tracing einbauen und anzeigen
-    - oben am Chat: Icon, bei dem man sich alle traces zu der conversation anschauen kann.
-        - auch rechts als Sidebar
-            - wenn man auf message in sidebar klickt, soll man zu dieser geführt werden
 
 - AutonomousAgentPage
     - TabBar
