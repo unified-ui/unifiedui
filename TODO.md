@@ -2,7 +2,9 @@
 
 ## Checkout:
 
-- https://github.com/Chainlit/chainlit
+- [Foundry REST API](https://learn.microsoft.com/en-us/azure/ai-foundry/reference/foundry-project-rest-preview?view=foundry)
+    - see: "In this article" on the right side!
+-  OSS Project for Chat Frontend [chainlit](https://github.com/Chainlit/chainlit)
 
 ## Done
 
@@ -135,6 +137,8 @@
 
 - Foundry IMT Agent
     - Tool, welches AI-Search abfragt und auf device_id == {ID} filtert!
+        - Wie tool entwickeln?
+            - in foundry kann man irgendwie MCP server erstellen und als tool nutzen?
     - Prompt entsprechend anpassen -> auc <context>device_id={ID}</context> holen
     - in tool übergeben (soll agent machen)
     - sollte in unified-ui funktionieren
