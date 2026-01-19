@@ -1,5 +1,13 @@
 # TODOs unified-ui
 
+## CMDs
+
+```sh
+uvicorn unifiedui.app:app --reload
+make run
+npm run dev
+```
+
 ## Checkout:
 
 - [Foundry REST API](https://learn.microsoft.com/en-us/azure/ai-foundry/reference/foundry-project-rest-preview?view=foundry)
@@ -106,9 +114,9 @@
 
 ## emtec Plan
 
-1. v1 fertigstellen
+1. v0.1.0 fertigstellen
     - definieren, welche Features in v1 vorhanden sein sollen
-2. v2
+2. v0.2.0
     - Langchain + Langgraph integration
         - per REST API
         - python-unified-ui-sdk für Streaming und Tracing
@@ -123,7 +131,16 @@
             - spezielle Zwischen Response notwendig
         - Single-Select
         - Multi-Select
-3. v3
+3. v0.3.0
+    - Azure Cloud Deployment
+        - Private-Public Deployment
+            - Kommunikation und DBs etc private
+            - Frontend Public
+        - Private-Private Deployment
+            - Frontend ebenfalls nur mit VPN erreichbar
+    - LDAP Auth-Provider
+    - Kerberos Auth-Provider
+    - tenant-konzept überarbeiten
     - MS Copilot integration
     - Formulare als Chat Widgets supporten
     - Simple ReACT Agent entwickeln
@@ -135,28 +152,33 @@
 
 ## Plan
 
-- Foundry IMT Agent
-    - Tool, welches AI-Search abfragt und auf device_id == {ID} filtert!
-        - Wie tool entwickeln?
-            - in foundry kann man irgendwie MCP server erstellen und als tool nutzen?
-    - Prompt entsprechend anpassen -> auc <context>device_id={ID}</context> holen
-    - in tool übergeben (soll agent machen)
-    - sollte in unified-ui funktionieren
+Deine Aufgaben:
+1. Analysiere die aktuelle struktur
+2. Analysiere meine anfordeurngen
+3. Implementiere meine anforderungen
+
+Deine Aufgaben:
+1. Analysiere die aktuelle struktur
+2. Analysiere meine anfordeurngen
+3. Plane die implementierung
+4. Hinterfrage deine Planung zur implementierung
+5. Implementiere meine anforderungen
 
 - Tracing Design ausarbeiten
-    - Tracing Dialog designen
-    - tracing im Chat einbauen -> beim draufklicken Hierarchische Struktur
-        - klick auf message -> Rechte Sidebar für tracing einbauen und anzeigen
-        - oben am Chat: Icon, bei dem man sich alle traces zu der conversation anschauen kann.
-            - auch rechts als Sidebar
-                - wenn man auf message in sidebar klickt, soll man zu dieser geführt werden
+    - keinigkeiten
+        - auch user message mappen!
+    - chat tracings testen
+        - Foundry:
+            - multi-messages -> funktioniert das öffnen der Traces?
+        - n8n
+            - springt er in richtige conversation?
+    
 
 - Frontend Refactoring 1
+    - Development Platforms raus
     - Credentials raus aus Sidebar und in Tenant-Settings rein
         - extra Tab; ähnlich wie Cutsom Groups
     - MCP Servers als Tab in Tenant Settings rein -> erstmal nur Dummy Page wie Custom Groups
-    - Development Platforms raus
-    - ConversationPage schöner designen
     - bugs beheben
         - systematisch jede Seite durchgehen und checken
             - wenn was hinzugefügt wird, wird jeder State aktualisiert?
@@ -166,7 +188,9 @@
         - beim fetchen der Credentials im Create- und EditApplicationDialog wird noch credentials?limit=999 gefetcht -> hier eher paginierung, aber man kann ruhig 100 fetchen (nur name und id -> + orderBy=name order_direction=asc)
         - siehe Video vom 02.01.
     - ConversationPage
+        - schöner designen
         - Search implementieren
+        - tracing im Chat verschönern
 
 - agent-service
     - N8N Traces refactoren
@@ -233,6 +257,14 @@
         - geben wir applicationId und extConversationId mit -> beides bekommen wir über die Conversation!
             - applicationId vielleicht okay
             - aber extConversationId brauchen wir nicht!
+
+- Foundry IMT Agent
+    - Tool, welches AI-Search abfragt und auf device_id == {ID} filtert!
+        - Wie tool entwickeln?
+            - in foundry kann man irgendwie MCP server erstellen und als tool nutzen?
+    - Prompt entsprechend anpassen -> auc <context>device_id={ID}</context> holen
+    - in tool übergeben (soll agent machen)
+    - sollte in unified-ui funktionieren
 
 ## Future
 
@@ -333,3 +365,20 @@
                 - hier die id holen und dann über gefilterte ids -> /executions/{id}?includeData=true -> parallel ausführen und speichern
                 - wenn fertig (successfuly), an platform-service PATCH
             - im ersten schritt mit JobQueue arbeiten und 202 zurückgeben (später vielleicht consumer/producer)
+
+- Embedding-Service
+    - Ziel:
+        - Customer kann Dokumente an API schicken und diese werden entsprechend der config embeddet
+        - Anschließend kann man dynamische querys absenden
+    - muss man configureiren
+        - Document-Collection anlegen und konfigurieren
+            - embedding model (NICHT von unified-ui bezahlt)
+            - destination (AI Search, )
+            - chunking; text extraction type -> gibt ja sowas die Indexer :)
+            - text extraction service oder default tika?
+    - Upload Files via REST API
+        - API Key
+    - in Collections speichern + embedded search
+    - Text-Extraction
+        - Tika
+        - externen 
