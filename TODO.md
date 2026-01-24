@@ -146,9 +146,13 @@ npm run dev
     - Simple ReACT Agent entwickeln
         - + Chat-Playground
         - + MCP Server Support für ReACT Agent
+        - + OpenAPI Definition als Tool für ReACT Agent (wie in Foundry)
         - neue Entitäten:
             - MCP Servers
+            - Open API Config
             - Credentials.Type: LLM > Azure, Anthropic etc (via Langchain)
+            - Credentials.Type: OPEN_API_CONNECTION > key mappen in header (wie in Foundry)
+
 
 ## Plan
 
@@ -164,11 +168,23 @@ Deine Aufgaben:
 4. Hinterfrage deine Planung zur implementierung
 5. Implementiere meine anforderungen
 
+
+
 - Frontend Refactoring 1
     - Development Platforms raus
     - Credentials raus aus Sidebar und in Tenant-Settings rein
         - extra Tab; ähnlich wie Cutsom Groups
-    - MCP Servers als Tab in Tenant Settings rein -> erstmal nur Dummy Page wie Custom Groups
+    - Simple ReACT Agent entwickeln
+        - + MCP Server Support für ReACT Agent
+        - + OpenAPI Definition als Tool für ReACT Agent (wie in Foundry)
+        - neue Entitäten:
+            - MCP Servers
+            - Open API Config
+            - Credentials.Type: OPEN_API_CONNECTION > key mappen in header (wie in Foundry)
+        - Tabs:
+            - Tools
+        - Sidebar
+            - ReACT-Agent Development
     - bugs beheben
         - systematisch jede Seite durchgehen und checken
             - wenn was hinzugefügt wird, wird jeder State aktualisiert?
