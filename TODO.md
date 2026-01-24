@@ -164,19 +164,6 @@ Deine Aufgaben:
 4. Hinterfrage deine Planung zur implementierung
 5. Implementiere meine anforderungen
 
-- Tracing Design ausarbeiten
-    - Fixes
-        - Sidebar data section
-        - OnMessage click error! (in linker sidebar!)
-    - keinigkeiten
-        - auch user message mappen!
-    - chat tracings testen
-        - Foundry:
-            - multi-messages -> funktioniert das öffnen der Traces?
-        - n8n
-            - springt er in richtige conversation?
-    
-
 - Frontend Refactoring 1
     - Development Platforms raus
     - Credentials raus aus Sidebar und in Tenant-Settings rein
@@ -194,10 +181,6 @@ Deine Aufgaben:
         - schöner designen
         - Search implementieren
         - tracing im Chat verschönern
-
-- agent-service
-    - N8N Traces refactoren
-    - Foundry Traces refactoren
 
 - AutonomousAgentPage
     - TabBar
@@ -230,6 +213,9 @@ Deine Aufgaben:
     - Dashboard
     - ...
 
+- agent-service
+    - N8N Traces refactoren
+    - Foundry Traces refactoren
 
 11. ZWEI Vaults fixen:
     - app_vault + secrets_vault

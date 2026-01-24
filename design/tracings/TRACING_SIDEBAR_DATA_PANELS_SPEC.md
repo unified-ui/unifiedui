@@ -413,35 +413,41 @@ const changePanelHeight = useCallback((newHeight: number) => {
 
 ## 5. Edge Cases
 
-### 5.1 Nicht genug Platz
-- Wenn alle Panels expandiert und nicht genug Platz:
-  - Jedes Panel erhält mindestens `minHeight`
-  - Tree Hierarchy schrumpft auf `minHeight`
-  - Overflow wird durch individuelle ScrollAreas gehandhabt
+### 5.1 Akkordeon-Verhalten
+- **Nur ein Panel gleichzeitig offen**: Beim Öffnen eines Panels wird das vorherige automatisch geschlossen
+- **Gemeinsame Höhe**: Alle Panels teilen sich eine `activeHeight`, die beim Resize geändert wird
+- **Höhe bleibt erhalten**: Wenn Panel A auf 200px resized wird und dann Panel B geöffnet wird, hat B ebenfalls 200px
 
 ### 5.2 Root vs. Node Auswahl
 - **Root ausgewählt**: INPUT und OUTPUT Panels werden **nicht angezeigt**
 - **Node ausgewählt**: Alle 4 Panels werden angezeigt
-- Beim Wechsel von Node → Root: INPUT/OUTPUT Panels verschwinden (collapse state bleibt für nächste Node-Auswahl)
+- Beim Wechsel von Node → Root: INPUT/OUTPUT Panels verschwinden, Panel-State bleibt erhalten
 
 ### 5.3 Leere Daten
 - Wenn ein Panel keine Daten hat (z.B. `logs = []`):
   - Panel wird trotzdem angezeigt
-  - Content zeigt "Keine Daten" Text
-  - Badge zeigt `[0]` oder wird nicht angezeigt
+  - Content zeigt "–" Text (via `hasContent` prop)
+  - Badge wird nur angezeigt wenn Content vorhanden ist
+
+### 5.4 Resize-Verhalten
+- **Smooth Resize**: Keine CSS-Transition auf height, keine requestAnimationFrame
+- **Minimale Höhe**: 80px (PANEL_MIN_HEIGHT)
+- **Default-Höhe**: 150px beim ersten Öffnen
+- **Cursor-Feedback**: `row-resize` Cursor während Drag
 
 ---
 
 ## 6. Implementierungs-Checkliste
 
-- [ ] `ResizablePanel` Komponente erstellen
-- [ ] State-Management für Panel-States (expanded, height)
-- [ ] Resize-Handle mit Drag-Logik
-- [ ] Individuelle ScrollArea pro Panel
-- [ ] Layout-Berechnung für verfügbaren Platz
-- [ ] Anpassung für Root vs. Node (INPUT/OUTPUT visibility)
-- [ ] CSS-Styles für Panel-Header, Resize-Handle, Content
-- [ ] Animationen für Expand/Collapse (optional)
+- [x] `ResizablePanel` Komponente erstellen
+- [x] State-Management: `activeHeight` (gemeinsam) + `expandedPanel` (welches offen)
+- [x] Resize-Handle mit Drag-Logik (direkt, ohne Animation)
+- [x] Individuelle ScrollArea pro Panel
+- [x] Akkordeon-Toggle (nur ein Panel offen)
+- [x] Panel-Reihenfolge: INPUT → OUTPUT → LOGS → METADATA
+- [x] Anpassung für Root vs. Node (INPUT/OUTPUT visibility)
+- [x] CSS-Styles für Panel-Header, Resize-Handle, Content
+- [x] Hover-Effekte für Panel-Header und Resize-Handle
 
 ---
 
@@ -452,11 +458,21 @@ const changePanelHeight = useCallback((newHeight: number) => {
 - Drag & Drop zum Umsortieren der Panels
 - Horizontales Resize
 - Panel-spezifische Actions (z.B. "Copy All" Button)
+- Animationen für Expand/Collapse (bewusst entfernt für smoothes Resize)
 
 ### Später möglich:
 - Höhen-Persistierung in localStorage
 - Keyboard Shortcuts (z.B. `Ctrl+1` für LOGS toggle)
 - Context Menu auf Panel-Header
+
+---
+
+## 8. Änderungshistorie
+
+| Version | Datum | Änderungen |
+|---------|-------|------------|
+| 1.0 | - | Initiale Spezifikation mit Multi-Panel-Expand |
+| 2.0 | 11.07.2025 | **Finale Implementierung**: Akkordeon-Verhalten, gemeinsame Höhe, smooth resize, Panel-Reihenfolge geändert |
 
 ---
 
