@@ -165,6 +165,9 @@ Deine Aufgaben:
 5. Implementiere meine anforderungen
 
 - Tracing Design ausarbeiten
+    - Fixes
+        - Sidebar data section
+        - OnMessage click error! (in linker sidebar!)
     - keinigkeiten
         - auch user message mappen!
     - chat tracings testen

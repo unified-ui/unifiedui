@@ -1299,4 +1299,396 @@ function generateEdges(layoutNodes: LayoutNode[]): Edge[] {
 
 ---
 
-**End of Specification v2**
+## 15. Tracing Sidebar (ConversationsPage Integration)
+
+Diese Sektion dokumentiert die **aktuelle Implementierung** der Tracing Sidebar auf der ConversationsPage.
+
+### 15.1 Übersicht
+
+Die Tracing Sidebar ist eine kompakte Variante der Tracing-Visualisierung, die rechts neben dem Chat auf der ConversationsPage angezeigt wird. Sie ermöglicht Benutzern, Traces zu navigieren und Details zu Nodes zu sehen, ohne die Chat-Ansicht zu verlassen.
+
+### 15.2 Integration auf ConversationsPage
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  MAIN LAYOUT                                                                │
+├───────────┬─────────────────────────────────────────────────────┬───────────┤
+│           │                                                     │           │
+│  CHAT     │                   CHAT AREA                         │  TRACING  │
+│ SIDEBAR   │                                                     │  SIDEBAR  │
+│           │  ┌─────────────────────────────────────────────┐   │           │
+│ (280px)   │  │  Chat Header                                │   │  (320px)  │
+│           │  │  [App Select] [Actions] [Tracing Toggle]    │   │           │
+│           │  ├─────────────────────────────────────────────┤   │           │
+│           │  │                                             │   │           │
+│           │  │              Chat Messages                  │   │           │
+│           │  │                                             │   │           │
+│           │  │              [User Message]                 │   │           │
+│           │  │              [Assistant Message] ◀──────────│───│── Klick   │
+│           │  │              [User Message]                 │   │   synchr. │
+│           │  │                                             │   │           │
+│           │  ├─────────────────────────────────────────────┤   │           │
+│           │  │              Chat Input                     │   │           │
+│           │  └─────────────────────────────────────────────┘   │           │
+│           │                                                     │           │
+└───────────┴─────────────────────────────────────────────────────┴───────────┘
+```
+
+**Toggle-Mechanismus:**
+- Button im ChatHeader: `IconChartDots` Icon
+- State: `tracingSidebarVisible` (useState)
+- Sidebar wird nur angezeigt wenn `tracingSidebarVisible && traces.length > 0`
+
+### 15.3 Komponenten-Hierarchie
+
+```
+ConversationsPage.tsx
+└── TracingProvider (nur wenn tracingSidebarVisible && traces.length > 0)
+    └── TracingSidebar
+        └── TracingHierarchyView (variant="compact", showHeader=true, showDataPanels=true)
+            ├── Header ("Tracing Hierarchie" + Fullscreen Button)
+            ├── Tree Area (ScrollArea)
+            │   └── TraceRootItem(s)
+            │       └── TreeItem(s) (rekursiv)
+            └── DataPanelsSection (resizable)
+                ├── CollapsiblePanel: Logs
+                ├── CollapsiblePanel: Input/Output (nur wenn Node ausgewählt)
+                └── CollapsiblePanel: Metadata
+```
+
+### 15.4 TracingSidebar Komponente
+
+**Datei:** `src/components/tracing/TracingSidebar.tsx`
+
+```typescript
+interface TracingSidebarProps {
+  onOpenFullscreen?: () => void;  // Callback für Vollbild-Dialog
+}
+```
+
+**Funktion:**
+- Wrapper-Komponente für `TracingHierarchyView`
+- Konfiguriert die Hierarchy View für den Sidebar-Modus:
+  - `variant="compact"` - Kompaktes Layout ohne Border
+  - `showHeader={true}` - Zeigt Header mit Titel und Fullscreen-Button
+  - `showDataPanels={true}` - Aktiviert VS Code-style Panels unten
+
+**CSS:**
+```css
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+```
+
+### 15.5 TracingHierarchyView (Kern-Komponente)
+
+**Datei:** `src/components/tracing/TracingHierarchyView.tsx`
+
+```typescript
+interface TracingHierarchyViewProps {
+  variant?: 'full' | 'compact';  // 'full' für Dialog, 'compact' für Sidebar
+  showHeader?: boolean;          // Header mit Titel anzeigen
+  showDataPanels?: boolean;      // VS Code-style Data Panels anzeigen
+  onOpenFullscreen?: () => void; // Callback für Fullscreen Button
+}
+```
+
+#### 15.5.1 Layout-Struktur (Sidebar-Mode)
+
+```
+┌───────────────────────────────────────┐
+│ HEADER                                │
+│ "Tracing Hierarchie"      [Fullscreen]│
+├───────────────────────────────────────┤
+│                                       │
+│ TREE AREA (ScrollArea, flex: 1)       │
+│                                       │
+│ ▾ [conversation] Microsoft Foundry ✓  │
+│   ├──[llm] User Message           ✓   │
+│   ├──▾ [workflow] SendActivity    ✓   │
+│   │   ├──[llm] Assistant...       ✓   │
+│   │   └──[llm] Assistant...       ✓   │
+│   └──[llm] User Message           ✓   │
+│                                       │
+├───────────────────────────────────────┤
+│ ═══════ RESIZE HANDLE ════════════    │
+├───────────────────────────────────────┤
+│                                       │
+│ DATA PANELS SECTION (resizable)       │
+│                                       │
+│ ▸ LOGS                          [3]   │
+│ ▾ INPUT / OUTPUT                      │
+│   ┌───────────────────────────────┐   │
+│   │ INPUT                         │   │
+│   │ Text: "Hello world"           │   │
+│   │ ▸ Arguments                   │   │
+│   │ ▸ Metadata                    │   │
+│   ├───────────────────────────────┤   │
+│   │ OUTPUT                        │   │
+│   │ Text: "Hi! How can I help?"   │   │
+│   │ ▸ Arguments                   │   │
+│   │ ▸ Metadata                    │   │
+│   └───────────────────────────────┘   │
+│ ▸ METADATA                            │
+│                                       │
+└───────────────────────────────────────┘
+```
+
+#### 15.5.2 Sub-Komponenten
+
+**TreeItem:**
+```typescript
+interface TreeItemProps {
+  node: TraceNodeResponse;
+  depth: number;              // Indentation Level
+  isSelected: boolean;
+  isExpanded: boolean;
+  onSelect: (nodeId: string) => void;
+  onToggle: (nodeId: string) => void;
+}
+```
+
+**TraceRootItem:** (für Trace-Root-Elemente)
+```typescript
+interface TraceRootItemProps {
+  trace: FullTraceResponse;
+  isSelected: boolean;        // Root ist selected wenn selectedNode === null
+  isExpanded: boolean;
+  onSelect: () => void;
+  onToggle: () => void;
+}
+```
+
+**CollapsiblePanel:** (VS Code-style)
+```typescript
+interface CollapsiblePanelProps {
+  title: string;
+  icon: React.ReactNode;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+  badge?: number;            // Badge mit Zähler (z.B. für Logs)
+}
+```
+
+**DataPanelsSection:**
+```typescript
+interface DataPanelsSectionProps {
+  panelsHeight: number;                      // Aktuelle Höhe (resizable)
+  onResizeStart: (e: React.MouseEvent) => void;
+}
+```
+
+### 15.6 Daten-Anzeige-Logik
+
+**Wenn Root (kein Node) ausgewählt:**
+- **Logs:** `selectedTrace.logs`
+- **Input/Output:** NICHT angezeigt (Panel versteckt)
+- **Metadata:** `selectedTrace.referenceMetadata`
+
+**Wenn Node ausgewählt:**
+- **Logs:** `selectedNode.logs`
+- **Input/Output:** 
+  - Input: `selectedNode.data.input` (text, arguments, metadata, extraData)
+  - Output: `selectedNode.data.output` (text, arguments, metadata, extraData)
+- **Metadata:** `selectedNode.metadata`
+
+### 15.7 Input/Output Panel Struktur
+
+```
+┌─────────────────────────────────────┐
+│ INPUT                               │
+├─────────────────────────────────────┤
+│ Text:                               │
+│ "Hello, how are you?"               │
+│                                     │
+│ ▸ Arguments                         │
+│   ┌─ { "param1": "value" } ─┐       │
+│   └─────────────────────────┘       │
+│                                     │
+│ ▸ Metadata                          │
+│   (collapsed by default)            │
+│                                     │
+│ ▸ Extra Data                        │
+│   (collapsed by default)            │
+├─────────────────────────────────────┤
+│ ─────────── DIVIDER ───────────     │
+├─────────────────────────────────────┤
+│ OUTPUT                              │
+├─────────────────────────────────────┤
+│ Text:                               │
+│ "I'm doing well, thanks!"           │
+│                                     │
+│ ▸ Arguments                         │
+│ ▸ Metadata                          │
+│ ▸ Extra Data                        │
+└─────────────────────────────────────┘
+```
+
+### 15.8 JSON Viewer Komponente
+
+**Funktion:** Zeigt JSON-Daten collapsible an
+
+```typescript
+interface JsonViewerProps {
+  data: unknown;
+  initialCollapsed?: boolean;  // Default: true für große Objekte
+}
+```
+
+**Verhalten:**
+- Kleine Objekte (≤5 Zeilen): Vollständig angezeigt
+- Große Objekte (>5 Zeilen): 
+  - Collapsed: Zeigt erste 3 Zeilen + "..."
+  - Toggle-Button mit Zeilenanzahl
+
+### 15.9 Message-to-Trace Synchronisation
+
+**Bidirektionale Synchronisation zwischen Chat und Tracing:**
+
+```
+Chat Message              Tracing Node
+─────────────────────────────────────────
+extMessageId     ←→      node.referenceId
+```
+
+**Von Message zu Trace:**
+1. User klickt auf "View Trace" Button bei einer Message
+2. `handleViewTrace(extMessageId)` wird aufgerufen
+3. TracingSidebar wird geöffnet (falls nicht offen)
+4. Node mit passendem `referenceId` wird selektiert
+5. Chat-Message wird highlighted (`highlightedExtMessageId`)
+
+**Von Trace zu Message:**
+1. User klickt auf Node in der Hierarchy
+2. `onNodeReferenceIdChange(referenceId)` Callback wird aufgerufen
+3. `highlightedMessageExtId` wird gesetzt
+4. Entsprechende Chat-Message wird highlighted
+
+### 15.10 TracingContext Integration
+
+**Provider-Props in ConversationsPage:**
+```typescript
+<TracingProvider 
+  traces={traces}
+  initialNodeReferenceId={selectedNodeReferenceId}
+  onNodeReferenceIdChange={setHighlightedMessageExtId}
+>
+  <TracingSidebar onOpenFullscreen={handleOpenTracingFullscreen} />
+</TracingProvider>
+```
+
+**Context-State für Sidebar:**
+```typescript
+// Aus TracingContext
+const {
+  selectedTrace,                    // Aktuell ausgewählter Trace
+  selectedNode,                     // Aktuell ausgewählter Node (null = Root)
+  hierarchyCollapsed,               // Set<string> - collapsed Node IDs
+  selectNode,                       // (nodeId: string | null) => void
+  toggleHierarchyCollapse,          // (nodeId: string) => void
+  findNodeForMessage,               // (extMessageId: string) => TraceNodeResponse | null
+  selectNodeByExtMessageId,         // (extMessageId: string) => boolean
+} = useTracing();
+```
+
+### 15.11 CSS Styling (Sidebar-spezifisch)
+
+**ConversationsPage.module.css:**
+```css
+.tracingSidebarWrapper {
+  width: 320px;
+  min-width: 320px;
+  border-left: 1px solid var(--border-default);
+  background-color: var(--bg-paper);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chatSection.withTracingSidebar {
+  /* Chat-Bereich schrumpft automatisch durch flex */
+}
+```
+
+**TracingHierarchyView.module.css (Auszug):**
+```css
+/* Container für compact Variant */
+.containerCompact {
+  border-left: none;  /* Border wird von Wrapper gesetzt */
+}
+
+/* Data Panels Section */
+.dataPanelsSection {
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
+  border-top: 1px solid var(--border-default);
+  background: var(--bg-app);
+  flex-shrink: 0;
+}
+
+/* Resize Handle */
+.panelsResizeHandle {
+  height: 4px;
+  cursor: row-resize;
+  background: transparent;
+  transition: background-color var(--transition-fast);
+}
+
+.panelsResizeHandle:hover {
+  background: var(--color-primary-200);
+}
+```
+
+### 15.12 Resize-Mechanismus (Data Panels)
+
+**State:**
+```typescript
+const [panelsHeight, setPanelsHeight] = useState(200);  // Initial: 200px
+```
+
+**Handler:**
+```typescript
+const handlePanelsResizeStart = useCallback((e: React.MouseEvent) => {
+  e.preventDefault();
+  isResizing.current = true;
+
+  const handleMouseMove = (moveEvent: MouseEvent) => {
+    if (!isResizing.current || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const newHeight = rect.bottom - moveEvent.clientY;
+    // Constraint: min 100px, max = container height - 100px
+    setPanelsHeight(Math.min(Math.max(newHeight, 100), rect.height - 100));
+  };
+
+  const handleMouseUp = () => {
+    isResizing.current = false;
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  };
+
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', handleMouseUp);
+}, []);
+```
+
+### 15.13 Zusammenfassung der aktuellen Implementierung
+
+| Feature | Status | Beschreibung |
+|---------|--------|--------------|
+| **Sidebar Toggle** | ✅ | Button im ChatHeader |
+| **Tree Hierarchie** | ✅ | TraceRoot + TreeItems mit Expand/Collapse |
+| **Node Selektion** | ✅ | Klick selektiert, Sync mit Canvas (in Dialog) |
+| **Data Panels** | ✅ | Logs, Input/Output, Metadata |
+| **Collapsible Sections** | ✅ | VS Code-style Panels |
+| **JSON Viewer** | ✅ | Collapsible für große Objekte |
+| **Resize Handle** | ✅ | Vertikale Größenänderung der Data Panels |
+| **Message-to-Trace Sync** | ✅ | Bidirektionale Synchronisation |
+| **Fullscreen Button** | ✅ | Öffnet TracingVisualDialog |
+
+---
+
