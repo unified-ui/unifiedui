@@ -171,20 +171,48 @@ Deine Aufgaben:
 
 
 - Frontend Refactoring 1
-    - Development Platforms raus
-    - Credentials raus aus Sidebar und in Tenant-Settings rein
-        - extra Tab; ähnlich wie Cutsom Groups
-    - Simple ReACT Agent entwickeln
-        - + MCP Server Support für ReACT Agent
-        - + OpenAPI Definition als Tool für ReACT Agent (wie in Foundry)
-        - neue Entitäten:
-            - MCP Servers
-            - Open API Config
-            - Credentials.Type: OPEN_API_CONNECTION > key mappen in header (wie in Foundry)
-        - Tabs:
-            - Tools
-        - Sidebar
-            - ReACT-Agent Development
+    - **siehe Video vom 02.01.**
+    - Sidebar
+        - :hover => ConversationSidebar -> wie die anderen sidebars, nur mit titel und untertitel!
+            - wenn man über Sidebar > ConversationItem hovert, soll nicht mehr die conversation sidebar erscheinen (also in diesem Design), sondern wie die anderen datasidebars (also das design), nur dass man hier die conversations verlinkt UND aber noch Titel und untertitel hat, wie in conversationsidebar
+        - expand -> auch lokal speichern!
+            - man kann die datasidebar expanden. dieser status soll lokal gespeichert werden und auch angewandt werden
+        - Traces Page hinzufügen (ganz unten; ohne hover einblendung)
+            - Es soll ein neues Sidebar item namens "Traces" unter autonomous agents hinzugefügt werden
+            - hover braucht dieses item erstmal nicht und es verweist auf die 404 page
+    - Chat Agents Page
+        - OnClickListItem
+            - hier stopPropergation -> nicht in Chat springen, wenn man auf toggle drückt
+
+            - aktuell springt er IMMER in die conversation. ob man auf den toggle button für active drückt, oder im kontextmenü (über "..."-Button) Auf Edit oder sontiges
+                - bitte beim kontext menü die den richtigen Dialog öffnen und beim toggle button einfach nur ausführen und den state refreshen
+        - ContextMenü
+            - bei Edit wird man in Chat navigiert (wegen ohne StopÜropergation)
+        - CreteChatAgent Dialog
+            - divider auch untern!!!
+                - aktuell gibt es einen divider zwischen den oberen daten und den typ spezifischen.
+                    - aber unten gibts noch das Beschreibungsfeld. der divider soll um die typ spezifischen felder gehen (also oben und unten)
+        - Beschreibung: ToolTip geben -> damit man alles lesen kann
+            - es soll die beschreibung beim hovern komplett gezeigt werden (als tooltip) -> üverall, wo abgeschnitten wird (name oder beschreibung!)
+    - AutoAgentPage
+        - CreateAutoAgent Dialog
+            - divider auch untern!!! (wie oben schon beschrieben)
+        - Beschreibung: ToolTip geben -> damit man alles lesen kann (wie oben schon beschrieben)
+    - SettingsPage
+        - CustomGroups
+            - Create Dialog zu hoch!
+                - der Create dialog sollte wie alle anderen dialoge recht zentral sein. bitte an den anderen dialogen orientieren!
+            - Edit Dialog
+                - hier wird immer neu gefetcht -> soll aber im state bleiben ohne neu zu fetchen!
+                    - bei den anderen Edit Dialogen, bei denen "Details" und "Manage Access" als tabs sind, wird nicht beim wechseln neu gefetcht. hier schon. bitte gleiche logik wie in den anderen Edit dialogen
+        - ReACT Agent Tools
+            - Create Dialog zu hoch! (wie oben schon beschreiben)
+            - type batches unterschiedliche Farben
+                - in der tabelle haben die types dieselbe batch-farbe. diese sollte je Typ unterschiedlich sein
+            - Liste: Description nach name und vor type; type schmaler
+            - filter: type rein (neben search)
+    - ALLES AUF ENGLISCH UMSTELLEN
+        - bitte ändere die bezeichnungen in allen files von deutsch auf englisch
     - bugs beheben
         - systematisch jede Seite durchgehen und checken
             - wenn was hinzugefügt wird, wird jeder State aktualisiert?
@@ -192,11 +220,6 @@ Deine Aufgaben:
             - context leeren
                 - zB sidebardatalist sind noch die bereits gefetcheten sachen dabei
         - beim fetchen der Credentials im Create- und EditApplicationDialog wird noch credentials?limit=999 gefetcht -> hier eher paginierung, aber man kann ruhig 100 fetchen (nur name und id -> + orderBy=name order_direction=asc)
-        - siehe Video vom 02.01.
-    - ConversationPage
-        - schöner designen
-        - Search implementieren
-        - tracing im Chat verschönern
 
 - AutonomousAgentPage
     - TabBar
@@ -228,6 +251,14 @@ Deine Aufgaben:
         - last visited
     - Dashboard
     - ...
+
+- ConversationPage
+    - schöner designen
+    - Search implementieren
+    - tracing im Chat verschönern
+    - ...
+
+- Dashboard designen
 
 - agent-service
     - N8N Traces refactoren
