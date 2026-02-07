@@ -14,104 +14,6 @@ npm run dev
     - see: "In this article" on the right side!
 -  OSS Project for Chat Frontend [chainlit](https://github.com/Chainlit/chainlit)
 
-## Done
-
-- Agent-Service
-    - autonomous agents
-        - hier API Key generieren lassen, inkl. rotate
-            - beim erstellen: werden in VAULT gespeichert und referenz uri in db auf autonomous-agent
-            - PUT /api/v1/platform-service/tenants/{id}/autonomous-agents/{id}/keys/1|2/rotate
-                - werden 
-
-- Tracing implementieren
-    - TODOS
-
-- platform-service
-    - models.py
-        - auto-agent entitiy
-            - type: enum[N8N] (aktuell nur N8N supportet!)
-            - primary_key_vault_uri -> bei POST -> erstelle einen API key für diese resource; nur über spezielle route bearbeitbar, wird aber IMMER vom system generiert
-            - secondary_key_vault_uri -> siehe primary_key_vault_uri
-            - last_full_import (timestamp; default NULL; system column (nicht vom user setzbar))
-            - config structure (validation needed!!!):
-                ```json
-                "workflow_endpoint": "http://localhost:5678/workflow/01V4K8pjRhOVncdg" (so bekommen wir sowohl den host, als auch die workflow id)
-                "api_api_key_credential_id": "<CREDENTIAL_ID>"
-                ```
-    - Anpassen:
-        - POST /autonomous-agents
-            - primary + secondary key generation + speicherung
-            - validierung der config (aktuell nur n8n)
-                - orientiere dich bei der validierung an dieser route:
-                    - POST /applications -> handler
-                    - da wurde schon mal n8n validiert, mit etwas anderen parametern
-                    - aber nutze auch hier ein entsprechendes pattern, da noch mehr typen mit unterschiedlichen configs kommen werden
-        - PATCH /autonomous-agents/{id}
-            - keys sind nicht bearbeitbar und dürfen nicht in body sein
-    - PUT /api/v1/platform-service/tenants/{id}/autonomous-agents/{id}/keys/1|2/rotate
-        - kein body -> alles systemseitig!
-        - gibt den neuen key zurück
-        - check_permissions:
-            - nur [TENANT ROLES:] GLOBAL_ADMIN, AUTONOMOUS_AGENT_ADMIN, [RESOURCE ROLES] ADMIN, WRITE
-    - GET /api/v1/platform-service/tenants/{id}/autonomous-agents/{id}/keys/1|2 erstellen
-        - hier den secret zurückgeben -> nur wenn 
-        - check_permissions:
-            - nur [TENANT ROLES:] GLOBAL_ADMIN, AUTONOMOUS_AGENT_ADMIN, [RESOURCE ROLES] ADMIN, WRITE
-
-            - GET /autonomous-agents/{id}/config implementieren
-                - Agent-Service Key 
-                
-
-- platform-service
-    - GET secret endpoint hinzufügen
-        - da man über "GET /api/v1/platform-service/tenants/{id}/credentials/{id}" nur die beschreibenden daten bekommt und nicht den secret, soll es eine dedizierte route für das fetchen des secrets geben:
-        - GET /api/v1/platform-service/tenants/{id}/credentials/{id}/secret
-            - gibt nur secret_value zurück
-            - check_permissions:
-                - Tenant Roles: GLOBAL_ADMIN, CREDENTIALS_ADMIN
-                - Resource Roles: WRITE, ADMIN
-
-- Frontend:
-    - client.ts und types.ts anpassen
-    - Autonomous-Agent Config bauen (aktuell nur n8n)
-
-- platform-service + Frontend: N8N API Version
-    - passe N8N config validator für auto-agent > config an: muss api_version gegeben sein (aktuell nut zulässig: "v1")
-    - füge in Create/EditAutonomousAgentDialog an: Feld "API Version" hinzu -> ganz so wie bei Create/EditApplicationDialog
-
-- platform-service /autonomous-agents/{id}/config implementieren
-    - analog zu /applications/{id}/config, nur mit anderer Config
-    - config: siehe config_auto_agent.json
-    - UND Auth ist anders! hier wird nicht mit einem bearer sondern der header `X-Unified-UI-Autonomous-Agent-API-Key` (und nur dieser key! nicht noch agent-service key) wenn nein 403
-        - jeder auto-agent hat ja nun zwei keys (primary key, secondary key) und einer dieser keys muss mit dem header key übereinstimmen; sonst 403
-    - und nutze kein Caching hier! Da keys rotieren können!
-
-- Agent Service
-    -  Endpoints und handler implementieren:
-        - POST /autonomous-agents/{id}/traces/import
-            - body: {"type": "N8N", "executionId": "..."}
-        - PUT /autonomous-agents/{id}/traces/{id}/import/refresh -> refresh import of trace
-            - hier bekommst du aus refrenceId die executionId für n8n; kein Body nötig
-        - beide routes kann nur mit dem header `X-Unified-UI-Autonomous-Agent-API-Key` ansprechen; kein bearer authorizatin nötig!
-        - du holst dir, wie auch bei POST /messages die config (von platform-service/autonomous-agent/{id}/config) endpoint
-        - du cachst in diesem fall NICHT -> es wird immer der Platform-servce /config abgefragt (wegen API Keys, die können rotieren etc)
-            - du holst dir die config aber nicht mit bearer token, sondern mit dem Header API Key
-        -  mit der config kannst du dann enstprechend die traces importieren. siehe dafür POST /messages > N8N
-            - aktuell wird für autonomous agents nur n8n unterstützt, jedoch beachte bei der implementierung, dass auch andere quellen zukünftig unterstützt werden! nutze das factory pattern bzw. orientiere dich sehr stark an POST /messages, da wurde schon einmal die logik für Microsoft Foundry und N8N traces umgesetzt, nur dass halt hier dann aus der jobQueue und nach dem stream die traces für chats importiert werden; etzt wollen wir autonome workflows (background workflows) importieren
-        - importlogik für n8n besteht schon
-- agent-service
-    - POST /autonomous-agents/{id}/traces/import
-        - ==> hier lieber ein PUT draus machen!
-        - weil wir haben ja die executionId!!!
-
-- N8N
-    - unified-ui-integration Workflow bauen -> traces übertragen
-        - PUT /autonomous-agents/{id}/traces/import
-- N8N Application: Workflow Endpoint soll auch noch angegeben werden
-    - dann kann man die workflowId in der Fallback logik nutzen, im besser über /executions zu itterieren!
-    - in config workflowId zurückgeben!
-
-
 ## emtec Plan
 
 1. v0.1.0 fertigstellen
@@ -131,6 +33,11 @@ npm run dev
             - spezielle Zwischen Response notwendig
         - Single-Select
         - Multi-Select
+    - Connection-Tests einführen
+        - wenn man mit N8N verbinden möchte per API -> test obs funktioniert
+            - /tenants/{id}/api/v1/test-connection {""...}
+    - DropDowns für externe Daten zur Verfügung stellen
+        - zB n8n: man gibt credentials an, endpoint und kann sich dann die workflows auflisten lassen 
 3. v0.3.0
     - Azure Cloud Deployment
         - Private-Public Deployment
@@ -142,6 +49,7 @@ npm run dev
     - Kerberos Auth-Provider
     - tenant-konzept überarbeiten
     - MS Copilot integration
+    - Feedback Framework integration
     - Formulare als Chat Widgets supporten
     - Simple ReACT Agent entwickeln
         - + Chat-Playground
@@ -152,6 +60,14 @@ npm run dev
             - Open API Config
             - Credentials.Type: LLM > Azure, Anthropic etc (via Langchain)
             - Credentials.Type: OPEN_API_CONNECTION > key mappen in header (wie in Foundry)
+        - Agent-Features:
+            - Reasoning
+            - Tool Calls
+            - Custom Agentic-Engine
+                - Summarization of History (Sub Agent)
+                - Split message in different tasks and create sub-agents for each task
+                    - enable Multi-Agent Orchestration
+                - ...
 
 
 ## Plan
@@ -168,58 +84,51 @@ Deine Aufgaben:
 4. Hinterfrage deine Planung zur implementierung
 5. Implementiere meine anforderungen
 
+---
+############################### v0.1.0 ###############################
+---
 
+- AutoAgent Page designen (refactoren)
 
-- Frontend Refactoring 1
-    - **siehe Video vom 02.01.**
-    - bugs beheben
-        - überall, wo limit=999 (außer datasidebar view=...) soll paginierung eingeführt werden!
-        - beim fetchen der Credentials im Create- und EditApplicationDialog wird noch credentials?limit=999 gefetcht -> hier eher paginierung, aber man kann ruhig 100 fetchen (nur name und id -> + orderBy=name order_direction=asc)
+- copilot-instructions anhand FE für agent-service umsetzen
+    - tests wichtig und das man sie per pytest -n auto ausführt nach änderungen und ggf fixen
+    - kommentare NUR wenn absolut notwenig; abgesehen von Klassen, Interfaces und Funktionskommentaren; diese sollte immer gegeben sein
 
-- AutonomousAgentPage
-    - TabBar
-        - Runs
-        - Autonomous Agent
-    - Liste der Autonomous Agents:
-        - wie jede andere auch
-    - Liste der RUNS:
-        - Filter
-            - nach Tag, Monat, Jahr
-            - status
-                - Success
-                - In Progress
-                - Partial Error
-                - Error
-                - Import Error
-        - Sort by
-            - ...
-- TracesPage
-    - hier ALLE traces, Chat Agent und Autonoumus Agents mit coolen filtern etc
-- TracingDetailPage
-    - details zu den traces
-        - Kopf: mit Metadaten (created, duration, status, name, description etc)
-        - Tracings... Hierarchie
+- nochmal für platform-service
+
+- Traces anlegen in agent, um liste zu debuggen
+    - liste debuggen
+    - delete trace möglich machen
+
+- entferne tracings item aus app sidebar -> brauchen wir nicht mehr
+
+- Tenant Sessting > AI Settings
+    - entity: tenant_ai_models
+        - name
+        - type [LLM_MODEL | EMBEDDING_MODEL]
+    - credentials.Type: TENANT_AI_MODEL
+    - liste an Models hinterlegen -> es wird loadbalancing genutzt
+    - Warum: AI Support, Embeddings für Search ()
 
 - Frontend Refactoring
+    - alle pages sollen NICHT im container, sondern über gesamte page gehen mit meinetwegen max-width
     - weitere features
         - PIN (favorietes)
         - last visited
-    - Dashboard
-    - ...
+        - notifications
+            - auto-agent runs
+    - Dashboard designen
+        - auf GET /id -> in user_history collection schreiben
+            - {"tenant_id": "", "user_id": "", "entity": "application": "id": "id"}
+        - hier fragen, was best practice -> eigentlich event, aber zu aufwendig!
+    - login routing etc besser gestalten
+    - Sidebar & überall: die icons insb. für tracing vereinheitlichen
+    - Einmal Dateien analysieren und refactoren
+        - keinen doppelten code
+        - nicht genutzter code raus
+        - alles was sonst noch dazugehört
 
-- ConversationPage
-    - schöner designen
-    - Search implementieren
-    - tracing im Chat verschönern
-    - ...
-
-- Dashboard designen
-
-- agent-service
-    - N8N Traces refactoren
-    - Foundry Traces refactoren
-
-11. ZWEI Vaults fixen:
+- ZWEI Vaults fixen:
     - app_vault + secrets_vault
         - App Vault für application keys wie zB `X-Service-Key`
         - Secrets Vault -> ist vault für credentials aus der app etc...
@@ -233,6 +142,12 @@ Deine Aufgaben:
 - Bei delete conversation -> auch messages und traces löschen
 - Bei delete auto agent -> auch traces löschen
 
+- ConversationPage
+    - schöner designen
+    - Search implementieren
+    - tracing im Chat verschönern
+    - ...
+
 - Frontend-Tests entwickeln
 
 - Tracings Refactoren
@@ -242,6 +157,7 @@ Deine Aufgaben:
     - Tool calls in die hierarchie
     - Foundry Agent -> MCP Call Confirmation
         - wenn man MCP Server aufruft (siehe Word), muss noch im chat confirmt werden -> wie machen wir das dann?
+    - N8N
 
 - Refactoring:
     - bei POST /messages
@@ -249,15 +165,39 @@ Deine Aufgaben:
             - applicationId vielleicht okay
             - aber extConversationId brauchen wir nicht!
 
-- Foundry IMT Agent
-    - Tool, welches AI-Search abfragt und auf device_id == {ID} filtert!
-        - Wie tool entwickeln?
-            - in foundry kann man irgendwie MCP server erstellen und als tool nutzen?
-    - Prompt entsprechend anpassen -> auc <context>device_id={ID}</context> holen
-    - in tool übergeben (soll agent machen)
-    - sollte in unified-ui funktionieren
+- Rollen im FE respektieren (und nur Items etc anzeigen, wenn man rolle hat)
+
+- Orga:
+    - GitHub Projekt sauber aufsetzen mit issues etc
+    - Branching-Konzept
+    - automatischen Change-log
+    - Copilot reviews#
+    - ...
 
 ## Future
+
+- Landingpage desinen
+- 
+
+- ReACT Agent Development Pages designen
+    - Extra Sidebar:
+        - Agents
+        - Tools
+        - Knowledge
+    - Agents
+        - Liste der ReACT Agents mit Descriptions, Tags etc
+    - Tools
+        - Liste an Tools mit Description, Type, Tags etc
+    - Knoledge
+        - Liste an Knowledgebases
+            - AI Search anbinden (nur connection)
+                - dann hier irgendwie container für files schaffen (Storage Account)
+                - dann kann man hier indexes bauen und und auch ACL definieren -> mit $filter ACL durchsetzen
+            - insb. FoundryIQ, WorkIQ
+    - agents/{id}
+        - hier an CopilotStudio oder Foundry orientieren
+            - Overview Page mit allem + einzelne Pages
+            - ODER wie in Foundry alles in einem kompakt ein und ausblendbar
 
 - Backend
     - Agent-Integration
@@ -372,4 +312,5 @@ Deine Aufgaben:
     - in Collections speichern + embedded search
     - Text-Extraction
         - Tika
-        - externen 
+        - externen dienst
+    - per kafka / eventhub!
