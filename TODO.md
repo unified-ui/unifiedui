@@ -89,31 +89,40 @@ Deine Aufgaben:
 ---
 
 
-- N8N Workflow nach traces importieren
-    - Workflow-Run per Tabelle und extra Workflow in traces importieren
-        - Tabelle
-            - id
-            - tenant_id
-            - autonomous_agent_id
-            - workflow_id
-            - created_at
-            - updated_at
-            - status
-    - dann einmal re-run dieses traces im UI anstoßen
-
 - Frontend Refactoring
     - alle pages sollen NICHT im container-layout, sondern über gesamte page gehen mit meinetwegen max-width
+        - hier mit ist gemeint, aktuell ist ein "typeisches" container layout für die breite eingebaut. man hat zentral die page mit ner max width
+        - will aber, dass jetzt die gesamte page width verwendet wird.
+            - konkretes beispiel: applications page:
+                - hier ist alles serh zentriert. ich will das der header der page oben links ist (mit bisschen page padding natürlich) etc. also insgesamt soll einfach mehr platz genutzt werden und es soll nicht so zentriert sein. das gleiche gilt für die details page etc. generell halt alle pages
+        - entwerfe hierfür ein neues layout, inkl. fontsizes, paddings, etc etc
+            - recherchiere gerne nach modernen layouts
     - weitere features
         - PIN (favorietes)
         - last visited
+            - für ein nices dashboard, auf dem der benutzer je entities seine relevanten last visits, aber auch favorites sieht
         - notifications
             - auto-agent runs
+        - plane all diese features. wir haben ja schon einiges datenseitig vorbereitet (zB pin etc), aber logik ist noch nicht implementiert und wir benötigen auch noch ein konzept, wie wir dann zB pins (favoroutes) im UI darstellen -> oben; aber vielleicht gesondert fetchen etc etc
     - Dashboard designen
-        - auf GET /id -> in user_history collection schreiben
-            - {"tenant_id": "", "user_id": "", "entity": "application": "id": "id"}
-        - hier fragen, was best practice -> eigentlich event, aber zu aufwendig!
-    - login routing etc besser gestalten
+        - ich will ein schönes dashboard (home) design haben. hier sollte der benutzer je entity irgendwie seine favoriztes vorne sehen und last visits etc. du verstehst schon. ähnlich wie bei powerbi. bielleicht gibts noch andere sachen, die geil sind. überlege mal, wke man da nen schönes und benutzer zentrietes design/layout hinbekommt
+        - gerne kannst du weitere features vorschlagen
+        - bedenke auch dabei, welche daten wir wie erheben müssen, um das zu ermöglichen (zB last visited etc) darzustellen. 
     - Sidebar & überall: die icons insb. für tracing vereinheitlichen
+    - dann ist es bei vielen pages so, wenn man nen refresh macht, flackert die page komplett aus und wieder ein. das ist nicht so geil. hier sollte der refresh der liste eigentlich geil über react gelöst werden. ist das nicht so, dass eine liste nie komplett neu gerendert wird, sondern nur die items, die sich geändert haben? also zB wenn ich auf der applications page bin und ich lösche eine application, dann sollte eigentlich nur diese eine application rausfliegen und nicht die komplette liste neu laden und damit das komplette UI flackern. das gleiche gilt für die details page. hier sollte eigentlich auch nur das item aktualisiert werden, wenn ich zB den namen ändere oder so. generell sollten wir also schauen, dass wir das UI so bauen, dass es möglichst wenig komplett neu rendert, sondern wirklich nur die items, die sich geändert haben. das macht das UI viel smoother und angenehmer zu bedienen
+        - überlege auch an anderen stellen, ob du solche optimierungen irgendwie finden kannst
+    - die settingspage arbeitet aktuell mit einer horizontalen tabbar navigation. ich denke, da wir schon einige einträge haben, würde es sinn ergeben hier auf eine page sidebar umzusteigen und oben auf der page dann wieder nen titel und beschreibung zu geben
+        - aber überlege mal, was aus design sicht hier best practice für den user wäre
+
+deine aufgabe ist letztendlich, ein geiles ui konzept zu entwickeln und gewisse themen zu refactiren (erstmal konzeptionell.)
+Scheibe das konzept in eine markdown datei für die abnahme meinerseits.
+sei wirklich ausführlich in deiner recherche und deinen überlegungen. es soll wirklich ein geiles und modernes UI Konzept entstehen, was auch die user experience verbessert.
+anschließend wollen wir vielleicht n och nen style guide als instructions entwerfen. dazu aber später
+zudem sollten styles auch einheitlich sein. tabellen immer sehr ähnlich; listen immer sehr ähnlich etc
+
+arbeit in deinem konzept auch viel mit layout beispielen (die du mehr oder weniger "zeichnest" mit ascii oder so) damit ich auch wirklich verstehe, wie du dir das vorstellst. gerne kannst du auch beispiele von anderen modernen ui's oder so einbauen, wenn du das für sinnvoll hältst
+
+    - login routing etc besser gestalten
 
 - ConversationPage
     - schöner designen

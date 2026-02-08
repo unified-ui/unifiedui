@@ -35,6 +35,70 @@ Die Integration basiert auf einer **N8N Data Table** als Job-Queue:
 
 ---
 
+## Authentifizierung
+
+Der Import-Endpoint unterstützt zwei Authentifizierungsmethoden:
+
+| Methode | Empfehlung | Beschreibung |
+|---------|------------|--------------|
+| **Bearer Token (Service Principal)** | **Best Practice** | OAuth2 Client Credentials Flow über Identity Provider |
+| API Key | Nur wenn nötig | Statischer API Key des Autonomous Agents |
+
+### Best Practice: Service Principal mit Bearer Token
+
+Die empfohlene Authentifizierung nutzt einen **Service Principal** (App Registration) beim Identity Provider. Vorteile:
+
+- **Kein statischer Key** — Token werden automatisch rotiert
+- **Gruppen-basierte Berechtigung** — Zugriff über Security Groups steuerbar
+- **Audit-Trail** — Zugriffe sind im Identity Provider nachvollziehbar
+- **Zentral verwaltbar** — Berechtigungen können jederzeit entzogen werden
+
+#### Voraussetzungen in unified-ui
+
+1. **Service Principal einer Gruppe zuordnen**: Der Service Principal muss beim Identity Provider (z.B. Azure Entra ID) einer Security Group zugeordnet sein
+2. **Gruppe als Member hinzufügen**: Diese Security Group muss im unified-ui als Member des Autonomous Agents mit **WRITE**-Berechtigung eingetragen sein
+
+#### Beispiel: Azure Entra ID
+
+**1. App Registration erstellen** (falls nicht vorhanden):
+- Azure Portal → **App Registrations** → **New Registration**
+- Name: z.B. `n8n-unified-ui-integration`
+- Client Secret erstellen und notieren
+
+**2. Service Principal einer Security Group zuordnen**:
+- Azure Portal → **Entra ID** → **Groups** → Gruppe auswählen oder erstellen
+- **Members** → **Add members** → den Service Principal (Enterprise Application) hinzufügen
+
+**3. Gruppe in unified-ui berechtigen**:
+- unified-ui → **Autonomous Agent** → **Members** → **Add Member**
+- Die Security Group hinzufügen mit Rolle **WRITE** (oder höher)
+
+**4. N8N Credential erstellen**:
+1. In N8N: **Credentials** → **New Credential** → **Microsoft OAuth2 API**
+2. Konfiguration:
+   - **Grant Type**: Client Credentials
+   - **Client ID**: Application (Client) ID der App Registration
+   - **Client Secret**: Das erstellte Client Secret
+   - **Scope**: `{Client-ID}/.default` (z.B. `2f323534-3dc9-4821-9589-5b467163ecdd/.default`)
+   - **Auth URI**: `https://login.microsoftonline.com/{Tenant-ID}/oauth2/v2.0/authorize`
+   - **Access Token URL**: `https://login.microsoftonline.com/{Tenant-ID}/oauth2/v2.0/token`
+3. Auf **Save** klicken
+
+**5. HTTP Request Node konfigurieren**:
+- **Authentication**: Predefined Credential Type → **Microsoft OAuth2 API**
+- Die erstellte Credential auswählen — N8N holt automatisch ein Bearer Token
+
+### Fallback: API Key
+
+API Keys sollten nur verwendet werden, wenn kein Identity Provider verfügbar ist oder für schnelle lokale Tests.
+
+1. In N8N: **Credentials** → **New Credential** → **Header Auth**
+2. Name: `unified-ui-agent-api`
+3. Header Name: `X-API-Key`
+4. Value: Der API Key des Autonomous Agents aus unified-ui Settings
+
+---
+
 ## Setup
 
 ### 1. Data Table erstellen
@@ -44,12 +108,9 @@ In N8N:
 2. Erstelle neue **Data Table** mit Name `unified-ui-integration`
 3. Füge die Spalten gemäß Schema hinzu (ohne `id`, `createdAt`, `updatedAt` — die werden automatisch erstellt)
 
-### 2. Credential für unified-ui API erstellen
+### 2. Credential erstellen
 
-1. In N8N: **Credentials** → **New Credential** → **Header Auth**
-2. Name: `unified-ui-agent-api`
-3. Header Name: `X-API-Key`
-4. Value: Der API Key des Autonomous Agents aus unified-ui Settings
+Erstelle eine Credential gemäß der [Authentifizierung](#authentifizierung)-Sektion. Empfohlen: **Microsoft OAuth2 API** mit Service Principal.
 
 ### 3. Integration Workflow importieren
 
@@ -68,9 +129,9 @@ Importiere `unified-ui-integration-workflow.json`:
 }
 ```
 
-**Wichtig**: Passe im HTTP Request Node die URL an:
-- Lokales Docker: `http://host.docker.internal:8085`
-- Production: Deine unified-ui Agent Service URL
+**Wichtig**: Passe im HTTP Request Node an:
+- **URL**: Lokales Docker `http://host.docker.internal:8085` / Production: Deine unified-ui Agent Service URL
+- **Authentication**: Die erstellte Credential auswählen (Microsoft OAuth2 API oder Header Auth)
 
 ### 4. Eigene Workflows integrieren
 
