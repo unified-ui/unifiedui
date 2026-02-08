@@ -1,0 +1,162 @@
+{
+  "name": "API Scraper",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0a2ffa65-efe7-44e7-8279-3235b86a3d5c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://swapi.info/api/people",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "44c90b3f-c5a6-46c9-8217-ac2b071685c7",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "4j5uofKV6rIY5V3g",
+          "mode": "list",
+          "cachedResultName": "unified-ui-integration",
+          "cachedResultUrl": "/projects/y8ejwi0III3uPZAd/datatables/4j5uofKV6rIY5V3g"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "workflow_id": "={{ $execution.id }}",
+            "status": "=PENDING",
+            "workflow_name": "={{ $workflow.name }}",
+            "execution_id": "={{ $execution.id }}",
+            "tenant_id": "01fadbf4-b9e2-43ae-8197-152596547ef6",
+            "autonomous_agent_id": "c523c3ad-e1b6-45f5-952b-1fb6b1d362c2"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "tenant_id",
+              "displayName": "tenant_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "autonomous_agent_id",
+              "displayName": "autonomous_agent_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "workflow_id",
+              "displayName": "workflow_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "workflow_name",
+              "displayName": "workflow_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "execution_id",
+              "displayName": "execution_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "dfec249c-aa9c-4fd2-aeaa-6d03bc347d71",
+      "name": "Insert row",
+      "executeOnce": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "71045359-d001-4c5a-bc46-77952c74a0d8",
+  "meta": {
+    "instanceId": "f0be8c6324100592952b6556238e4e16540662ec22c4c222a83d8a50c5de2694"
+  },
+  "id": "IiiQwIploZVZVMIL",
+  "tags": []
+}

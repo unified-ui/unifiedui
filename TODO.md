@@ -1,100 +1,5 @@
 # TODOs unified-ui
 
-## Setup vault secrets
-
-### 1. Shared Service Key generieren
-
-```sh
-openssl rand -hex 32
-```
-
-Ergebnis kopieren (z.B. `a1b2c3d4...`). Das ist der gemeinsame Service Key.
-
-### 2. Platform Service `.env` anpassen
-
-In `unified-ui-platform-service/.env`:
-
-```dotenv
-# ALT — löschen oder leer lassen:
-# X_AGENT_SERVICE_KEY=
-
-# NEU — Vault-basierte Service Keys:
-VAULT_TYPE=DOTENV
-platform-to-agent-service-key=<GENERATED_KEY>
-agent-to-platform-service-key=<GENERATED_KEY>
-
-# Agent Service URL (wo der Agent Service läuft):
-AGENT_SERVICE_URL=http://localhost:8085
-AGENT_SERVICE_TIMEOUT=30
-```
-
-> **Hinweis:** `platform-to-agent-service-key` und `agent-to-platform-service-key` sind die Vault-Key-Namen. Der DotEnv-Vault liest sie als Env-Vars via `os.getenv()`. Beide Keys können denselben Wert haben oder unterschiedliche (je nach gewünschter Granularität).
-
-### 3. Agent Service `.env` anpassen
-
-In `unified-ui-agent-service/.env`:
-
-```dotenv
-# ALT — löschen:
-# X_AGENT_SERVICE_KEY=
-
-# NEU — Vault-basierte Service Keys:
-VAULT_TYPE=dotenv
-platform-to-agent-service-key=<GENERATED_KEY>
-agent-to-platform-service-key=<GENERATED_KEY>
-```
-
-> Gleiche Werte wie im Platform Service verwenden!
-
-### 4. Services starten
-
-```sh
-# Terminal 1: Platform Service
-cd unified-ui-platform-service
-uvicorn unifiedui.app:app --reload
-
-# Terminal 2: Agent Service
-cd unified-ui-agent-service
-make run
-
-# Terminal 3: Frontend
-cd unified-ui-frontend-service
-npm run dev
-```
-
-### 5. Testen
-
-**a) Service-Key Auth testen (Agent → Platform):**
-```sh
-# Sollte 401 liefern (kein Key):
-curl -X GET http://localhost:8081/api/v1/...eine-service-key-route...
-
-# Sollte 403 liefern (falscher Key):
-curl -X GET http://localhost:8081/api/v1/... -H "X-Service-Key: falsch"
-
-# Sollte 200 liefern (richtiger Key):
-curl -X GET http://localhost:8081/api/v1/... -H "X-Service-Key: <GENERATED_KEY>"
-```
-
-**b) Cascade Delete testen (Platform → Agent):**
-1. Im Frontend eine Conversation mit Nachrichten/Traces anlegen
-2. Conversation löschen → Platform Service ruft Agent Service auf und löscht Messages + Traces
-3. In MongoDB prüfen: `db.messages.find({conversationId: "..."})` und `db.traces.find({conversationId: "..."})` sollten leer sein
-
-**c) Autonomous Agent Cascade Delete testen:**
-1. Autonomous Agent mit Traces anlegen
-2. Agent löschen → Platform ruft Agent Service, löscht Traces + Vault-Secrets
-3. In MongoDB prüfen: `db.traces.find({autonomousAgentId: "..."})` sollte leer sein
-
-### 6. Fehler-Diagnose
-
-- **Platform startet nicht?** → `VAULT_TYPE=DOTENV` prüfen
-- **401/403 bei Service-Calls?** → Keys in beiden `.env` vergleichen, müssen identisch sein
-- **Cascade Delete tut nichts?** → Agent Service Logs prüfen, `AGENT_SERVICE_URL` korrekt?
-- **Fallback:** Alt-Modus funktioniert weiterhin über `X_AGENT_SERVICE_KEY` in Platform `.env`
-
-
-
 ## CMDs
 
 ```sh
@@ -183,37 +88,21 @@ Deine Aufgaben:
 ############################### v0.1.0 ###############################
 ---
 
-<!-- - Bei delete conversation -> auch messages und traces löschen
-    - hier müsste man auf agent-service gehen und platform-service anschließend aufrufen und mit X-Service-Key auth machen
-- Bei delete auto agent -> auch traces löschen
-    - hier müsste man auf agent-service gehen und platform-service anschließend aufrufen und mit X-Service-Key auth machen
-- CORS im platform-service
-    - hier CORS für header X-Service-Key explizit angeben, damit nur vom unified-ui agent-service darauf zugegriffen werden kann
-
-- ZWEI Vaults fixen:
-    - app_vault + secrets_vault
-        - App Vault für application keys wie zB `X-Service-Key`
-        - Secrets Vault -> ist vault für credentials aus der app etc...
-    - *aktuell in auth.py > _validate_service_key soll app_vault nutzen
-        - app_vault kann auch dotenv sein... -->
-
-- Setup vault secrets (siehe Anleitung oben)
 
 - N8N Workflow nach traces importieren
     - Workflow-Run per Tabelle und extra Workflow in traces importieren
+        - Tabelle
+            - id
+            - tenant_id
+            - autonomous_agent_id
+            - workflow_id
+            - created_at
+            - updated_at
+            - status
     - dann einmal re-run dieses traces im UI anstoßen
 
-- Tenant Sessting > AI Settings
-    - entity: tenant_ai_models
-        - name
-        - type [LLM_MODEL | EMBEDDING_MODEL]
-    - credentials.Type: TENANT_AI_MODEL
-    - liste an Models hinterlegen -> es wird loadbalancing genutzt
-    - Warum: AI Support, Embeddings für Search ()
-
-
 - Frontend Refactoring
-    - alle pages sollen NICHT im container, sondern über gesamte page gehen mit meinetwegen max-width
+    - alle pages sollen NICHT im container-layout, sondern über gesamte page gehen mit meinetwegen max-width
     - weitere features
         - PIN (favorietes)
         - last visited
@@ -261,14 +150,24 @@ Deine Aufgaben:
     - Branching-Konzept
     - automatischen Change-log
     - Copilot reviews#
-    - ...
+    - ruff als linter + linter bei go und ts
+    - CI um linter + coverage tests erweitern
 
 ## Future
 
-- CORS im platform-service
+- Backend
+    - Agent-Integration
+        - file upload
+        - reasoning / tool calls etc
+            - in foundry mit tools etc arbeiten und entsprechend im UI anzeigen
+    - Fehler im UI auch anzeigen -> wenn von Agent Service kommt
+
+- [DONE?] CORS im platform-service
     - hier CORS für header X-Service-Key explizit angeben, damit nur vom unified-ui agent-service darauf zugegriffen werden kann
 
 - Landingpage desinen
+
+- Chat in ext. Webseite embedden lassen
 
 - PUT und POST auf autoagents /traces soll auch mit Service Principal funktionieren -> dann kann man SVC in Manage Access registrieren und dann mit diesem bearer token auth machen
 
@@ -295,12 +194,6 @@ Deine Aufgaben:
         - hier an CopilotStudio oder Foundry orientieren
             - Overview Page mit allem + einzelne Pages
             - ODER wie in Foundry alles in einem kompakt ein und ausblendbar
-
-- Backend
-    - Agent-Integration
-        - file upload
-        - reasoning / tool calls etc
-            - in foundry mit tools etc arbeiten und entsprechend im UI anzeigen
 
 - Frontend
     - /refresh von identity implementieren
