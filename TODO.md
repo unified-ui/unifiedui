@@ -1,5 +1,100 @@
 # TODOs unified-ui
 
+## Setup vault secrets
+
+### 1. Shared Service Key generieren
+
+```sh
+openssl rand -hex 32
+```
+
+Ergebnis kopieren (z.B. `a1b2c3d4...`). Das ist der gemeinsame Service Key.
+
+### 2. Platform Service `.env` anpassen
+
+In `unified-ui-platform-service/.env`:
+
+```dotenv
+# ALT — löschen oder leer lassen:
+# X_AGENT_SERVICE_KEY=
+
+# NEU — Vault-basierte Service Keys:
+VAULT_TYPE=DOTENV
+platform-to-agent-service-key=<GENERATED_KEY>
+agent-to-platform-service-key=<GENERATED_KEY>
+
+# Agent Service URL (wo der Agent Service läuft):
+AGENT_SERVICE_URL=http://localhost:8085
+AGENT_SERVICE_TIMEOUT=30
+```
+
+> **Hinweis:** `platform-to-agent-service-key` und `agent-to-platform-service-key` sind die Vault-Key-Namen. Der DotEnv-Vault liest sie als Env-Vars via `os.getenv()`. Beide Keys können denselben Wert haben oder unterschiedliche (je nach gewünschter Granularität).
+
+### 3. Agent Service `.env` anpassen
+
+In `unified-ui-agent-service/.env`:
+
+```dotenv
+# ALT — löschen:
+# X_AGENT_SERVICE_KEY=
+
+# NEU — Vault-basierte Service Keys:
+VAULT_TYPE=dotenv
+platform-to-agent-service-key=<GENERATED_KEY>
+agent-to-platform-service-key=<GENERATED_KEY>
+```
+
+> Gleiche Werte wie im Platform Service verwenden!
+
+### 4. Services starten
+
+```sh
+# Terminal 1: Platform Service
+cd unified-ui-platform-service
+uvicorn unifiedui.app:app --reload
+
+# Terminal 2: Agent Service
+cd unified-ui-agent-service
+make run
+
+# Terminal 3: Frontend
+cd unified-ui-frontend-service
+npm run dev
+```
+
+### 5. Testen
+
+**a) Service-Key Auth testen (Agent → Platform):**
+```sh
+# Sollte 401 liefern (kein Key):
+curl -X GET http://localhost:8081/api/v1/...eine-service-key-route...
+
+# Sollte 403 liefern (falscher Key):
+curl -X GET http://localhost:8081/api/v1/... -H "X-Service-Key: falsch"
+
+# Sollte 200 liefern (richtiger Key):
+curl -X GET http://localhost:8081/api/v1/... -H "X-Service-Key: <GENERATED_KEY>"
+```
+
+**b) Cascade Delete testen (Platform → Agent):**
+1. Im Frontend eine Conversation mit Nachrichten/Traces anlegen
+2. Conversation löschen → Platform Service ruft Agent Service auf und löscht Messages + Traces
+3. In MongoDB prüfen: `db.messages.find({conversationId: "..."})` und `db.traces.find({conversationId: "..."})` sollten leer sein
+
+**c) Autonomous Agent Cascade Delete testen:**
+1. Autonomous Agent mit Traces anlegen
+2. Agent löschen → Platform ruft Agent Service, löscht Traces + Vault-Secrets
+3. In MongoDB prüfen: `db.traces.find({autonomousAgentId: "..."})` sollte leer sein
+
+### 6. Fehler-Diagnose
+
+- **Platform startet nicht?** → `VAULT_TYPE=DOTENV` prüfen
+- **401/403 bei Service-Calls?** → Keys in beiden `.env` vergleichen, müssen identisch sein
+- **Cascade Delete tut nichts?** → Agent Service Logs prüfen, `AGENT_SERVICE_URL` korrekt?
+- **Fallback:** Alt-Modus funktioniert weiterhin über `X_AGENT_SERVICE_KEY` in Platform `.env`
+
+
+
 ## CMDs
 
 ```sh
@@ -88,19 +183,25 @@ Deine Aufgaben:
 ############################### v0.1.0 ###############################
 ---
 
-- AutoAgent Page designen (refactoren)
+<!-- - Bei delete conversation -> auch messages und traces löschen
+    - hier müsste man auf agent-service gehen und platform-service anschließend aufrufen und mit X-Service-Key auth machen
+- Bei delete auto agent -> auch traces löschen
+    - hier müsste man auf agent-service gehen und platform-service anschließend aufrufen und mit X-Service-Key auth machen
+- CORS im platform-service
+    - hier CORS für header X-Service-Key explizit angeben, damit nur vom unified-ui agent-service darauf zugegriffen werden kann
 
-- copilot-instructions anhand FE für agent-service umsetzen
-    - tests wichtig und das man sie per pytest -n auto ausführt nach änderungen und ggf fixen
-    - kommentare NUR wenn absolut notwenig; abgesehen von Klassen, Interfaces und Funktionskommentaren; diese sollte immer gegeben sein
+- ZWEI Vaults fixen:
+    - app_vault + secrets_vault
+        - App Vault für application keys wie zB `X-Service-Key`
+        - Secrets Vault -> ist vault für credentials aus der app etc...
+    - *aktuell in auth.py > _validate_service_key soll app_vault nutzen
+        - app_vault kann auch dotenv sein... -->
 
-- nochmal für platform-service
+- Setup vault secrets (siehe Anleitung oben)
 
-- Traces anlegen in agent, um liste zu debuggen
-    - liste debuggen
-    - delete trace möglich machen
-
-- entferne tracings item aus app sidebar -> brauchen wir nicht mehr
+- N8N Workflow nach traces importieren
+    - Workflow-Run per Tabelle und extra Workflow in traces importieren
+    - dann einmal re-run dieses traces im UI anstoßen
 
 - Tenant Sessting > AI Settings
     - entity: tenant_ai_models
@@ -109,6 +210,7 @@ Deine Aufgaben:
     - credentials.Type: TENANT_AI_MODEL
     - liste an Models hinterlegen -> es wird loadbalancing genutzt
     - Warum: AI Support, Embeddings für Search ()
+
 
 - Frontend Refactoring
     - alle pages sollen NICHT im container, sondern über gesamte page gehen mit meinetwegen max-width
@@ -123,24 +225,6 @@ Deine Aufgaben:
         - hier fragen, was best practice -> eigentlich event, aber zu aufwendig!
     - login routing etc besser gestalten
     - Sidebar & überall: die icons insb. für tracing vereinheitlichen
-    - Einmal Dateien analysieren und refactoren
-        - keinen doppelten code
-        - nicht genutzter code raus
-        - alles was sonst noch dazugehört
-
-- ZWEI Vaults fixen:
-    - app_vault + secrets_vault
-        - App Vault für application keys wie zB `X-Service-Key`
-        - Secrets Vault -> ist vault für credentials aus der app etc...
-    - *aktuell in auth.py > _validate_service_key soll app_vault nutzen
-        - app_vault kann auch dotenv sein...
-
-- models.py refactoren
-    - überall wo uuid von uns -> char(36) nutzen
-        - zb bei Conversation.application_id string(100) -> char(36)
-
-- Bei delete conversation -> auch messages und traces löschen
-- Bei delete auto agent -> auch traces löschen
 
 - ConversationPage
     - schöner designen
@@ -166,6 +250,11 @@ Deine Aufgaben:
             - aber extConversationId brauchen wir nicht!
 
 - Rollen im FE respektieren (und nur Items etc anzeigen, wenn man rolle hat)
+    - Rollen testen mit mehreren Usern
+
+- AI-Based Refactring
+    - für agent-service, platform-service und frontend-service eine analyse machen lassen und refactoring vorschlagen
+    - dann die vorschläge durchgehen und umsetzen
 
 - Orga:
     - GitHub Projekt sauber aufsetzen mit issues etc
@@ -176,8 +265,16 @@ Deine Aufgaben:
 
 ## Future
 
+- CORS im platform-service
+    - hier CORS für header X-Service-Key explizit angeben, damit nur vom unified-ui agent-service darauf zugegriffen werden kann
+
 - Landingpage desinen
-- 
+
+- PUT und POST auf autoagents /traces soll auch mit Service Principal funktionieren -> dann kann man SVC in Manage Access registrieren und dann mit diesem bearer token auth machen
+
+- Import Dialog für Auto Agents
+    - über Tabelle Import IconButton -> Import Dialog
+        - hier die ID eingeben und dann importieren lassen
 
 - ReACT Agent Development Pages designen
     - Extra Sidebar:
