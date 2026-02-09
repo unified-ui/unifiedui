@@ -88,20 +88,19 @@ Deine Aufgaben:
 ############################### v0.1.0 ###############################
 ---
 
-Du wirst mir nun das Konzept von vorne bis hinten implementieren.
-Dabei wirst du sowohl im Forontend, als auch im Backend test-driven arbeiten.
-Du wirst planen, wie du die noch nicht implementierten features konzeptionell, spezell was das datenmanagement/modellierung angeht, umsetzen.
-Wenn du eine Section umgesetzt/implementiert hast, schreibst du entsprechende tests, führst diese aus, fixt gegenenfalls UND am Ende, wenn alle tests grün sind, reviewst du noch einmal deine Implementierung und solltest du unschlüssigkeiten finden, refactorst du entsprechend und der zyklus beginnt von vorne.
-Ist das Refactoring abgeschlossen für den jeweiligen Service (platform-service, agent-service, frontend-service), passt du entsprechend der guidelines die copilot-instructions.md und die weiteren instructions-dateien an.
-Besonders im Frontend-Service erwarte ich von dir, dass du sauber testest und vielleicht sogar manuell einmal im browser klickst, ob alles funktioniert und ob das layout mit padding, margin, skrollfähigkeit etc sauber implementiert ist.
+- Frontend-Refactoring
+    - checken, ob alles so funktioniert, wie es soll
+    - Design ggf anpassen lassen
 
 - ConversationPage
-    - schöner designen
-    - Search implementieren
-    - tracing im Chat verschönern
-    - ...
+    - Conversation Sidebar -> aktuell nur für dark mode -> noch für light mode anpassen
+    - dateityp "markdown" supporten!
+    - Markdown-Renderer
+        - custom css properties für die items, damit schöner gerendert wird
+    - input-bar
+        - mehr wie im typecode chat!
 
-- Frontend-Tests entwickeln
+- frontend-linting und tests im ci einbauen
 
 - Tracings Refactoren
     - Foundry Tracings -> mehr Daten sammeln mit tool calls, etc etc
