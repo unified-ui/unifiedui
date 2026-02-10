@@ -89,18 +89,29 @@ Deine Aufgaben:
 ---
 
 - Frontend-Refactoring
+    - die listen sind jetzt komplett in denspalten durcheinander
+    - überall wo man speichern/updaten kann
+        - speicherbutton soll beim update erst aktiv werden, wenn sich was geändert hat!!!
+        - und wenn sich etwas geändert hat und man raus navigieren will, sollte ein browser popup kommen "Änderungen wurden nicht gespeichert, wirklich verlassen?" -> wenn ja, dann verwerfen, wenn nein, dann bleiben (dafür gibts von den browsern ja schon eine gute möglichkeit das zu unterdrück, dass man einfach wegnavigeiren kann, richtig?)
     - checken, ob alles so funktioniert, wie es soll
     - Design ggf anpassen lassen
 
 - ConversationPage
-    - Conversation Sidebar -> aktuell nur für dark mode -> noch für light mode anpassen
+    - die tabbar in sidebar für time und agent refactoren
     - dateityp "markdown" supporten!
+    - traces hierarchie auch schwarzerhintergrund, links-oben abgerundet etc
     - Markdown-Renderer
         - custom css properties für die items, damit schöner gerendert wird
     - input-bar
         - mehr wie im typecode chat!
 
-- frontend-linting und tests im ci einbauen
+- tools service + re-act-agent-service
+    - outlook tools
+        - hier kann man mit SVC oder auch mit delegated permissions arbeiten! token haben wir ja
+    - sharepoint
+        - site scrapen
+        - get metadata und und und
+    - OpenAPI defintiion & mcp server (haben wir ja schon) mit beschreibung
 
 - Tracings Refactoren
     - Foundry Tracings -> mehr Daten sammeln mit tool calls, etc etc
