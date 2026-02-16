@@ -1,0 +1,50 @@
+# CODEOWNERS file
+# 
+# This file defines code ownership for automatic reviewer assignment.
+# Each line is a file pattern followed by one or more owners.
+# 
+# Owners can be:
+# - @username (GitHub username)
+# - @org/team-name (GitHub team)
+# - email@example.com (email address)
+#
+# More information: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything in the repo
+# Will be requested for review when someone opens a pull request
+* @enricogoerlitz
+
+# Documentation
+*.md @enricogoerlitz
+/docs/ @enricogoerlitz
+
+# Frontend Service
+/frontend/ @enricogoerlitz
+*.tsx @enricogoerlitz
+*.ts @enricogoerlitz
+*.jsx @enricogoerlitz
+*.js @enricogoerlitz
+
+# Platform Service (Python/FastAPI)
+/platform/ @enricogoerlitz
+*.py @enricogoerlitz
+
+# Agent Service (Go)
+/agent/ @enricogoerlitz
+*.go @enricogoerlitz
+go.mod @enricogoerlitz
+go.sum @enricogoerlitz
+
+# CI/CD and GitHub Configuration
+/.github/ @enricogoerlitz
+.github/workflows/ @enricogoerlitz
+
+# Configuration Files
+/.gitignore @enricogoerlitz
+/.yamllint.yml @enricogoerlitz
+/.markdownlint.json @enricogoerlitz
+/CONTRIBUTING.md @enricogoerlitz
+/CHANGELOG.md @enricogoerlitz
+
+# Design Documents
+/design/ @enricogoerlitz

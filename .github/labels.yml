@@ -1,0 +1,194 @@
+# GitHub Labels Configuration
+#
+# This file documents the recommended labels for the unified-ui repository.
+# Use the GitHub Labels feature or the GitHub CLI to apply these labels.
+#
+# To apply labels using GitHub CLI:
+# gh label create "label-name" --description "Description" --color "hex-color"
+
+## Type Labels (What kind of change)
+- name: "bug"
+  description: "Something isn't working"
+  color: "d73a4a"
+
+- name: "enhancement"
+  description: "New feature or request"
+  color: "a2eeef"
+
+- name: "task"
+  description: "General task or chore"
+  color: "d4c5f9"
+
+- name: "documentation"
+  description: "Improvements or additions to documentation"
+  color: "0075ca"
+
+- name: "refactor"
+  description: "Code refactoring"
+  color: "fbca04"
+
+## Priority Labels
+- name: "priority: critical"
+  description: "Critical priority - needs immediate attention"
+  color: "b60205"
+
+- name: "priority: high"
+  description: "High priority"
+  color: "d93f0b"
+
+- name: "priority: medium"
+  description: "Medium priority"
+  color: "fbca04"
+
+- name: "priority: low"
+  description: "Low priority"
+  color: "0e8a16"
+
+## Status Labels
+- name: "status: needs-triage"
+  description: "Needs initial review and prioritization"
+  color: "ededed"
+
+- name: "status: blocked"
+  description: "Blocked by another issue or external dependency"
+  color: "b60205"
+
+- name: "status: in-progress"
+  description: "Work is in progress"
+  color: "0052cc"
+
+- name: "status: ready-for-review"
+  description: "Ready for review"
+  color: "0e8a16"
+
+- name: "status: needs-revision"
+  description: "Needs changes after review"
+  color: "e99695"
+
+## Service Labels (Where the change is)
+- name: "service: frontend"
+  description: "Frontend service (React/TypeScript)"
+  color: "61dafb"
+
+- name: "service: platform"
+  description: "Platform service (Python/FastAPI)"
+  color: "3776ab"
+
+- name: "service: agent"
+  description: "Agent service (Go)"
+  color: "00add8"
+
+- name: "service: infra"
+  description: "Infrastructure/DevOps/CI/CD"
+  color: "5319e7"
+
+## Release Labels
+- name: "release: v0.1.0"
+  description: "Planned for v0.1.0 release"
+  color: "006b75"
+
+- name: "release: v0.2.0"
+  description: "Planned for v0.2.0 release"
+  color: "006b75"
+
+- name: "release: v0.3.0"
+  description: "Planned for v0.3.0 release"
+  color: "006b75"
+
+- name: "release: v1.0.0"
+  description: "Planned for v1.0.0 release"
+  color: "006b75"
+
+## Special Labels
+- name: "good first issue"
+  description: "Good for newcomers"
+  color: "7057ff"
+
+- name: "help wanted"
+  description: "Extra attention is needed"
+  color: "008672"
+
+- name: "question"
+  description: "Further information is requested"
+  color: "d876e3"
+
+- name: "duplicate"
+  description: "This issue or pull request already exists"
+  color: "cfd3d7"
+
+- name: "wontfix"
+  description: "This will not be worked on"
+  color: "ffffff"
+
+- name: "invalid"
+  description: "This doesn't seem right"
+  color: "e4e669"
+
+- name: "security"
+  description: "Security-related issue"
+  color: "ee0701"
+
+- name: "breaking-change"
+  description: "Breaking API or behavior change"
+  color: "d93f0b"
+
+- name: "dependencies"
+  description: "Dependency updates"
+  color: "0366d6"
+
+- name: "copilot"
+  description: "GitHub Copilot assisted development"
+  color: "8b949e"
+
+- name: "needs-discussion"
+  description: "Needs team discussion before proceeding"
+  color: "d4c5f9"
+
+---
+
+## Applying Labels via GitHub CLI
+
+```bash
+# Example commands to create labels:
+
+# Type labels
+gh label create "bug" --description "Something isn't working" --color "d73a4a"
+gh label create "enhancement" --description "New feature or request" --color "a2eeef"
+gh label create "task" --description "General task or chore" --color "d4c5f9"
+
+# Priority labels
+gh label create "priority: critical" --description "Critical priority" --color "b60205"
+gh label create "priority: high" --description "High priority" --color "d93f0b"
+
+# Service labels
+gh label create "service: frontend" --description "Frontend service (React/TypeScript)" --color "61dafb"
+gh label create "service: platform" --description "Platform service (Python/FastAPI)" --color "3776ab"
+gh label create "service: agent" --description "Agent service (Go)" --color "00add8"
+
+# Release labels
+gh label create "release: v0.1.0" --description "Planned for v0.1.0 release" --color "006b75"
+
+# For bulk creation, you can use a script:
+cat .github/labels.yml | yq -r '.[] | "gh label create \"\(.name)\" --description \"\(.description)\" --color \"\(.color)\""' | sh
+```
+
+## Label Usage Guidelines
+
+### Issue Labeling
+- Every issue should have at least one **type** label (bug, enhancement, task, etc.)
+- Assign a **priority** label if known
+- Add **service** labels for the affected services
+- Add a **release** label if it's planned for a specific release
+- Use **status** labels to track progress
+
+### PR Labeling
+- PRs inherit labels from linked issues
+- Add additional labels as needed during review
+- Use **breaking-change** label for breaking changes
+- Use **needs-revision** after requesting changes
+
+### Special Cases
+- Use **good first issue** for beginner-friendly tasks
+- Use **help wanted** when community help is needed
+- Use **security** for security-related issues (handle carefully)
+- Use **needs-discussion** before making decisions on complex issues

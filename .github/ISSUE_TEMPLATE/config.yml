@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussion
+    url: https://github.com/unified-ui/unifiedui/discussions
+    about: Ask questions, share ideas, or discuss the project
+  - name: 📖 Documentation
+    url: https://github.com/unified-ui/unifiedui/blob/main/README.md
+    about: Read the project documentation
+  - name: 🤝 Contributing Guide
+    url: https://github.com/unified-ui/unifiedui/blob/main/CONTRIBUTING.md
+    about: Learn how to contribute to the project

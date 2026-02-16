@@ -1,0 +1,112 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  pr-checks:
+    name: PR Validation
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate PR title
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+          scopes: |
+            frontend
+            platform
+            agent
+            auth
+            api
+            ui
+            docs
+            ci
+            deps
+          requireScope: false
+
+      - name: Check for merge conflicts
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          if git merge-tree $(git merge-base HEAD origin/${{ github.base_ref }}) origin/${{ github.base_ref }} HEAD | grep -q '<<<<<<<'; then
+            echo "::error::Pull request has merge conflicts with ${{ github.base_ref }}"
+            exit 1
+          fi
+
+      - name: Validate branch name
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          if [[ ! "$BRANCH_NAME" =~ ^(feature|bugfix|hotfix|release|copilot)/.+ ]]; then
+            echo "::error::Branch name must follow pattern: feature/*, bugfix/*, hotfix/*, release/*, or copilot/*"
+            echo "Current branch: $BRANCH_NAME"
+            exit 1
+          fi
+
+      - name: Check CHANGELOG updated
+        if: github.base_ref == 'main' || github.base_ref == 'develop'
+        run: |
+          if git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -q "CHANGELOG.md"; then
+            echo "✓ CHANGELOG.md has been updated"
+          else
+            echo "::warning::CHANGELOG.md was not updated. Consider adding an entry for this change."
+          fi
+
+      - name: Check for large files
+        run: |
+          MAX_SIZE=1048576  # 1MB in bytes
+          LARGE_FILES=$(find . -type f -size +${MAX_SIZE}c -not -path "*/node_modules/*" -not -path "*/.git/*" -not -path "*/dist/*" -not -path "*/build/*" -not -path "*.png" -not -path "*.jpg" -not -path "*.jpeg" -not -path "*.gif" -not -path "*.pdf" | head -10)
+
+          if [ -n "$LARGE_FILES" ]; then
+            echo "::warning::Large files detected (>1MB):"
+            echo "$LARGE_FILES"
+            echo "Consider using Git LFS for large files or excluding them from the repository"
+          fi
+
+      - name: Validate no secrets in code
+        run: |
+          # Check for common secret patterns
+          if grep -r -i -E "(password|secret|api[_-]?key|token|private[_-]?key)\s*=\s*['\"][^'\"]+['\"]" --exclude-dir={node_modules,.git,dist,build} . ; then
+            echo "::error::Potential secrets detected in code. Please remove them."
+            exit 1
+          fi
+
+  summary:
+    name: PR Summary
+    runs-on: ubuntu-latest
+    needs: [pr-checks]
+    if: always()
+
+    steps:
+      - name: Check job results
+        run: |
+          if [ "${{ needs.pr-checks.result }}" != "success" ]; then
+            echo "::error::PR validation failed. Please fix the issues before merging."
+            exit 1
+          fi
+          echo "✓ All PR validation checks passed!"

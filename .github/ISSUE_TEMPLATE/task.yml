@@ -1,0 +1,150 @@
+name: Task/Chore
+description: Create a task or chore (refactoring, maintenance, documentation, etc.)
+title: "[Task]: "
+labels: ["task", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for tasks, chores, refactoring, documentation updates, and other non-feature work.
+
+  - type: dropdown
+    id: task-type
+    attributes:
+      label: Task Type
+      description: What type of task is this?
+      options:
+        - Refactoring
+        - Documentation
+        - Maintenance
+        - CI/CD
+        - Testing
+        - Code Quality
+        - Security
+        - Performance
+        - Dependencies Update
+        - Configuration
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: service
+    attributes:
+      label: Affected Service/Area
+      description: Which service or area does this task relate to?
+      options:
+        - Frontend Service
+        - Platform Service
+        - Agent Service
+        - Documentation
+        - Infrastructure/DevOps
+        - Multiple Services
+        - Repository/Project Management
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Task Description
+      description: Provide a clear description of what needs to be done
+      placeholder: Describe the task in detail...
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation/Background
+      description: Why is this task necessary? What problem does it solve?
+      placeholder: |
+        This task is needed because...
+        Benefits include...
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope of Work
+      description: What specific work needs to be done?
+      placeholder: |
+        - [ ] Item 1
+        - [ ] Item 2
+        - [ ] Item 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: How will we know when this task is complete?
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Documentation updated (if applicable)
+        - [ ] Tests passing
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this task?
+      options:
+        - Critical (urgent)
+        - High (important)
+        - Medium (normal)
+        - Low (nice to have)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: release
+    attributes:
+      label: Target Release
+      description: Which release should this be completed in?
+      options:
+        - v0.1.0
+        - v0.2.0
+        - v0.3.0
+        - v1.0.0
+        - Future Release
+        - Not Release-Blocking
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Are there any dependencies or blockers for this task?
+      placeholder: |
+        Depends on:
+        - Issue #123
+        - Completion of feature X
+        - External dependency Y
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, links, or resources about this task
+      placeholder: Any additional information...
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      description: Please verify the following before submitting
+      options:
+        - label: I have searched existing issues to ensure this is not a duplicate
+          required: true
+        - label: I have clearly described the scope and acceptance criteria
+          required: true
+        - label: I have identified any dependencies or blockers
+          required: false
