@@ -180,29 +180,29 @@ jobs:
       - name: Check linting results
         run: |
           FAILED=0
-          
+
           if [ "${{ needs.lint-frontend.result }}" == "failure" ]; then
             echo "::error::Frontend linting failed"
             FAILED=1
           fi
-          
+
           if [ "${{ needs.lint-platform.result }}" == "failure" ]; then
             echo "::error::Platform service linting failed"
             FAILED=1
           fi
-          
+
           if [ "${{ needs.lint-agent.result }}" == "failure" ]; then
             echo "::error::Agent service linting failed"
             FAILED=1
           fi
-          
+
           if [ "${{ needs.lint-markdown.result }}" == "failure" ]; then
             echo "::error::Markdown linting failed"
             FAILED=1
           fi
-          
+
           if [ $FAILED -eq 1 ]; then
             exit 1
           fi
-          
+
           echo "✓ All linting checks passed!"

@@ -81,7 +81,7 @@ jobs:
         run: |
           MAX_SIZE=1048576  # 1MB in bytes
           LARGE_FILES=$(find . -type f -size +${MAX_SIZE}c -not -path "*/node_modules/*" -not -path "*/.git/*" -not -path "*/dist/*" -not -path "*/build/*" -not -path "*.png" -not -path "*.jpg" -not -path "*.jpeg" -not -path "*.gif" -not -path "*.pdf" | head -10)
-          
+
           if [ -n "$LARGE_FILES" ]; then
             echo "::warning::Large files detected (>1MB):"
             echo "$LARGE_FILES"

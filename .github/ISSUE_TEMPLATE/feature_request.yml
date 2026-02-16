@@ -49,7 +49,7 @@ body:
       description: What problem does this feature solve? What is the motivation?
       placeholder: |
         As a [user type], I want to [goal] so that [benefit].
-        
+
         Currently, [describe the limitation or pain point]...
     validations:
       required: true

@@ -172,24 +172,24 @@ jobs:
       - name: Check test results
         run: |
           FAILED=0
-          
+
           if [ "${{ needs.test-frontend.result }}" == "failure" ]; then
             echo "::error::Frontend tests failed"
             FAILED=1
           fi
-          
+
           if [ "${{ needs.test-platform.result }}" == "failure" ]; then
             echo "::error::Platform service tests failed"
             FAILED=1
           fi
-          
+
           if [ "${{ needs.test-agent.result }}" == "failure" ]; then
             echo "::error::Agent service tests failed"
             FAILED=1
           fi
-          
+
           if [ $FAILED -eq 1 ]; then
             exit 1
           fi
-          
+
           echo "✓ All tests passed!"
