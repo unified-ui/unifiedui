@@ -84,34 +84,45 @@ Deine Aufgaben:
 4. Hinterfrage deine Planung zur implementierung
 5. Implementiere meine anforderungen
 
+Beachte dabei den folgenden Workflow:
+1. Wähle einen Part aus, den du implementieren möchtest
+2. Plane deine implementierung
+3. Implementiere
+4. Füge Tests hinzu, passe bestehende ggf an und Führe alle tests aus; bei error: fixe
+5. Reviewe nochmal deine Implementierung und baue ggf. Optimierungen ein. danach nochmal Schritt 4
+
 ---
 ############################### v0.1.0 ###############################
 ---
 
+
+- ConversationPage
+    - MessageSearchDialog
+
+- Skeleton loading schön gestalten
+    - farben
+    - 
+- Tool-Tips
+    - bei allen beschreibungen, namen und überall wo abgeschnitten werden kann
+        - hier soll der volle text in einem tooltip angezeigt werden
+            - so wie auch bei den dateiuploads im chat
+
 - Frontend-Refactoring
-    - die listen sind jetzt komplett in denspalten durcheinander
-    - überall wo man speichern/updaten kann
-        - speicherbutton soll beim update erst aktiv werden, wenn sich was geändert hat!!!
-        - und wenn sich etwas geändert hat und man raus navigieren will, sollte ein browser popup kommen "Änderungen wurden nicht gespeichert, wirklich verlassen?" -> wenn ja, dann verwerfen, wenn nein, dann bleiben (dafür gibts von den browsern ja schon eine gute möglichkeit das zu unterdrück, dass man einfach wegnavigeiren kann, richtig?)
     - checken, ob alles so funktioniert, wie es soll
     - Design ggf anpassen lassen
 
-- ConversationPage
-    - die tabbar in sidebar für time und agent refactoren
-    - dateityp "markdown" supporten!
-    - traces hierarchie auch schwarzerhintergrund, links-oben abgerundet etc
-    - Markdown-Renderer
-        - custom css properties für die items, damit schöner gerendert wird
-    - input-bar
-        - mehr wie im typecode chat!
+- [TESTE] Rollen im FE respektieren (und nur Items etc anzeigen, wenn man rolle hat)
+    - einen unified-ui tenant bauen
+        - neue app-registration
+        - user anlegen mit verschiedenen rollen
+        - gruppen anlegen
+    - Rollen testen mit mehreren Usern
 
-- tools service + re-act-agent-service
-    - outlook tools
-        - hier kann man mit SVC oder auch mit delegated permissions arbeiten! token haben wir ja
-    - sharepoint
-        - site scrapen
-        - get metadata und und und
-    - OpenAPI defintiion & mcp server (haben wir ja schon) mit beschreibung
+- Refactoring:
+    - bei POST /messages
+        - geben wir applicationId und extConversationId mit -> beides bekommen wir über die Conversation!
+            - applicationId vielleicht okay
+            - aber extConversationId brauchen wir nicht!
 
 - Tracings Refactoren
     - Foundry Tracings -> mehr Daten sammeln mit tool calls, etc etc
@@ -122,28 +133,38 @@ Deine Aufgaben:
         - wenn man MCP Server aufruft (siehe Word), muss noch im chat confirmt werden -> wie machen wir das dann?
     - N8N
 
-- Refactoring:
-    - bei POST /messages
-        - geben wir applicationId und extConversationId mit -> beides bekommen wir über die Conversation!
-            - applicationId vielleicht okay
-            - aber extConversationId brauchen wir nicht!
-
-- Rollen im FE respektieren (und nur Items etc anzeigen, wenn man rolle hat)
-    - Rollen testen mit mehreren Usern
+- Frontend Tracing Visualizer Design überarbeiten
+    - Die Data Section ist noch chaos!
+        - sowohl im chat interface, als auc im dialog
 
 - AI-Based Refactring
     - für agent-service, platform-service und frontend-service eine analyse machen lassen und refactoring vorschlagen
     - dann die vorschläge durchgehen und umsetzen
 
+- frontend code struktur refactoren
+    - aktuell chat content und so unter conversation page => hier eher in components?/common odero so, damit wir in ReACT Agent Development page wiederverwenden können
+
+- naming refactoring:
+    - überhall "applications"/"application" in "chat-agents"/"chat-agent" umbenennen
+        - auch in DB!!!
+
 - Orga:
     - GitHub Projekt sauber aufsetzen mit issues etc
     - Branching-Konzept
     - automatischen Change-log
-    - Copilot reviews#
+    - Copilot reviews
     - ruff als linter + linter bei go und ts
     - CI um linter + coverage tests erweitern
 
 ## Future
+
+- tools service + re-act-agent-service
+    - outlook tools
+        - hier kann man mit SVC oder auch mit delegated permissions arbeiten! token haben wir ja
+    - sharepoint
+        - site scrapen
+        - get metadata und und und
+    - OpenAPI defintiion & mcp server (haben wir ja schon) mit beschreibung
 
 - Backend
     - Agent-Integration
