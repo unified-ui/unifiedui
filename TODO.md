@@ -101,15 +101,13 @@ Beachte dabei den folgenden Workflow:
 
 - Skeleton loading schön gestalten
     - farben
-    - 
+
 - Tool-Tips
     - bei allen beschreibungen, namen und überall wo abgeschnitten werden kann
         - hier soll der volle text in einem tooltip angezeigt werden
             - so wie auch bei den dateiuploads im chat
 
-- Frontend-Refactoring
-    - checken, ob alles so funktioniert, wie es soll
-    - Design ggf anpassen lassen
+- Dashboard design mit mehr Farbe
 
 - [TESTE] Rollen im FE respektieren (und nur Items etc anzeigen, wenn man rolle hat)
     - einen unified-ui tenant bauen
@@ -117,6 +115,12 @@ Beachte dabei den folgenden Workflow:
         - user anlegen mit verschiedenen rollen
         - gruppen anlegen
     - Rollen testen mit mehreren Usern
+
+- Frontend-Refactoring
+    - checken, ob alles so funktioniert, wie es soll
+    - Design ggf anpassen lassen
+
+--- 
 
 - Refactoring:
     - bei POST /messages
@@ -132,6 +136,7 @@ Beachte dabei den folgenden Workflow:
     - Foundry Agent -> MCP Call Confirmation
         - wenn man MCP Server aufruft (siehe Word), muss noch im chat confirmt werden -> wie machen wir das dann?
     - N8N
+        - calls
 
 - Frontend Tracing Visualizer Design überarbeiten
     - Die Data Section ist noch chaos!
@@ -166,6 +171,11 @@ Beachte dabei den folgenden Workflow:
         - get metadata und und und
     - OpenAPI defintiion & mcp server (haben wir ja schon) mit beschreibung
 
+- emtec branging / customizations ermöglichen
+    - Farbschema
+    - Logo
+    - etc
+
 - Backend
     - Agent-Integration
         - file upload
@@ -173,14 +183,14 @@ Beachte dabei den folgenden Workflow:
             - in foundry mit tools etc arbeiten und entsprechend im UI anzeigen
     - Fehler im UI auch anzeigen -> wenn von Agent Service kommt
 
-- [DONE?] CORS im platform-service
+- [DONE] CORS im platform-service
     - hier CORS für header X-Service-Key explizit angeben, damit nur vom unified-ui agent-service darauf zugegriffen werden kann
 
 - Landingpage desinen
 
 - Chat in ext. Webseite embedden lassen
 
-- PUT und POST auf autoagents /traces soll auch mit Service Principal funktionieren -> dann kann man SVC in Manage Access registrieren und dann mit diesem bearer token auth machen
+- [DONE] PUT und POST auf autoagents /traces soll auch mit Service Principal funktionieren -> dann kann man SVC in Manage Access registrieren und dann mit diesem bearer token auth machen
 
 - Import Dialog für Auto Agents
     - über Tabelle Import IconButton -> Import Dialog
@@ -210,14 +220,6 @@ Beachte dabei den folgenden Workflow:
     - /refresh von identity implementieren
         - FE button in IAM table -> da wo das icon ganz links ist -> beim hovern hier ein refresh icon rein!
 
-    - Rollen im FE beachten
-        - GLOBAL_ADMIN, *CREATOR, *ADMIN
-        - TENANT manages acces etc etc
-
-    - language-support einbauen
-        - erstmal alles in englisch
-        - als zweites: über url /de-de /en-us übersetzen (default -> /en-us)
-
 - Copilot anbinden
     - Integration:
         - API via `DirectLine` ODER
@@ -227,91 +229,3 @@ Beachte dabei den folgenden Workflow:
     - Integration testen (postman)
     - Config im Frontend implementieren
     - Agent im Frontend testen
-
-- Langchain und Langgraph REST API Service
-    - mit eigenem ReACT Chat Agent verknüpfen!
-        - fürs streaming und tracing geben wir je zwei klassen vor mit to_dict()...
-    - einen simplen Langchain Agent bauen -> per REST API exposen
-    - state auch irgendwie senden
-        - einfach als dict?
-    - Integration in GO mit sdk bauen
-    - Integration testen (postman)
-    - Config im Frontend implementieren
-    - Agent im Frontend testen
-
-- Application -> Simple ReAct Chat Agent direkt in unified-ui
-    - PoC [Here](/Users/enricogoerlitz/Developer/repos/unified-ui-agent-service/poc/unified_ui_agent/py/)
-    - dafür müsste man verschiedene LLM-APIs anbinden können
-        - NEIN -> wir nutzen einfach auch Langchain, müssen nur die config speichern und damit das llm bauen
-    - UND! man kann MCP Server je Application anbinden und tools mitgeben!
-
-    - TODOs:
-        - PoC in GO schreiben und nochmal testen
-            - langchain und alle Features müssen auch in GO nutzbar sein!
-                - ansonsten FAST API Service für custom agents...
-        - Update Entities
-            - credentials
-                - type: HTTP_HEADERS UND AZURE_OPENAI
-                - wird als string in secret_value gesendet
-        - Neue Entities:
-            - mcp_servers
-                - id
-                - name
-                - description
-                - type: "SSE"
-                - credential_id
-        - ....
-    - Frontend Config:
-        - agent_version (aktuell nur ["v1"])
-        - agent_type (aktuell nur ["ReACT_AGENT", "MULTI_AGENT_ORCHESTRATOR"])
-        - instructions
-        - Geeting message (Message, die zum start gesendet wird und als Gruß oder als Einleitung in die Konversation dient)
-        - default chat history count
-        - llm_credentials_id
-            - neuen Credential Type: "AZURE_OPENAI"
-                - type
-                - api_version
-                - endpoint
-                - api_key
-        - llm_deployment_name
-        - tools[]:
-            - type: mcp_server
-            - mcp_server_id
-            - allowed_tools: [liste aus strings]
-        - sub_agents[]:
-            - agent (Chat Agent)
-            - 
-        - tools > Log Tool-Output to Message
-        - *zukünftig: Playground!
-
-
-- Überlegen, full import eines auto-agents von unified-ui anstoßen? **eher nicht, kann automatisierungsplattform übernehmen!**
-    - PATCH /autonomous-agents/{id}/last-full-import {"timestamp": "..."}
-        - nur wenn user check_permissions: GLOBAL_ADMIN, AUTONOMOUS_ADMIN, oder auf Resource: WRITE oder ADMIN hat
-        - UND wenn X-Agent-Service-API-Key korrekt ist!
-        - hier wird NUR das feld last_full_import 
-
-        - PUT /autonomous-agents/{id}/traces/import/refresh -> make full import of all traces of this workflow
-            - n8n: itterate over /executions?workflowId={WORKFLOW_ID}
-                - in config we get "last_full_import" (wenn null -> alle; wennn nicht null; nur executions nach last_full_inpott)
-                - hier die id holen und dann über gefilterte ids -> /executions/{id}?includeData=true -> parallel ausführen und speichern
-                - wenn fertig (successfuly), an platform-service PATCH
-            - im ersten schritt mit JobQueue arbeiten und 202 zurückgeben (später vielleicht consumer/producer)
-
-- Embedding-Service
-    - Ziel:
-        - Customer kann Dokumente an API schicken und diese werden entsprechend der config embeddet
-        - Anschließend kann man dynamische querys absenden
-    - muss man configureiren
-        - Document-Collection anlegen und konfigurieren
-            - embedding model (NICHT von unified-ui bezahlt)
-            - destination (AI Search, )
-            - chunking; text extraction type -> gibt ja sowas die Indexer :)
-            - text extraction service oder default tika?
-    - Upload Files via REST API
-        - API Key
-    - in Collections speichern + embedded search
-    - Text-Extraction
-        - Tika
-        - externen dienst
-    - per kafka / eventhub!
