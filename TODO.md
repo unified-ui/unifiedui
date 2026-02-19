@@ -99,34 +99,26 @@ Beachte dabei den folgenden Workflow:
 - ConversationPage
     - MessageSearchDialog
 
-- Skeleton loading schön gestalten
-    - farben
+- Dashboard design
+    - mit mehr Farbe
+    - Favoriten namen
 
-- Tool-Tips
-    - bei allen beschreibungen, namen und überall wo abgeschnitten werden kann
-        - hier soll der volle text in einem tooltip angezeigt werden
-            - so wie auch bei den dateiuploads im chat
+- msal im platform service bauen? für callback -> damit nicht secret im fe ist!
 
-- Dashboard design mit mehr Farbe
+- Landingpage -> hier so easy login
 
-- [TESTE] Rollen im FE respektieren (und nur Items etc anzeigen, wenn man rolle hat)
-    - einen unified-ui tenant bauen
-        - neue app-registration
-        - user anlegen mit verschiedenen rollen
-        - gruppen anlegen
-    - Rollen testen mit mehreren Usern
+- frontend code struktur refactoren
+    - aktuell chat content und so unter conversation page => hier eher in components?/common odero so, damit wir in ReACT Agent Development page wiederverwenden können
+
+- naming refactoring:
+    - überhall "applications"/"application" in "chat-agents"/"chat-agent" umbenennen
+        - auch in DB!!!
 
 - Frontend-Refactoring
     - checken, ob alles so funktioniert, wie es soll
     - Design ggf anpassen lassen
 
 --- 
-
-- Refactoring:
-    - bei POST /messages
-        - geben wir applicationId und extConversationId mit -> beides bekommen wir über die Conversation!
-            - applicationId vielleicht okay
-            - aber extConversationId brauchen wir nicht!
 
 - Tracings Refactoren
     - Foundry Tracings -> mehr Daten sammeln mit tool calls, etc etc
@@ -138,20 +130,20 @@ Beachte dabei den folgenden Workflow:
     - N8N
         - calls
 
-- Frontend Tracing Visualizer Design überarbeiten
-    - Die Data Section ist noch chaos!
-        - sowohl im chat interface, als auc im dialog
+    - Frontend Tracing Visualizer Design überarbeiten
+        - Die Data Section ist noch chaos!
+            - sowohl im chat interface, als auc im dialog
 
 - AI-Based Refactring
     - für agent-service, platform-service und frontend-service eine analyse machen lassen und refactoring vorschlagen
     - dann die vorschläge durchgehen und umsetzen
 
-- frontend code struktur refactoren
-    - aktuell chat content und so unter conversation page => hier eher in components?/common odero so, damit wir in ReACT Agent Development page wiederverwenden können
-
-- naming refactoring:
-    - überhall "applications"/"application" in "chat-agents"/"chat-agent" umbenennen
-        - auch in DB!!!
+- [TESTE] Rollen im FE respektieren (und nur Items etc anzeigen, wenn man rolle hat)
+    - einen unified-ui tenant bauen
+        - neue app-registration
+        - user anlegen mit verschiedenen rollen
+        - gruppen anlegen
+    - Rollen testen mit mehreren Usern
 
 - Orga:
     - GitHub Projekt sauber aufsetzen mit issues etc
