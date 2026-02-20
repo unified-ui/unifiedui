@@ -96,27 +96,23 @@ Beachte dabei den folgenden Workflow:
 ---
 
 
-- ConversationPage
-    - MessageSearchDialog
+- Frontend-Refactoring (Placeholder)
 
-- Dashboard design
-    - mit mehr Farbe
-    - Favoriten namen
+    - naming refactoring:
+        - überhall "applications"/"application" in "chat-agents"/"chat-agent" umbenennen
+            - auch in DB!!!
 
-- msal im platform service bauen? für callback -> damit nicht secret im fe ist!
+    - ConversationPage
+        - MessageSearchDialog
+        - weniger hoch der chat input
+        - light mode fixen
+        - ...
+        - iframe chat embedding
+            - hier header und so besser gestalten
 
-- Landingpage -> hier so easy login
-
-- frontend code struktur refactoren
-    - aktuell chat content und so unter conversation page => hier eher in components?/common odero so, damit wir in ReACT Agent Development page wiederverwenden können
-
-- naming refactoring:
-    - überhall "applications"/"application" in "chat-agents"/"chat-agent" umbenennen
-        - auch in DB!!!
-
-- Frontend-Refactoring
-    - checken, ob alles so funktioniert, wie es soll
-    - Design ggf anpassen lassen
+    - Dashboard design
+        - mit mehr Farbe
+        - Favoriten namen
 
 --- 
 
