@@ -127,7 +127,7 @@ export interface TraceNodeResponse {
 export interface FullTraceResponse {
   id: string;
   tenantId: string;
-  applicationId?: string;
+  chatAgentId?: string;
   conversationId?: string;
   autonomousAgentId?: string;
   contextType: TraceContextType | string;

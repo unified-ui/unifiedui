@@ -153,13 +153,13 @@
 | PL-1 | `apis/v1/tags.py` | 1492 | 1092 |
 | PL-2 | `handlers/autonomous_agents.py` | 1223 | 823 |
 | PL-3 | `apis/v1/autonomous_agents.py` | 962 | 562 |
-| PL-4 | `handlers/applications.py` | 956 | 556 |
+| PL-4 | `handlers/chat-agents.py` | 956 | 556 |
 | PL-5 | `core/database/models.py` | 986 | 586 |
 | PL-6 | `handlers/custom_groups.py` | 921 | 521 |
 | PL-7 | `handlers/resource_permissions.py` | 849 | 449 |
 | PL-8 | `handlers/credentials.py` | 835 | 435 |
 | PL-9 | `handlers/tags.py` | 765 | 365 |
-| PL-10 | `apis/v1/applications.py` | 758 | 358 |
+| PL-10 | `apis/v1/chat-agents.py` | 758 | 358 |
 | PL-11 | `handlers/principals.py` | 761 | 361 |
 | PL-12 | `apis/v1/credentials.py` | 739 | 339 |
 | PL-13 | `handlers/tools.py` | 733 | 333 |
@@ -273,7 +273,7 @@ These 3 changes would eliminate ~4000+ lines and fix the majority of issues:
 |---|-------|----------|-----|
 | FE-D1 | `src/authConfig.ts` exact duplicate of `src/auth/authConfig.ts` | Critical | Delete root-level copy |
 | FE-D2 | `request()` and `agentServiceRequest()` in client.ts — near-identical ~50-line fetch methods | Critical | Extract shared `_fetch()` base method |
-| FE-D3 | `SidebarDataContext.tsx` — `fetchApplications`/`fetchAutonomousAgents`/`fetchChatWidgets` structurally identical | Medium | Create generic `fetchEntities<T>(fetcher, stateKey)` |
+| FE-D3 | `SidebarDataContext.tsx` — `fetchChatAgents`/`fetchAutonomousAgents`/`fetchChatWidgets` structurally identical | Medium | Create generic `fetchEntities<T>(fetcher, stateKey)` |
 | FE-D4 | Create/Edit dialog pairs share 80%+ code across entity types | Medium | Create generic `EntityFormDialog<T>` |
 | FE-D5 | Tag convenience methods in client.ts — 6 identical one-liner patterns | Low | Generate dynamically |
 
@@ -281,7 +281,7 @@ These 3 changes would eliminate ~4000+ lines and fix the majority of issues:
 
 | # | Issue | Severity | Fix |
 |---|-------|----------|-----|
-| FE-I1 | **40+ hardcoded success messages** in `client.ts` (`'Application created successfully'`, etc.) | Critical | Move to i18n or handle at call sites |
+| FE-I1 | **40+ hardcoded success messages** in `client.ts` (`'Chat Agent created successfully'`, etc.) | Critical | Move to i18n or handle at call sites |
 | FE-I2 | **~28 page/component files** have NO i18n for user-visible text | Critical | Add `useTranslation()` + define keys |
 | FE-I3 | **`ConfirmDeleteDialog`** — 6 hardcoded English strings, used in 12+ locations | Critical | Add i18n keys |
 | FE-I4 | **`settings` namespace (10 keys) entirely unused** — `TenantSettingsPage` doesn't call `useTranslation('settings')` | Medium | Wire up or remove unused keys |

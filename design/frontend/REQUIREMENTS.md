@@ -134,7 +134,7 @@ Klickbare Menu-Items die `console.log()` ausführen — entweder implementieren 
 
 | Page | Menu-Item | Aktion |
 |------|-----------|--------|
-| ApplicationsPage | Duplicate | Implementieren oder entfernen |
+| ChatAgentsPage | Duplicate | Implementieren oder entfernen |
 | AutonomousAgentsPage | Share | Entfernen (kein Share-Konzept) |
 | AutonomousAgentsPage | Duplicate | Implementieren oder entfernen |
 | AutonomousAgentsPage | Pin | Implementieren (→ Favorites, Phase 3) |
@@ -171,7 +171,7 @@ Klickbare Menu-Items die `console.log()` ausführen — entweder implementieren 
 }
 ```
 
-**Betroffene Pages**: ApplicationsPage, AutonomousAgentsPage, AutonomousAgentDetailsPage, TenantSettingsPage, ChatWidgetsPage, TracesPage (wird entfernt → 3.6).
+**Betroffene Pages**: ChatAgentsPage, AutonomousAgentsPage, AutonomousAgentDetailsPage, TenantSettingsPage, ChatWidgetsPage, TracesPage (wird entfernt → 3.6).
 
 ### 3.2 Header Redesign
 
@@ -238,7 +238,7 @@ Layout:
 
 ### 3.5 List-Page Deduplication
 
-**`useEntityList` Custom Hook** extrahieren — eliminiert ~90% Code-Duplikation über ApplicationsPage, AutonomousAgentsPage, ChatWidgetsPage.
+**`useEntityList` Custom Hook** extrahieren — eliminiert ~90% Code-Duplikation über ChatAgentsPage, AutonomousAgentsPage, ChatWidgetsPage.
 
 ```typescript
 interface UseEntityListOptions<T> {
@@ -267,7 +267,7 @@ Auf Detail-Pages einführen:
 
 ```
 Autonomous Agents > Invoice Agent
-Applications > Support Bot > Traces
+Chat Agents > Support Bot > Traces
 ```
 
 - Component: `<Breadcrumbs>` basierend auf Mantine Breadcrumbs
@@ -295,8 +295,8 @@ Hash-basierte farbige Initialen für alle Entities:
 
 #### Backend
 
-- Neuer Endpoint: `GET /v1/tenants/{id}/search?q=query&types=application,autonomous_agent&limit=10`
-- Durchsucht: Applications (name, description, tags), Autonomous Agents (name, description, tags), Conversations (title, messages), Credentials (name, type), Settings-Entities (Groups, AI Models, Tools)
+- Neuer Endpoint: `GET /v1/tenants/{id}/search?q=query&types=chat_agent,autonomous_agent&limit=10`
+- Durchsucht: Chat Agents (name, description, tags), Autonomous Agents (name, description, tags), Conversations (title, messages), Credentials (name, type), Settings-Entities (Groups, AI Models, Tools)
 - Response: `{ results: [{ type, id, name, description, match_field, match_highlight }] }`
 
 #### Frontend
@@ -313,16 +313,16 @@ Hash-basierte farbige Initialen für alle Entities:
 ```
 RECENT
   🤖 Invoice Agent                    Autonomous Agent
-  ✨ Support Bot                      Application
+  ✨ Support Bot                      Chat Agent
 
 COMMANDS
-  ➕ Create Application
+  ➕ Create Chat Agent
   ➕ Create Autonomous Agent
   ⚙️  Open Settings
   🌙 Toggle Dark Mode
 
 NAVIGATION
-  📄 Applications
+  📄 Chat Agents
   📄 Conversations
   📄 Settings
 ```
@@ -370,13 +370,13 @@ NAVIGATION
 
 ### 4.3 Favorites/Pins anbinden
 
-**Backend existiert bereits** (3 Favorites-Tabellen für application, autonomous_agent, conversation).
+**Backend existiert bereits** (3 Favorites-Tabellen für chat_agent, autonomous_agent, conversation).
 
 Frontend-Arbeiten:
 - `FavoritesContext`: Lädt alle Favorites beim Mount, cached als `Map<type, Set<id>>`
 - `isFavorite(type, id)` / `toggleFavorite(type, id)` — optimistic update
 - **DataTableRow**: Star-Icon (☆/★) links neben Entity-Namen, klickbar
-- **ApplicationsPage**: Favorites anbinden
+- **ChatAgentsPage**: Favorites anbinden
 - **AutonomousAgentsPage**: Favorites anbinden
 - **DataTable**: Pinned Items immer oben sortieren (visueller Separator)
 - **SidebarDataList**: Favorites mit Star-Icon markieren
@@ -414,7 +414,7 @@ Frontend-Arbeiten:
 **KEIN Activity Feed** (User-Entscheidung).
 
 Sections:
-1. **Quick Stats**: 4 Cards (Applications, Autonomous Agents, Active Convos, Traces 7d) — klickbar, navigiert zu List-Page
+1. **Quick Stats**: 4 Cards (Chat Agents, Autonomous Agents, Active Convos, Traces 7d) — klickbar, navigiert zu List-Page
 2. **Favorites**: Max 6 Cards, aus FavoritesContext + Entity-Detail-Nachladen
 3. **Recently Visited**: Max 6 Cards, aus RecentVisitsContext
 
@@ -533,7 +533,7 @@ Das Chat-Component muss parametrisierbar sein für Wiederverwendung im ReACT Age
 interface ChatPanelProps {
   mode: 'conversation' | 'playground';
   conversationId?: string;           // nur bei 'conversation'
-  applicationId?: string;            // nur bei 'conversation'
+  chatAgentId?: string;            // nur bei 'conversation'
   agentConfig?: PlaygroundConfig;    // nur bei 'playground'
   persistMessages?: boolean;         // true bei conversation, false bei playground
   showTracing?: boolean;             // true bei conversation, optional bei playground
@@ -553,7 +553,7 @@ interface ChatPanelProps {
 - Such-Input + Ergebnisliste (Entities, Commands, Navigation)
 - Library: `cmdk` oder `kbar`
 - Commands:
-  - Create Entity (Application, Agent, etc.)
+  - Create Entity (Chat Agent, Agent, etc.)
   - Navigation (Dashboard, Settings, etc.)
   - Toggle Dark Mode
   - Focus Search
@@ -580,11 +580,11 @@ Illustrierte Empty States mit Call-to-Action auf allen List-Pages:
 │                                      │
 │        [Illustration/Icon]           │
 │                                      │
-│    No applications yet               │
+│    No chat agents yet               │
 │    Create your first AI agent to     │
 │    get started.                      │
 │                                      │
-│       [+ Create Application]         │
+│       [+ Create Chat Agent]         │
 │                                      │
 └──────────────────────────────────────┘
 ```
@@ -618,7 +618,7 @@ React.memo für DataTableRow, useCallback für Event-Handler.
 | Shortcut | Aktion |
 |----------|--------|
 | `⌘K` / `Ctrl+K` | Command Palette öffnen |
-| `N` | New Entity (kontextabhängig — auf ApplicationsPage → Create Application) |
+| `N` | New Entity (kontextabhängig — auf ChatAgentsPage → Create Chat Agent) |
 | `/` | Focus Header-Search |
 | `Esc` | Close Dialog / Deselect / Close Panel |
 | `⌘,` / `Ctrl+,` | Open Settings |
@@ -936,7 +936,7 @@ Das bestehende `chat_widgets.config` JSON-Feld erweitern um Widget-Form-Felder:
 
 ```json
 {
-  "applications": {
+  "chat_agents": {
     "total": 12,
     "active": 10,
     "inactive": 2
@@ -964,7 +964,7 @@ Das bestehende `chat_widgets.config` JSON-Feld erweitern um Widget-Form-Felder:
 {
   "results": [
     {
-      "type": "application",
+      "type": "chat_agent",
       "id": "uuid",
       "name": "Support Bot",
       "description": "Handles customer support...",
@@ -1164,7 +1164,7 @@ Einheitliches Icon-Mapping (Tabler Icons):
 |---------|------|
 | Home | `IconHome` / `IconHomeFilled` |
 | Conversations | `IconMessages` / `IconMessagesFilled` |
-| Applications | `IconSparkles` / `IconSparklesFilled` |
+| Chat Agents | `IconSparkles` / `IconSparklesFilled` |
 | Autonomous Agents | `IconRobot` / `IconRobotFilled` |
 | Traces | `IconTimeline` |
 | Chat Widgets | `IconMessageChatbot` |
@@ -1248,7 +1248,7 @@ App
 │   │
 │   └── <main> (full-width)
 │       ├── DashboardPage (Stats + Favorites + Recents)
-│       ├── ApplicationsPage (useEntityList)
+│       ├── ChatAgentsPage (useEntityList)
 │       ├── AutonomousAgentsPage (useEntityList)
 │       ├── AutonomousAgentDetailsPage (Breadcrumbs)
 │       ├── ChatWidgetsPage (useEntityList)

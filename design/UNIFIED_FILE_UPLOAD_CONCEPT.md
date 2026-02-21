@@ -117,7 +117,7 @@ Der N8N-Workflow muss folgende Schritte implementieren:
 // SendMessageRequest - aktuell
 type SendMessageRequest struct {
     ConversationID    string         `json:"conversationId,omitempty"`
-    ApplicationID     string         `json:"applicationId" binding:"required"`
+    ChatAgentID     string         `json:"chatAgentId" binding:"required"`
     ExtConversationID string         `json:"extConversationId,omitempty"`
     Message           MessageContent `json:"message" binding:"required"`
     InvokeConfig      InvokeConfig   `json:"invokeConfig,omitempty"`
@@ -638,7 +638,7 @@ Authorization: Bearer {token}
 X-Microsoft-Foundry-API-Key: {foundry-api-key}  // Optional, nur für Foundry
 
 {
-  "applicationId": "app-123",
+  "chatAgentId": "app-123",
   "conversationId": "conv-456",
   "message": {
     "content": "Was siehst du auf diesem Bild?",
@@ -799,7 +799,7 @@ export interface MessageContent {
 }
 
 export interface SendMessageRequest {
-  applicationId: string;
+  chatAgentId: string;
   conversationId?: string;
   message: MessageContent;
   invokeConfig?: InvokeConfig;
@@ -854,7 +854,7 @@ const handleSendMessage = useCallback(async (content: string, attachments?: File
   // Build request with files
   const requestBody = {
     conversationId: activeConversationId,
-    applicationId: selectedApplicationId,
+    chatAgentId: selectedChatAgentId,
     message: {
       content,
       files,  // NEW: Include converted files

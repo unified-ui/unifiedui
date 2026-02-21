@@ -333,12 +333,12 @@ const DEFAULT_RESPONSE_PROMPT = `Format responses using Markdown:
 // src/components/common/EntityAvatar/EntityAvatar.tsx
 
 interface EntityAvatarProps {
-  entityType: 'application' | 'autonomous-agent' | 'chat-widget' | 're-act-agent' | 'conversation';
+  entityType: 'chat-agent' | 'autonomous-agent' | 'chat-widget' | 're-act-agent' | 'conversation';
   size?: number;
 }
 
 const ENTITY_ICONS: Record<string, FC<{ size: number }>> = {
-  'application': IconApps,
+  'chat-agent': IconApps,
   'autonomous-agent': IconRobot,
   'chat-widget': IconMessage,
   're-act-agent': IconBrain,

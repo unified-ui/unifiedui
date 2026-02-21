@@ -29,7 +29,7 @@ npm run dev
             - Reasoning
             - Tool Calls wie Web-Search etc
     - einfache Chat-Widgets im Chat einbinden
-        - Standard Chat Widgets können Application hinzugefügt werden
+        - Standard Chat Widgets können Chat Agent hinzugefügt werden
             - spezielle Zwischen Response notwendig
         - Single-Select
         - Multi-Select
@@ -101,6 +101,7 @@ Beachte dabei den folgenden Workflow:
     - naming refactoring:
         - überhall "applications"/"application" in "chat-agents"/"chat-agent" umbenennen
             - auch in DB!!!
+            - ✅ Design-Docs umbenannt
 
     - ConversationPage
         - MessageSearchDialog
@@ -109,6 +110,10 @@ Beachte dabei den folgenden Workflow:
         - ...
         - iframe chat embedding
             - hier header und so besser gestalten
+
+    - Frontend Tracing Visualizer Design überarbeiten
+        - Die Data Section ist noch chaos!
+            - sowohl im chat interface, als auc im dialog
 
     - Dashboard design
         - mit mehr Farbe
@@ -125,10 +130,6 @@ Beachte dabei den folgenden Workflow:
         - wenn man MCP Server aufruft (siehe Word), muss noch im chat confirmt werden -> wie machen wir das dann?
     - N8N
         - calls
-
-    - Frontend Tracing Visualizer Design überarbeiten
-        - Die Data Section ist noch chaos!
-            - sowohl im chat interface, als auc im dialog
 
 - AI-Based Refactring
     - für agent-service, platform-service und frontend-service eine analyse machen lassen und refactoring vorschlagen

@@ -46,7 +46,7 @@ Beispiele — bitte ankreuzen/ergänzen:
 
 ### 2.1 Was soll durchsuchbar sein?
 
-- [x] Applications (Name, Description, Tags)
+- [x] Chat Agents (Name, Description, Tags)
 - [x] Autonomous Agents (Name, Description, Tags)
 - [x] Conversations (Title, Messages)
 - [x] Credentials (Name, type)
@@ -73,7 +73,7 @@ Mein Vorschlag: Search-Bar im Header funktioniert als Quick-Search über Entitie
 
 ### 3.1 Welche Stats/KPIs sind wichtig?
 
-- [x] Anzahl Applications (aktiv / inaktiv)
+- [x] Anzahl Chat Agents (aktiv / inaktiv)
 - [x] Anzahl Autonomous Agents (aktiv / inaktiv)
 - [x] Anzahl Conversations (letzte 7/30 Tage)
 - [x] Anzahl Traces / Error-Rate
@@ -292,8 +292,8 @@ API:
 ### 8.2 Global Search — Backend-Endpoint
 
 ```
-GET /v1/tenants/{id}/search?q=invoice&types=application,agent&limit=10
-→ Returns: [{ type: "application", id: "...", name: "...", match_field: "name" }, ...]
+GET /v1/tenants/{id}/search?q=invoice&types=chat_agent,agent&limit=10
+→ Returns: [{ type: "chat_agent", id: "...", name: "...", match_field: "name" }, ...]
 ```
 
 - [x] Ja, so einen Endpoint brauchen wir

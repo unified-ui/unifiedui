@@ -22,7 +22,7 @@
 > - Besser: `credentials.type = "AI_MODEL_PROVIDER"` als neuer generischer Type, und `tenant_ai_models.provider` bestimmt den konkreten Provider (AZURE_OPENAI, OPENAI, ANTHROPIC, etc.)
 
 #### 2.2 Config als JSON statt vieler Spalten
-> Verschiedene Provider brauchen verschiedene Config-Parameter (Azure braucht endpoint+deployment, OpenAI nur model_name, Anthropic nochmal anders). Daher: **`config: JSON`** Feld mit einem `TenantAIModelConfigValidator` der pro Provider die richtige Config validiert — genau wie bei Applications.
+> Verschiedene Provider brauchen verschiedene Config-Parameter (Azure braucht endpoint+deployment, OpenAI nur model_name, Anthropic nochmal anders). Daher: **`config: JSON`** Feld mit einem `TenantAIModelConfigValidator` der pro Provider die richtige Config validiert — genau wie bei Chat Agents.
 
 #### 2.3 Purpose Groups flexibler gestalten
 > Statt fest auf 2 Purpose Groups zu beschränken, empfehle ich ein JSON-Array-Feld `purpose_groups: list[str]`. Ein Modell kann für mehrere Zwecke taugen.
@@ -216,7 +216,7 @@ Prefix: `/api/v1/agent-service/tenants/{tenant_id}/ai`
 ```json
 // Request
 {
-  "entity_type": "application",       // application | autonomous_agent | tool | credential | chat_widget | ai_model
+  "entity_type": "chat_agent",       // chat_agent | autonomous_agent | tool | credential | chat_widget | ai_model
   "entity_name": "My N8N Agent",
   "existing_description": "n8n bot",  // Optional — roh-description die poliert werden soll
   "context": {                         // Optional — zusätzlicher Kontext
@@ -458,7 +458,7 @@ Platzierung: Neben dem Description-Feld in Create/Edit Dialogen aller Entities.
                                           ▼ onClick:
                               POST /ai/generate-description
                               {
-                                entity_type: "application",
+                                entity_type: "chat_agent",
                                 entity_name: "My App",
                                 existing_description: "My raw notes about th..."
                               }
@@ -474,7 +474,7 @@ Platzierung: Neben dem Description-Feld in Create/Edit Dialogen aller Entities.
 - Ergebnis wird ins Feld gesetzt, User kann noch editieren vor Speichern
 
 **Betroffene Entities:**
-- Applications (Create/Edit Dialog)
+- Chat Agents (Create/Edit Dialog)
 - Autonomous Agents (Create/Edit Dialog)
 - Tools (Create/Edit Dialog)
 - Credentials (Create/Edit Dialog)

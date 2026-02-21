@@ -239,7 +239,7 @@ Die `MainLayout` `.content`-Klasse wird angepasst:
 ```
 VORHER:
 ┌────────────────────────────────────────────────────┐
-│  Chat Agents                 [+ Create Application]│
+│  Chat Agents                 [+ Create Chat Agent]│
 │  Manage your AI chat agents                        │
 │  ──────────────────────────────────────────────────│
 └────────────────────────────────────────────────────┘
@@ -247,7 +247,7 @@ VORHER:
 
 NACHHER:
 Chat Agents                                              [+ Create Agent]
-Manage and configure your AI-powered chat agents across applications.
+Manage and configure your AI-powered chat agents across chat agents.
 ─────────────────────────────────────────────────────────────────────────
       (full-width, links-bündig, Linie geht über gesamte Breite)
 ```
@@ -377,14 +377,14 @@ Das Dashboard ist die erste Seite nach dem Login. Es soll dem User seine **pers�
 │ +2 this wk  │  │ 3 active    │  │  +24 today  │  │  ↗ 15%      │
 └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
    klickbar →       klickbar →       klickbar →       klickbar →
- /applications    /auto-agents    /conversations     /traces
+ /chat-agents    /auto-agents    /conversations     /traces
 ```
 
 - **Datenquelle**: Neue Backend-API `GET /tenants/{id}/dashboard/stats`
 - Liefert Counts + Trends (Vergleich letzte 7 Tage)
 - Klick navigiert zur entsprechenden List-Page
 - **Variante**: Optional können die Stats auch direkt aus den bestehenden List-APIs (mit limit=0) abgeleitet werden:
-  - `GET /applications?limit=0` → Header `X-Total-Count`
+  - `GET /chat-agents?limit=0` → Header `X-Total-Count`
   - Oder: dedizierter lightweight Dashboard-Stats-Endpoint
 
 #### Section 2: Favorites / Pinned Items
@@ -395,7 +395,7 @@ Das Dashboard ist die erste Seite nach dem Login. Es soll dem User seine **pers�
 ┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────────┐
 │ ✨ Support Bot      │  │ 🤖 Invoice Agent    │  │ ✨ Sales Agent      │
 │                     │  │                     │  │                     │
-│ Application         │  │ Autonomous Agent    │  │ Application         │
+│ Chat Agent          │  │ Autonomous Agent    │  │ Chat Agent          │
 │ Last msg: 2h ago    │  │ 42 traces (today)   │  │ Online              │
 │ ── ── ── ── ──      │  │ ── ── ── ── ──      │  │ ── ── ── ── ──      │
 │ support, faq        │  │ finance, invoice    │  │ sales, crm          │
@@ -416,7 +416,7 @@ Das Dashboard ist die erste Seite nach dem Login. Es soll dem User seine **pers�
 ┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────────┐
 │ 🤖 Email Parser     │  │ ✨ FAQ Bot          │  │ 💬 Conversation     │
 │                     │  │                     │  │    #3842            │
-│ Autonomous Agent    │  │ Application         │  │ Conversation        │
+│ Autonomous Agent    │  │ Chat Agent          │  │ Conversation        │
 │ 15 minutes ago      │  │ 1 hour ago          │  │ 3 hours ago         │
 │ ── ── ── ── ──      │  │                     │  │                     │
 │ email, automation   │  │ support, chatbot    │  │ Support Bot         │
@@ -500,9 +500,9 @@ CSS:
 | Aspekt | Status |
 |--------|--------|
 | Backend API (CRUD) | ✅ Vollständig implementiert |
-| `FavoriteResourceTypeEnum` | ✅ `APPLICATION`, `AUTONOMOUS_AGENT`, `CONVERSATION` |
+| `FavoriteResourceTypeEnum` | ✅ `CHAT_AGENT`, `AUTONOMOUS_AGENT`, `CONVERSATION` |
 | ConversationsPage | ✅ Nutzt Favorites |
-| ApplicationsPage | ❌ Kein Handler |
+| ChatAgentsPage | ❌ Kein Handler |
 | AutonomousAgentsPage | ❌ Nur TODO-Stub |
 | DataTableRow | ⚠️ Hat Pin-Menu-Item, aber nicht verbunden |
 | Dashboard | ❌ Zeigt keine Favorites |
@@ -619,7 +619,7 @@ Tracking der letzten N besuchten Entities für:
 
 ```typescript
 interface RecentVisit {
-  resourceType: 'application' | 'autonomous-agent' | 'conversation' | 'trace' | 'settings';
+  resourceType: 'chat-agent' | 'autonomous-agent' | 'conversation' | 'trace' | 'settings';
   resourceId: string;
   resourceName: string;
   visitedAt: string;  // ISO timestamp
@@ -635,7 +635,7 @@ interface RecentVisit {
 
 | Navigation | Tracking |
 |-----------|---------|
-| `/applications` (Liste) | ❌ Nicht tracken (zu generisch) |
+| `/chat-agents` (Liste) | ❌ Nicht tracken (zu generisch) |
 | `/conversations?chat-agent=xxx` (Chat öffnen) | ✅ Conversation tracken |
 | `/autonomous-agents/{id}` (Detail-Seite) | ✅ Agent tracken |
 | Klick auf Entity in Sidebar-DataList | ✅ Entity tracken |
@@ -885,13 +885,13 @@ const handleDelete = async (id: string) => {
   setItems(prev => prev.filter(item => item.id !== id));
   
   try {
-    await apiClient.deleteApplication(tenantId, id);
+    await apiClient.deleteChatAgent(tenantId, id);
     // Sidebar refreshen (lightweight)
-    sidebarData.refreshApplications();
+    sidebarData.refreshChatAgents();
   } catch (error) {
     // Rollback bei Fehler
     setItems(previousItems);
-    showError('Failed to delete application');
+    showError('Failed to delete chat agent');
   }
 };
 
@@ -905,10 +905,10 @@ const handleUpdate = async (id: string, data: UpdateRequest) => {
   ));
   
   try {
-    await apiClient.updateApplication(tenantId, id, data);
+    await apiClient.updateChatAgent(tenantId, id, data);
   } catch (error) {
     setItems(previousItems);
-    showError('Failed to update application');
+    showError('Failed to update chat agent');
   }
 };
 ```
@@ -977,7 +977,7 @@ Spinner (aktuell):              Skeleton (neu):
 |---------|---------------|---------------|------|
 | Home / Dashboard | `IconHome` | `IconHomeFilled` | Sidebar, Breadcrumbs |
 | Chat / Conversations | `IconMessages` | `IconMessagesFilled` | Sidebar, Nav |
-| Chat Agents / Applications | `IconSparkles` | `IconSparklesFilled` | Sidebar, Cards, DataTable |
+| Chat Agents | `IconSparkles` | `IconSparklesFilled` | Sidebar, Cards, DataTable |
 | Autonomous Agents | `IconRobot` | `IconRobotFilled` | Sidebar, Cards, DataTable |
 | Traces / Tracing | `IconTimeline` | — | Sidebar, Tabs, Pages |
 | Chat Widgets | `IconMessageChatbot` | — | Sidebar, Cards |
@@ -1214,7 +1214,7 @@ Icon:       bg transparent, border none, text secondary, hover bg-hover
 
 ```json
 {
-  "applications": {
+  "chat_agents": {
     "total": 12,
     "active": 10,
     "trend": "+2",
@@ -1246,7 +1246,7 @@ Icon:       bg transparent, border none, text secondary, hover bg-hover
 | Daten | Quelle | Dashboard-Nutzung |
 |-------|--------|-------------------|
 | Favorites | `user_favorites` Tabelle | ✅ Favorites Section |
-| Application Count | `/applications?limit=0` (Header) | ✅ Quick Stats |
+| Chat Agent Count | `/chat-agents?limit=0` (Header) | ✅ Quick Stats |
 | Agent Count | `/autonomous-agents?limit=0` | ✅ Quick Stats |
 | Recent Traces | `/traces?sort=created_desc&limit=5` | ✅ Activity Feed (minimal) |
 | User Info | IdentityContext | ✅ Welcome Message |
@@ -1285,7 +1285,7 @@ Icon:       bg transparent, border none, text secondary, hover bg-hover
 ```
 3.1  FavoritesContext erstellen
 3.2  DataTableRow: Star-Icon inline + optimistic toggle
-3.3  ApplicationsPage: Favorites anbinden
+3.3  ChatAgentsPage: Favorites anbinden
 3.4  AutonomousAgentsPage: Favorites anbinden
 3.5  DataTable: Pinned Items oben sortieren
 3.6  SidebarDataList: Favorites markieren
@@ -1338,7 +1338,7 @@ Icon:       bg transparent, border none, text secondary, hover bg-hover
 
 ## Anhang A: Vergleich Vorher/Nachher
 
-### Applications Page
+### Chat Agents Page
 
 ```
 VORHER:                                  NACHHER:
@@ -1473,7 +1473,7 @@ App
 │       │   ├── RecentVisits       ← NEU
 │       │   └── ActivityFeed       ← NEU
 │       │
-│       ├── ApplicationsPage (full-width, no PageContainer)
+│       ├── ChatAgentsPage (full-width, no PageContainer)
 │       │   ├── PageHeader
 │       │   └── DataTable (optimistic updates)
 │       │
@@ -1534,7 +1534,7 @@ App
 
 | Page | Aktuell | Aktion |
 |------|---------|--------|
-| ApplicationsPage | `PageContainer` (lg=1200px) | Entfernen |
+| ChatAgentsPage | `PageContainer` (lg=1200px) | Entfernen |
 | AutonomousAgentsPage | `PageContainer` (lg=1200px) | Entfernen |
 | AutonomousAgentDetailsPage | `PageContainer` (xl=1400px) | Entfernen |
 | TenantSettingsPage | `PageContainer` (lg=1200px) | Entfernen, SettingsSidebar statt |
@@ -1608,7 +1608,7 @@ Das ist das schwerwiegendste UX-Problem. Drei UI-Elemente im Header täuschen Fu
 
 | Page | Menu-Item | Implementierung |
 |------|-----------|----------------|
-| ApplicationsPage | Duplicate | `console.log('Duplicate:', id)` |
+| ChatAgentsPage | Duplicate | `console.log('Duplicate:', id)` |
 | AutonomousAgentsPage | Share | `console.log('Share:', id)` |
 | AutonomousAgentsPage | Duplicate | `console.log('Duplicate:', id)` |
 | AutonomousAgentsPage | Pin | `console.log('Pin:', id, isPinned)` |
@@ -1635,7 +1635,7 @@ An zahlreichen Stellen werden Fehler verschluckt, ohne dem User Feedback zu gebe
 // AutonomousAgentDetailsPage.tsx L174
 catch {} // "Silently handle — could show notification"
 
-// ApplicationsPage L230 — Delete-Fehler
+// ChatAgentsPage L230 — Delete-Fehler
 catch (error) { console.error('Error deleting:', error); }
 // → Dialog bleibt offen, User bemerkt nichts
 
@@ -1708,7 +1708,7 @@ TenantSettingsPage/
 
 #### 14.3.2 List-Page Triple-Duplication
 
-`ApplicationsPage`, `AutonomousAgentsPage`, `ChatWidgetsPage` sind ~90% identisch:
+`ChatAgentsPage`, `AutonomousAgentsPage`, `ChatWidgetsPage` sind ~90% identisch:
 
 ```
 Identischer Code (in allen 3 Dateien):
@@ -1735,10 +1735,10 @@ const {
   handleSearch, handleSort, handleFilter, handleLoadMore,
   handleDelete, handleStatusChange, refetch
 } = useEntityList({
-  entityType: 'applications',
-  fetchFn: (params) => apiClient.listApplications(tenantId, params),
-  fetchTagsFn: (search) => apiClient.listTags(tenantId, 'application', search),
-  storageKey: 'applications-sort',
+  entityType: 'chat-agents',
+  fetchFn: (params) => apiClient.listChatAgents(tenantId, params),
+  fetchTagsFn: (search) => apiClient.listTags(tenantId, 'chat_agent', search),
+  storageKey: 'chat-agents-sort',
 });
 ```
 
@@ -1768,10 +1768,10 @@ ConversationsPage/
 #### 14.3.4 Dialog-Duplikation — IAM-Boilerplate
 
 Die Edit-Dialoge haben einen `details | iam`-Tab-Pattern. Die IAM-Tab-Logik ist:
-- In `EditApplicationDialog` **manuell** implementiert (~200 Zeilen Inline-Code für Permission-Loading/Updating)
+- In `EditChatAgentDialog` **manuell** implementiert (~200 Zeilen Inline-Code für Permission-Loading/Updating)
 - In allen anderen Edit-Dialogen über den `useEntityPermissions` Hook gelöst
 
-**Problem**: `EditApplicationDialog` ist mit 936 Zeilen der größte Dialog — hauptsächlich weil es die IAM-Logik dupliziert, die in einem fertigen Hook existiert.
+**Problem**: `EditChatAgentDialog` ist mit 936 Zeilen der größte Dialog — hauptsächlich weil es die IAM-Logik dupliziert, die in einem fertigen Hook existiert.
 
 ---
 
@@ -1938,23 +1938,23 @@ Wie in Linear, VS Code, Vercel — eine globale Suchleiste die ALLES kann:
 ├──────────────────────────────────────────────────────┤
 │ RECENT                                               │
 │   🤖 Invoice Agent                    Auto Agent     │
-│   ✨ Support Bot                      Application    │
+│   ✨ Support Bot                      Chat Agent    │
 │                                                      │
 │ COMMANDS                                             │
-│   ➕ Create Application                              │
+│   ➕ Create Chat Agent                              │
 │   ➕ Create Autonomous Agent                         │
 │   ⚙️  Open Settings                                  │
 │   🌙 Toggle Dark Mode                               │
 │                                                      │
 │ NAVIGATION                                           │
-│   📄 Applications                                    │
+│   📄 Chat Agents                                    │
 │   📄 Conversations                                   │
 │   📄 Traces                                          │
 └──────────────────────────────────────────────────────┘
 ```
 
 - Ersetzt den aktuellen (fake) Suchbalken im Header
-- Sucht über alle Entities (Applications, Agents, Conversations, Credentials)
+- Sucht über alle Entities (Chat Agents, Agents, Conversations, Credentials)
 - Quick-Commands: Create, Navigation, Settings, Theme Toggle
 - Recent Searches + Recent Visits integriert
 - **Aufwand**: ~2-3 Tage (Library: `cmdk` oder `kbar`)
@@ -2131,7 +2131,7 @@ Die App nutzt `@mantine/form` mit `useForm`, aber die Validierung ist inkonsiste
 
 | Dialog | Client-Side Validation | Server-Side Errors shown |
 |--------|----------------------|-------------------------|
-| CreateApplicationDialog | ✅ Name, URL Pattern, Ranges | ❌ |
+| CreateChatAgentDialog | ✅ Name, URL Pattern, Ranges | ❌ |
 | CreateAutonomousAgentDialog | ✅ Name, URL Pattern | ❌ |
 | CreateChatWidgetDialog | ✅ Name | ❌ |
 | CreateCredentialDialog | ✅ Name | ❌ |

@@ -2,20 +2,20 @@
 
 ## Overview
 
-Applications can be embedded as chat widgets in external websites via iframe. The embed system uses the existing MSAL authentication — no separate embed-token system is needed.
+Chat Agents can be embedded as chat widgets in external websites via iframe. The embed system uses the existing MSAL authentication — no separate embed-token system is needed.
 
 ## URL Format
 
 ```
-https://{host}/embed/chat/{applicationId}?tenantId={tenantId}&theme=light|dark&lang=en-US&ctx_key=value
+https://{host}/embed/chat/{chatAgentId}?tenantId={tenantId}&theme=light|dark&lang=en-US&ctx_key=value
 ```
 
 ### Parameters
 
 | Parameter | Source | Required | Description |
 |-----------|--------|----------|-------------|
-| `applicationId` | URL path | Yes | Application ID to chat with |
-| `tenantId` | Query | Yes | Tenant ID the application belongs to |
+| `chatAgentId` | URL path | Yes | Chat Agent ID to chat with |
+| `tenantId` | Query | Yes | Tenant ID the chat agent belongs to |
 | `theme` | Query | No | Force `light` or `dark` mode (default: auto) |
 | `lang` | Query | No | UI language override |
 | `ctx_*` | Query | No | Context data passed to the agent (prefix `ctx_` is stripped) |
@@ -34,10 +34,10 @@ The embed page is **not** behind `ProtectedRoute`. Authentication is handled ins
 
 ## Allowed Origins
 
-Each application has an `embed_allowed_origins` field — a semicolon-separated string of allowed origins (e.g., `https://example.com;https://app.example.com`).
+Each chat agent has an `embed_allowed_origins` field — a semicolon-separated string of allowed origins (e.g., `https://example.com;https://app.example.com`).
 
-- Stored as a single `VARCHAR(2000)` column on the `applications` table.
-- Managed via the Create/Edit Application dialogs (tag-like input using Mantine `TagsInput`).
+- Stored as a single `VARCHAR(2000)` column on the `chat_agents` table.
+- Managed via the Create/Edit Chat Agent dialogs (tag-like input using Mantine `TagsInput`).
 - Used by the host page to configure CSP `frame-ancestors` headers.
 - In the frontend, origins are displayed as chips and stored as a `;`-separated string in the API.
 
@@ -64,16 +64,16 @@ Host Page (customer.com)
 ## Files Modified
 
 ### Backend (platform-service)
-- `models.py` — Added `embed_allowed_origins` column to `Application`
-- `schema/requests/applications.py` — Added `embed_allowed_origins` to Create/Update schemas
-- `schema/responses/applications.py` — Added `embed_allowed_origins` to response schema
-- `handlers/applications.py` — Handle `embed_allowed_origins` in create, update, and `_model_to_response`
+- `models.py` — Added `embed_allowed_origins` column to `ChatAgent`
+- `schema/requests/chat-agents.py` — Added `embed_allowed_origins` to Create/Update schemas
+- `schema/responses/chat-agents.py` — Added `embed_allowed_origins` to response schema
+- `handlers/chat-agents.py` — Handle `embed_allowed_origins` in create, update, and `_model_to_response`
 - `alembic/versions/h2b3c4d5e6f7_...py` — Migration to add the column
 
 ### Frontend (frontend-service)
-- `api/types.ts` — Added `embed_allowed_origins` to Application interfaces
-- `components/dialogs/CreateApplicationDialog.tsx` — Added origins `TagsInput` field
-- `components/dialogs/EditApplicationDialog/EditApplicationDialog.tsx` — Added origins `TagsInput` field with `;`-split/join
+- `api/types.ts` — Added `embed_allowed_origins` to ChatAgent interfaces
+- `components/dialogs/CreateChatAgentDialog.tsx` — Added origins `TagsInput` field
+- `components/dialogs/EditChatAgentDialog/EditChatAgentDialog.tsx` — Added origins `TagsInput` field with `;`-split/join
 - `pages/EmbedChatPage/EmbedChatPage.tsx` — Full rewrite with ChatView + MSAL auth
 - `pages/EmbedChatPage/EmbedChatPage.module.css` — Embed page styles
 - `hooks/chat/useChat.ts` — Added optional `onNavigate` param

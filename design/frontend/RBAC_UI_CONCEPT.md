@@ -16,8 +16,8 @@ Dieses Konzept definiert, wie Role-Based Access Control (RBAC) im Frontend imple
 |-------|--------------|------------|
 | `READER` | Basis-Lesezugriff | Kann Tenant-Ressourcen sehen |
 | `GLOBAL_ADMIN` | Super-Admin | Vollzugriff auf ALLE Ressourcen |
-| `APPLICATIONS_ADMIN` | App-Admin | Admin auf alle Applications |
-| `APPLICATIONS_CREATOR` | App-Ersteller | Kann Applications erstellen |
+| `CHAT_AGENTS_ADMIN` | App-Admin | Admin auf alle Chat Agents |
+| `CHAT_AGENTS_CREATOR` | App-Ersteller | Kann Chat Agents erstellen |
 | `AUTONOMOUS_AGENTS_ADMIN` | Agent-Admin | Admin auf alle Autonomous Agents |
 | `AUTONOMOUS_AGENTS_CREATOR` | Agent-Ersteller | Kann Autonomous Agents erstellen |
 | `CONVERSATIONS_ADMIN` | Konv.-Admin | Admin auf alle Conversations |
@@ -53,7 +53,7 @@ Dieses Konzept definiert, wie Role-Based Access Control (RBAC) im Frontend imple
 ```typescript
 interface TenantWithRoles {
   tenant: TenantResponse;
-  roles: string[];  // z.B. ['GLOBAL_ADMIN', 'APPLICATIONS_CREATOR']
+  roles: string[];  // z.B. ['GLOBAL_ADMIN', 'CHAT_AGENTS_CREATOR']
 }
 ```
 
@@ -68,14 +68,14 @@ const tenantsWithRoles = meResponse.tenants || [];
 
 ### 2.2 Ressourcen-Berechtigungen (neu zu fetchen bei Bedarf)
 
-Für ressourcenspezifische Berechtigungen (z.B. hat User WRITE auf Application X?) gibt es zwei Ansätze:
+Für ressourcenspezifische Berechtigungen (z.B. hat User WRITE auf Chat Agent X?) gibt es zwei Ansätze:
 
 **Option A: Principals-Endpoint pro Ressource**
-- `GET /applications/{id}/principals` → Prüfen ob eigene `principal_id` in Liste ist
+- `GET /chat-agents/{id}/principals` → Prüfen ob eigene `principal_id` in Liste ist
 - Nachteil: Viele API-Calls bei Listen
 
 **Option B: Neuer Endpoint für eigene Berechtigungen** (empfohlen)
-- `GET /applications/{id}/my-permission` → `{ action: 'WRITE' }`
+- `GET /chat-agents/{id}/my-permission` → `{ action: 'WRITE' }`
 - Oder: Backend liefert `my_permission` im Response jeder Ressource mit
 
 **Option C: Inline im Response** (am effizientesten)
@@ -123,7 +123,7 @@ interface UsePermissionsReturn {
 }
 
 type ResourceType = 
-  | 'applications' 
+  | 'chat-agents' 
   | 'autonomous-agents' 
   | 'chat-widgets' 
   | 're-act-agents'
@@ -139,10 +139,10 @@ type ResourceType =
 ```tsx
 // Versteckt Kinder wenn keine Berechtigung
 <PermissionGate 
-  requiredRole="APPLICATIONS_CREATOR"
+  requiredRole="CHAT_AGENTS_CREATOR"
   fallback={null}  // oder <Tooltip>Keine Berechtigung</Tooltip>
 >
-  <Button>Application erstellen</Button>
+  <Button>Chat Agent erstellen</Button>
 </PermissionGate>
 
 // Deaktiviert Kinder wenn keine Berechtigung
@@ -159,7 +159,7 @@ type ResourceType =
 
 ## 4. UI-Elemente und Berechtigungslogik
 
-### 4.1 Listen-Seiten (ApplicationsPage, AutonomousAgentsPage, etc.)
+### 4.1 Listen-Seiten (ChatAgentsPage, AutonomousAgentsPage, etc.)
 
 | Element | Verhalten | Prüfung |
 |---------|-----------|---------|
@@ -219,7 +219,7 @@ type ResourceType =
 
 | Element | Verhalten | Prüfung |
 |---------|-----------|---------|
-| + Button (Application) | Verstecken | `!canCreate('applications')` |
+| + Button (Chat Agent) | Verstecken | `!canCreate('chat-agents')` |
 | + Button (Autonomous Agent) | Verstecken | `!canCreate('autonomous-agents')` |
 | + Button (Chat Widget) | Verstecken | `!canCreate('chat-widgets')` |
 | + Button (ReACT Agent) | Verstecken | `!canCreate('re-act-agents')` |
@@ -255,8 +255,8 @@ const { hasRole, canCreate, isGlobalAdmin } = usePermissions();
 **Empfehlung: Backend erweitert alle Ressourcen-Responses um `my_permission`**
 
 ```typescript
-// Beispiel: Application Response
-interface ApplicationResponse {
+// Beispiel: Chat Agent Response
+interface ChatAgentResponse {
   id: string;
   name: string;
   // ... andere Felder
@@ -362,12 +362,12 @@ const getResourcePermission = async (
 ```typescript
 // types.ts - Erweiterte Response-Typen
 
-export interface ApplicationResponse {
+export interface ChatAgentResponse {
   id: string;
   tenant_id: string;
   name: string;
   description?: string;
-  type: ApplicationTypeEnum;
+  type: ChatAgentTypeEnum;
   config: Record<string, unknown>;
   is_active: boolean;
   created_at: string;
@@ -389,7 +389,7 @@ import { useIdentity } from '../contexts';
 import { TenantPermissionEnum, PermissionActionEnum } from '../api/types';
 
 type ResourceType = 
-  | 'applications' 
+  | 'chat-agents' 
   | 'autonomous-agents' 
   | 'chat-widgets' 
   | 're-act-agents'
@@ -399,7 +399,7 @@ type ResourceType =
   | 'tools';
 
 const CREATOR_ROLES: Record<ResourceType, TenantPermissionEnum> = {
-  'applications': 'APPLICATIONS_CREATOR',
+  'chat-agents': 'CHAT_AGENTS_CREATOR',
   'autonomous-agents': 'AUTONOMOUS_AGENTS_CREATOR',
   'chat-widgets': 'CHAT_WIDGETS_CREATOR',
   're-act-agents': 'REACT_AGENT_CREATOR',
@@ -410,7 +410,7 @@ const CREATOR_ROLES: Record<ResourceType, TenantPermissionEnum> = {
 };
 
 const ADMIN_ROLES: Record<ResourceType, TenantPermissionEnum> = {
-  'applications': 'APPLICATIONS_ADMIN',
+  'chat-agents': 'CHAT_AGENTS_ADMIN',
   'autonomous-agents': 'AUTONOMOUS_AGENTS_ADMIN',
   'chat-widgets': 'CHAT_WIDGETS_ADMIN',
   're-act-agents': 'REACT_AGENT_ADMIN',

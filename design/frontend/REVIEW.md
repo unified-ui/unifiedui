@@ -49,11 +49,11 @@ All files must be **< 400 lines**. Files exceeding this limit need decomposition
 |---|---|---|---|
 | `pages/TenantSettingsPage/TenantSettingsPage.tsx` | 1998 | 5.0× | **Critical** |
 | `components/tracing/TracingCanvasView/TracingCanvasView.tsx` | 975 | 2.4× | **Critical** |
-| `components/dialogs/EditApplicationDialog/EditApplicationDialog.tsx` | 937 | 2.3× | **Critical** |
+| `components/dialogs/EditChatAgentDialog/EditChatAgentDialog.tsx` | 937 | 2.3× | **Critical** |
 | `components/tracing/TracingHierarchyView/TracingHierarchyView.tsx` | 781 | 2.0× | **Critical** |
 | `pages/AutonomousAgentDetailsPage/AutonomousAgentDetailsPage.tsx` | 700 | 1.75× | **Critical** |
 | `components/common/AddPrincipalDialog/AddPrincipalDialog.tsx` | 641 | 1.6× | **Critical** |
-| `components/dialogs/CreateApplicationDialog/CreateApplicationDialog.tsx` | 602 | 1.5× | **Critical** |
+| `components/dialogs/CreateChatAgentDialog/CreateChatAgentDialog.tsx` | 602 | 1.5× | **Critical** |
 | `components/dialogs/EditAutonomousAgentDialog/EditAutonomousAgentDialog.tsx` | 591 | 1.48× | **Critical** |
 | `pages/ConversationsPage/components/ChatSidebar/ChatSidebar.tsx` | 591 | 1.48× | **Critical** |
 | `components/common/ManageTenantAccessTable/ManageTenantAccessTable.tsx` | 576 | 1.44× | **Critical** |
@@ -81,11 +81,11 @@ All files must be **< 400 lines**. Files exceeding this limit need decomposition
 - Extract `useTracingLayout` hook for dagre layout logic
 - Extract `useTracingCanvas` hook for selection/interaction state
 
-**EditApplicationDialog (937 → ~4 files)**
-- Extract `ApplicationDetailsForm` component
-- Extract `ApplicationN8NConfig` component
-- Extract `ApplicationFoundryConfig` component
-- Extract `ApplicationIAMTab` component
+**EditChatAgentDialog (937 → ~4 files)**
+- Extract `ChatAgentDetailsForm` component
+- Extract `ChatAgentN8NConfig` component
+- Extract `ChatAgentFoundryConfig` component
+- Extract `ChatAgentIAMTab` component
 
 **TracingHierarchyView (781 → ~4 files)**
 - Extract `JsonViewer` into a shared `common/` component (also used by `TracingDataSection`)
@@ -121,14 +121,14 @@ These files have **no i18n at all** or import `useTranslation` but don't use `t(
 
 | File | Examples of hardcoded strings | Severity |
 |---|---|---|
-| `components/dialogs/CreateApplicationDialog` | `"Create Chat Agent"`, `"Name"`, `"Cancel"`, `"Create"`, validation messages | **Critical** |
+| `components/dialogs/CreateChatAgentDialog` | `"Create Chat Agent"`, `"Name"`, `"Cancel"`, `"Create"`, validation messages | **Critical** |
 | `components/dialogs/CreateAutonomousAgentDialog` | `"Create Autonomous Agent"`, `"Name"`, `"Type"`, all form labels | **Critical** |
 | `components/dialogs/CreateChatWidgetDialog` | `"Create Chat Widget"`, `"Name"`, `"Type"`, `"Cancel"`, `"Create"` | **Critical** |
 | `components/dialogs/CreateCredentialDialog` | `"Create Credential"`, `"Name"`, `"Type"`, all validation | **Critical** |
 | `components/dialogs/CreateCustomGroupDialog` | `"Create Custom Group"`, `"Name"`, `"Cancel"`, `"Create"` | **Critical** |
 | `components/dialogs/CreateTenantDialog` | `"Create Tenant"`, `"Name"`, `"Cancel"`, `"Create"` | **Critical** |
 | `components/dialogs/CreateToolDialog` | `"Create New Tool"`, `"Name"`, `"Type"`, `"Cancel"`, `"Create"` | **Critical** |
-| `components/dialogs/EditApplicationDialog` | All form labels, tab labels, validation messages, badge text | **Critical** |
+| `components/dialogs/EditChatAgentDialog` | All form labels, tab labels, validation messages, badge text | **Critical** |
 | `components/dialogs/EditAutonomousAgentDialog` | `"Active"`, `"Inactive"`, all labels, validation | **Critical** |
 | `components/dialogs/EditChatWidgetDialog` | `"Details"`, `"Manage Access"`, `"Name"`, `"Cancel"`, `"Save Changes"`, `"Active"`, `"Inactive"` | **Critical** |
 | `components/dialogs/EditToolDialog` | `"Details"`, `"Manage Access"`, `"Name"`, `"Cancel"`, `"Save Changes"`, `"Active"`, `"Inactive"` | **Critical** |
@@ -154,13 +154,13 @@ These files have **no i18n at all** or import `useTranslation` but don't use `t(
 
 | File | Issue | Severity |
 |---|---|---|
-| `pages/ApplicationsPage` | `"Chat Agents"`, `"Manage your AI chat agents"`, `"Create Chat Agent"`, `"Search chat agents..."` | **Medium** |
+| `pages/ChatAgentsPage` | `"Chat Agents"`, `"Manage your AI chat agents"`, `"Create Chat Agent"`, `"Search chat agents..."` | **Medium** |
 | `pages/AutonomousAgentsPage` | Page title, description, button labels | **Medium** |
 | `pages/ChatWidgetsPage` | Similar to above | **Medium** |
 | `pages/LoginTokenPage` | `"Access Token"`, `"Graph API Token"` hardcoded alongside i18n | **Medium** |
 | `pages/AutonomousAgentDetailsPage` | Extensive hardcoded labels across all sections | **Medium** |
 | `components/layout/SidebarDataList` | `'Collapse'`, `'Expand'`, `'Close'`, `'Refresh data'`, `'Loading...'`, `'No entries found'`, `addButtonLabel = 'Add'` | **Medium** |
-| `components/layout/GlobalChatSidebar` | `'Conversations'`, `'No conversations yet'`, `'View all conversations'`, `'Unknown Application'` | **Medium** |
+| `components/layout/GlobalChatSidebar` | `'Conversations'`, `'No conversations yet'`, `'View all conversations'`, `'Unknown Chat Agent'` | **Medium** |
 | `pages/ConversationsPage/components/ChatContent` | `"Loading messages..."`, `"How can I help you today?"`, `"Retry"` | **Medium** |
 
 ### Well-Implemented i18n (Reference)
@@ -226,10 +226,10 @@ Project rule: **No comments** except absolutely critical ones.
 | Files | Duplication | Lines Affected | Severity | Fix |
 |---|---|---|---|---|
 | `TenantSettingsPage.tsx` | Groups/Tools/Credentials/AI Models tabs repeat the same table+CRUD pattern (~150 lines each) | ~600 | **Critical** | Extract generic `TenantEntityTab<T>` accepting config for columns, API calls, and form fields |
-| `CreateApplicationDialog` ↔ `EditApplicationDialog` | Duplicated constants (`APPLICATION_TYPES`, `N8N_API_VERSIONS`, `FOUNDRY_MODELS`), validation logic, form field structure | ~300 | **Critical** | Extract shared `ApplicationForm` + constants file |
+| `CreateChatAgentDialog` ↔ `EditChatAgentDialog` | Duplicated constants (`CHAT_AGENT_TYPES`, `N8N_API_VERSIONS`, `FOUNDRY_MODELS`), validation logic, form field structure | ~300 | **Critical** | Extract shared `ChatAgentForm` + constants file |
 | `CreateAutonomousAgentDialog` ↔ `EditAutonomousAgentDialog` | Same form structure, validation, N8N config sections | ~200 | **Critical** | Extract shared `AutonomousAgentForm` component |
 | `TracingHierarchyView` ↔ `TracingDataSection` | `JsonViewer` component duplicated identically in both files | ~60 | **Critical** | Extract `JsonViewer` to `components/common/` |
-| `ApplicationsPage` ↔ `AutonomousAgentsPage` ↔ `ChatWidgetsPage` | Nearly identical entity list page structure | ~120 each | **Critical** | Extract shared `EntityListPageLayout` |
+| `ChatAgentsPage` ↔ `AutonomousAgentsPage` ↔ `ChatWidgetsPage` | Nearly identical entity list page structure | ~120 each | **Critical** | Extract shared `EntityListPageLayout` |
 
 ### Medium — Pattern Duplication
 
@@ -274,7 +274,7 @@ Replace with notification system (`notifications.show()`) or centralized error l
 | `components/dialogs/CreateChatWidgetDialog` | Create error | **Medium** |
 | `components/dialogs/CreateCredentialDialog` | Create error | **Medium** |
 | `components/dialogs/ShareConversationDialog` | Share error | **Medium** |
-| `components/dialogs/EditApplicationDialog` | Multiple catch blocks | **Medium** |
+| `components/dialogs/EditChatAgentDialog` | Multiple catch blocks | **Medium** |
 | `components/dialogs/EditAutonomousAgentDialog` | Multiple catch blocks | **Medium** |
 | `components/dialogs/EditCredentialDialog` | Fetch/save errors | **Medium** |
 | `components/dialogs/EditChatWidgetDialog` | `'Failed to fetch chat widget:'` | **Medium** |
@@ -321,7 +321,7 @@ eslint-disable comments indicate design issues that should be resolved, not supp
 | File | Rule Disabled | Severity | Fix |
 |---|---|---|---|
 | `pages/AutonomousAgentDetailsPage` | `react-hooks/exhaustive-deps` | **Medium** | Restructure deps |
-| `components/dialogs/EditApplicationDialog` | `react-hooks/exhaustive-deps` | **Medium** | Fix `initializeFromData` pattern |
+| `components/dialogs/EditChatAgentDialog` | `react-hooks/exhaustive-deps` | **Medium** | Fix `initializeFromData` pattern |
 | `components/dialogs/EditAutonomousAgentDialog` | `react-hooks/exhaustive-deps` | **Medium** | Same pattern |
 | `components/dialogs/EditCredentialDialog` | `react-hooks/exhaustive-deps` | **Medium** | Same pattern |
 | `components/dialogs/EditCustomGroupDialog` | `react-hooks/exhaustive-deps` | **Medium** | Same pattern |
@@ -408,12 +408,12 @@ Project rule: Named exports only with `FC<Props>`. No `export default`.
 2. **Add i18n to ALL dialog components** — ~20 dialog files have zero i18n; create namespaced translation files per dialog
 3. **Fix hardcoded German strings** — 7 files contain hardcoded German text (NotFoundPage, LoginTokenPage, TagInput, TracingSubHeader, TracingHierarchyView, TracingCanvasView, TracingDialogDevelopmentPage)
 4. **Decompose `TracingCanvasView.tsx`** (975 lines) — Extract nodes, edges, and layout hooks
-5. **Decompose `EditApplicationDialog.tsx`** (937 lines) — Extract form sections, share with CreateApplicationDialog
+5. **Decompose `EditChatAgentDialog.tsx`** (937 lines) — Extract form sections, share with CreateChatAgentDialog
 6. **Extract shared `JsonViewer`** — Duplicated in TracingHierarchyView and TracingDataSection
 7. **Remove all `console.error`** — 19 files; replace with notification system
 8. **Remove all comments** — 20+ files contain JSDoc, section separators, or inline comments
 9. **Fix all `eslint-disable` hooks deps** — 7 Edit dialogs share same `initializeFromData` pattern issue; use `formRef` pattern
-10. **Extract shared entity page patterns** — ApplicationsPage/AutonomousAgentsPage/ChatWidgetsPage are nearly identical; Create↔Edit dialog pairs duplicate forms
+10. **Extract shared entity page patterns** — ChatAgentsPage/AutonomousAgentsPage/ChatWidgetsPage are nearly identical; Create↔Edit dialog pairs duplicate forms
 
 ---
 ---
@@ -517,7 +517,7 @@ This is **HIGH** severity because ConfirmDeleteDialog is used across 12+ locatio
 |-----------|--------|-------|
 | `setup.ts` | ✅ Good | `matchMedia` mock, `ResizeObserver` mock, MSW server lifecycle |
 | `utils.tsx` | ✅ Good | `renderWithProviders` wraps `MantineProvider` + `I18nextProvider` + `MemoryRouter` |
-| MSW mock handlers | ✅ Good | Covers `/v1/me`, `/v1/tenants/:id/applications`, `/autonomous-agents`, `/chat-widgets`, `/conversations`, `/ai-capabilities` |
+| MSW mock handlers | ✅ Good | Covers `/v1/me`, `/v1/tenants/:id/chat-agents`, `/autonomous-agents`, `/chat-widgets`, `/conversations`, `/ai-capabilities` |
 | `i18nForTests.ts` | ✅ Good | Deterministic `lng: 'en-US'`, no LanguageDetector |
 
 ### 13.2 Existing Test Quality
@@ -540,7 +540,7 @@ This is **HIGH** severity because ConfirmDeleteDialog is used across 12+ locatio
 | `LoginPage` | ❌ | Medium | Medium |
 | `LoginTokenPage` | ❌ | Medium | Low |
 | `ConversationsPage` | ❌ | **Very High** | **HIGH** |
-| `ApplicationsPage` | ❌ | High | **HIGH** |
+| `ChatAgentsPage` | ❌ | High | **HIGH** |
 | `AutonomousAgentsPage` | ❌ | High | **HIGH** |
 | `AutonomousAgentDetailsPage` | ❌ | **Very High** | **HIGH** |
 | `ChatWidgetsPage` | ❌ | High | Medium |
