@@ -2,10 +2,59 @@
 
 ## CMDs
 
+### Development (Hot Reload)
+
 ```sh
-uvicorn unifiedui.app:app --reload
-make run
+# Platform Service (Python/FastAPI)
+uv run uvicorn unifiedui.app:app --reload
+
+# Agent Service (Go/Gin with Air)
+make dev
+# oder: ~/go/bin/air -c .air.toml
+
+# Frontend Service (React/Vite)
 npm run dev
+```
+
+### Tests
+
+```sh
+# Platform Service
+pytest tests/ -n auto --no-header -q
+
+# Agent Service
+make test
+
+# Frontend Service
+npx vitest run
+```
+
+### Test Coverage
+
+```sh
+# Platform Service (80%+)
+pytest tests/ -n auto --cov=unifiedui --cov-report=html
+
+# Agent Service
+make test-cover
+# oder: go test -coverprofile=coverage.out ./... && go tool cover -html=coverage.out -o coverage.html
+
+# Frontend Service
+npx vitest run --coverage
+```
+
+### Linting
+
+```sh
+# Platform Service
+ruff check . && ruff format --check .
+
+# Agent Service
+make lint
+# oder: golangci-lint run
+
+# Frontend Service
+npm run lint && npx tsc --noEmit
 ```
 
 ## Checkout:
