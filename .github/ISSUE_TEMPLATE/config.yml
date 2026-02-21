@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: unified-ui Documentation
+    url: https://github.com/enricogoerlitz/unifiedui
+    about: Check the main repository for documentation and architecture details.
+  - name: Platform Service
+    url: https://github.com/enricogoerlitz/unified-ui-platform-service
+    about: Issues specific to the Python/FastAPI Platform Service.
+  - name: Agent Service
+    url: https://github.com/enricogoerlitz/unified-ui-agent-service
+    about: Issues specific to the Go/Gin Agent Service.
+  - name: Frontend Service
+    url: https://github.com/enricogoerlitz/unified-ui-frontend-service
+    about: Issues specific to the React/TypeScript Frontend Service.

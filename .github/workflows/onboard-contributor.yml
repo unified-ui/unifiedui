@@ -1,0 +1,77 @@
+name: "Onboard New Contributor"
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  welcome:
+    if: github.event.action == 'opened' && !contains(github.event.issue.labels.*.name, 'automated')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Welcome new contributor
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueAuthor = context.payload.issue.user.login;
+            const issueNumber = context.payload.issue.number;
+
+            // Check if this is the contributor's first issue
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              creator: issueAuthor,
+              state: 'all'
+            });
+
+            if (issues.length === 1) {
+              const welcomeMessage = `
+            ## 👋 Welcome to unified-ui, @${issueAuthor}!
+
+            Thank you for your first issue! We're excited to have you here.
+
+            ### Getting Started
+
+            Here are some resources to help you get started:
+
+            - 📖 **[README](../README.md)** — Project overview
+            - 🏗️ **[Architecture](../design/)** — System design documents
+            - 🔧 **[TOOLING.md](../TOOLING.md)** — Development tooling guide
+
+            ### Our Services
+
+            | Service | Description | Tech |
+            |---------|-------------|------|
+            | [Platform Service](https://github.com/enricogoerlitz/unified-ui-platform-service) | Auth, RBAC, Core DB | Python/FastAPI |
+            | [Agent Service](https://github.com/enricogoerlitz/unified-ui-agent-service) | AI Backend Abstraction | Go/Gin |
+            | [Frontend Service](https://github.com/enricogoerlitz/unified-ui-frontend-service) | React Frontend | TypeScript/React |
+
+            ### Communication
+
+            - Use clear, descriptive titles for issues
+            - Provide reproduction steps for bugs
+            - Follow the issue templates when available
+
+            We'll review your issue soon. Thanks for contributing! 🚀
+            `;
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: welcomeMessage
+              });
+            }
+
+  first-pr-welcome:
+    if: github.event.action == 'opened'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Check if triggered by PR (not applicable here)
+        run: echo "This workflow handles issues only"

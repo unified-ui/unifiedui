@@ -1,0 +1,68 @@
+name: "Welcome First PR"
+
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  welcome-first-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Welcome first-time contributor PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prAuthor = context.payload.pull_request.user.login;
+            const prNumber = context.payload.pull_request.number;
+
+            // Check if this is the contributor's first PR
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all'
+            });
+
+            const authorPRs = prs.filter(pr => pr.user.login === prAuthor);
+
+            if (authorPRs.length === 1) {
+              const welcomeMessage = `
+            ## 🎉 Welcome to unified-ui, @${prAuthor}!
+
+            Thank you for your first pull request! We're thrilled to have you contribute.
+
+            ### PR Checklist
+
+            Before we review, please ensure:
+
+            - [ ] Code follows our style guidelines (see [TOOLING.md](../TOOLING.md))
+            - [ ] Tests are added/updated for the changes
+            - [ ] Documentation is updated if needed
+            - [ ] Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/)
+
+            ### Code Quality
+
+            Our CI will automatically run:
+            - ✅ Unit tests
+            - ✅ Linting (ESLint/Ruff/golangci-lint)
+            - ✅ Type checking
+            - ✅ Security scanning (CodeQL)
+
+            ### Review Process
+
+            1. A maintainer will review your PR
+            2. We may request changes — please don't be discouraged!
+            3. Once approved, we'll merge your contribution
+
+            Thanks again for contributing! 🚀
+            `;
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: welcomeMessage
+              });
+            }

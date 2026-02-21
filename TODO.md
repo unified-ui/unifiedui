@@ -175,7 +175,7 @@ Beachte dabei den folgenden Workflow:
 - [DONE] CORS im platform-service
     - hier CORS für header X-Service-Key explizit angeben, damit nur vom unified-ui agent-service darauf zugegriffen werden kann
 
-- Landingpage desinen
+- Landingpage + Documentation Page designen
 
 - Chat in ext. Webseite embedden lassen
 
