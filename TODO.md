@@ -9,6 +9,7 @@
 uv run uvicorn unifiedui.app:app --reload
 
 # Agent Service (Go/Gin with Air)
+# make run
 make dev
 # oder: ~/go/bin/air -c .air.toml
 
@@ -63,62 +64,6 @@ npm run lint && npx tsc --noEmit
     - see: "In this article" on the right side!
 -  OSS Project for Chat Frontend [chainlit](https://github.com/Chainlit/chainlit)
 
-## emtec Plan
-
-1. v0.1.0 fertigstellen
-    - definieren, welche Features in v1 vorhanden sein sollen
-2. v0.2.0
-    - Langchain + Langgraph integration
-        - per REST API
-        - python-unified-ui-sdk für Streaming und Tracing
-            - track_langchain_traces(lc_agent=lc_agent)
-            - ...
-    - anhand des Typecode Research Chats Features ableiten
-        - Real-Time Updates von
-            - Reasoning
-            - Tool Calls wie Web-Search etc
-    - einfache Chat-Widgets im Chat einbinden
-        - Standard Chat Widgets können Chat Agent hinzugefügt werden
-            - spezielle Zwischen Response notwendig
-        - Single-Select
-        - Multi-Select
-    - Connection-Tests einführen
-        - wenn man mit N8N verbinden möchte per API -> test obs funktioniert
-            - /tenants/{id}/api/v1/test-connection {""...}
-    - DropDowns für externe Daten zur Verfügung stellen
-        - zB n8n: man gibt credentials an, endpoint und kann sich dann die workflows auflisten lassen 
-3. v0.3.0
-    - Azure Cloud Deployment
-        - Private-Public Deployment
-            - Kommunikation und DBs etc private
-            - Frontend Public
-        - Private-Private Deployment
-            - Frontend ebenfalls nur mit VPN erreichbar
-    - LDAP Auth-Provider
-    - Kerberos Auth-Provider
-    - tenant-konzept überarbeiten
-    - MS Copilot integration
-    - Feedback Framework integration
-    - Formulare als Chat Widgets supporten
-    - Simple ReACT Agent entwickeln
-        - + Chat-Playground
-        - + MCP Server Support für ReACT Agent
-        - + OpenAPI Definition als Tool für ReACT Agent (wie in Foundry)
-        - neue Entitäten:
-            - MCP Servers
-            - Open API Config
-            - Credentials.Type: LLM > Azure, Anthropic etc (via Langchain)
-            - Credentials.Type: OPEN_API_CONNECTION > key mappen in header (wie in Foundry)
-        - Agent-Features:
-            - Reasoning
-            - Tool Calls
-            - Custom Agentic-Engine
-                - Summarization of History (Sub Agent)
-                - Split message in different tasks and create sub-agents for each task
-                    - enable Multi-Agent Orchestration
-                - ...
-
-
 ## Plan
 
 Deine Aufgaben:
@@ -146,11 +91,6 @@ Beachte dabei den folgenden Workflow:
 
 
 - Frontend-Refactoring (Placeholder)
-
-    - naming refactoring:
-        - überhall "applications"/"application" in "chat-agents"/"chat-agent" umbenennen
-            - auch in DB!!!
-            - ✅ Design-Docs umbenannt
 
     - ConversationPage
         - MessageSearchDialog
@@ -192,6 +132,7 @@ Beachte dabei den folgenden Workflow:
     - Rollen testen mit mehreren Usern
 
 - Orga:
+    - Repos refactoren / aufräumen
     - GitHub Projekt sauber aufsetzen mit issues etc
     - Branching-Konzept
     - automatischen Change-log
@@ -224,11 +165,16 @@ Beachte dabei den folgenden Workflow:
 - [DONE] CORS im platform-service
     - hier CORS für header X-Service-Key explizit angeben, damit nur vom unified-ui agent-service darauf zugegriffen werden kann
 
-- Landingpage + Documentation Page designen
+- Landingpage + Documentation App designen
+    - en-us und de-de Version
+    - App mit
+        - Landingpage
+        - docs
+        - about us
+            - why unified-ui
+        - contact
+        - Leistungen
 
-- Chat in ext. Webseite embedden lassen
-
-- [DONE] PUT und POST auf autoagents /traces soll auch mit Service Principal funktionieren -> dann kann man SVC in Manage Access registrieren und dann mit diesem bearer token auth machen
 
 - Import Dialog für Auto Agents
     - über Tabelle Import IconButton -> Import Dialog
