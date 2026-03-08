@@ -15,6 +15,9 @@ make dev
 
 # Frontend Service (React/Vite)
 npm run dev
+
+# Re-ACT Agent Service (Python/FastAPI)
+uv run uvicorn app.main:app --reload --port 8086
 ```
 
 ### Tests
@@ -89,40 +92,24 @@ Beachte dabei den folgenden Workflow:
 ############################### v0.1.0 ###############################
 ---
 
+- unified-ui tools mcp server
+    - über konfig kann man angeben, welche tools man für den server "enablen" wird und dann werden diese nur registriert
+    - mcp server soll auch auth supporten (zB api key auth) -> über config (also env vars) mitgeben
+    - soll support für key vault
 
-- Frontend-Refactoring (Placeholder)
-
-    - ConversationPage
-        - MessageSearchDialog
-        - weniger hoch der chat input
-        - light mode fixen
-        - ...
-        - iframe chat embedding
-            - hier header und so besser gestalten
-
-    - Frontend Tracing Visualizer Design überarbeiten
-        - Die Data Section ist noch chaos!
-            - sowohl im chat interface, als auc im dialog
-
-    - Dashboard design
+- Sonntag
+    - AI-Based Refactring
+        - für agent-service, platform-service und frontend-service eine analyse machen lassen und refactoring vorschlagen
+        - dann die vorschläge durchgehen und umsetzen
+    - Demo für N8N Tracing Import bauen
+    - Demo für N8N Agent bauen
+    - Dashboard design/refactoring
+        - Links anpassen bei fav (zB Agent)
         - mit mehr Farbe
         - Favoriten namen
 
 --- 
 
-- Tracings Refactoren
-    - Foundry Tracings -> mehr Daten sammeln mit tool calls, etc etc
-        - mehr daten analyiseren und algorithmus anpassen!
-        - aktuell ist foundry algo noch eher fehlerhaft
-    - Tool calls in die hierarchie
-    - Foundry Agent -> MCP Call Confirmation
-        - wenn man MCP Server aufruft (siehe Word), muss noch im chat confirmt werden -> wie machen wir das dann?
-    - N8N
-        - calls
-
-- AI-Based Refactring
-    - für agent-service, platform-service und frontend-service eine analyse machen lassen und refactoring vorschlagen
-    - dann die vorschläge durchgehen und umsetzen
 
 - [TESTE] Rollen im FE respektieren (und nur Items etc anzeigen, wenn man rolle hat)
     - einen unified-ui tenant bauen
