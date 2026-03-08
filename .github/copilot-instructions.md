@@ -1,40 +1,24 @@
-# unified-ui
+# Copilot Instructions — unified-ui
 
-> **unified-ui for your AI** — One interface for all your AI agents, regardless of origin.
+## Project Overview
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+**unified-ui** is a unified integration platform for AI agent systems that provides a single, cohesive interface for managing agents across multiple platforms including Microsoft Foundry, n8n, LangGraph, Copilot, and custom solutions.
 
-## Overview
-
-**unified-ui** is a unified integration platform that transforms the complexity of managing multiple AI systems into a single, cohesive experience. Organizations today deploy agents across diverse platforms—Microsoft Foundry, n8n, LangGraph, Copilot, and custom solutions—resulting in fragmented user experiences, inconsistent monitoring, and operational silos. unified-ui eliminates these challenges by providing a unified interface where every agent converges into one platform.
-
-### Key Features
-
-- 🎯 **Unified Chat Interface** — Single, consistent chat experience for all AI agents
-- 🔌 **Multi-Platform Integration** — Microsoft Foundry, n8n, LangGraph, Copilot, and custom agents
-- 🎨 **Flexible Widget System** — Custom UI components embedded into conversations
-- 📊 **Centralized Tracing** — Unified observability across all agents
-- 🔐 **Enterprise Authentication** — Microsoft Entra ID, Google OAuth, and more
-- 🌍 **Cloud-Agnostic** — Deploy on Azure, AWS, GCP, or on-premises
-- 🚀 **Autonomous Agent Support** — Background agents with centralized tracing
-
----
+This is the **entry repository** containing project documentation, architecture overviews, and integration guides. It does not contain application code.
 
 ## Repository Structure
 
-This is the **entry repository** containing documentation and integration guides. The platform consists of the following service repositories:
+The unified-ui platform consists of the following service repositories:
 
 | Repository | Description | Language |
 |------------|-------------|----------|
-| [unified-ui-platform-service](https://github.com/enricogoerlitz/unified-ui-platform-service) | Core backend API — tenants, agents, credentials, RBAC | Python (FastAPI) |
-| [unified-ui-agent-service](https://github.com/enricogoerlitz/unified-ui-agent-service) | Agent execution, SSE streaming, tracing | Go (Gin) |
-| [unified-ui-frontend-service](https://github.com/enricogoerlitz/unified-ui-frontend-service) | Web UI — React SPA | TypeScript (React) |
-| [unified-ui-re-act-agent-service](https://github.com/enricogoerlitz/unified-ui-re-act-agent-service) | ReACT Agent execution engine | Python (FastAPI) |
-| [unifiedui-sdk](https://github.com/enricogoerlitz/unifiedui-sdk) | Python SDK for external integrations | Python |
+| [unified-ui-platform-service](https://github.com/unified-ui/unified-ui-platform-service) | Core backend API — tenants, agents, credentials, RBAC | Python (FastAPI) |
+| [unified-ui-agent-service](https://github.com/unified-ui/unified-ui-agent-service) | Agent execution, SSE streaming, tracing | Go (Gin) |
+| [unified-ui-frontend-service](https://github.com/unified-ui/unified-ui-frontend-service) | Web UI — React SPA | TypeScript (React) |
+| [unified-ui-re-act-agent-service](https://github.com/unified-ui/unified-ui-re-act-agent-service) | ReACT Agent execution engine | Python (FastAPI) |
+| [unifiedui-sdk](https://github.com/unified-ui/unifiedui-sdk) | Python SDK for external integrations | Python |
 
----
-
-## Architecture
+## Architecture Overview
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -70,53 +54,42 @@ This is the **entry repository** containing documentation and integration guides
                └───────────┘       └───────────┘       └───────────┘
 ```
 
----
+## Key Features
 
-## The Problem unified-ui Solves
-
-### Fragmented AI Experiences
-- **Inconsistent interfaces**: Each platform has its own chat experience
-- **Missing UI layers**: Custom agents (e.g., LangGraph) often lack user interfaces
-- **Scattered monitoring**: Tracing data lives in disparate systems
-
-### Integration Complexity
-- Custom API integrations for each agent system
-- Bespoke authentication and authorization flows
-- Redundant implementations of common features
-
-### Rapid Technology Obsolescence
-- Agent frameworks evolve quickly; today's tools may be tomorrow's legacy
-- **unified-ui decouples agent frameworks from user experience**
-- Integrate legacy and modern systems simultaneously
-- Seamless transitions without disrupting end users
-
----
+- **Multi-Platform Integration**: Microsoft Foundry, n8n, LangGraph, Copilot, custom REST
+- **Unified Chat Interface**: Single chat experience for all AI agents
+- **Centralized Tracing**: Observability across all agent types
+- **Multi-Tenant RBAC**: Enterprise-grade access control
+- **SSE Streaming**: Real-time response streaming with 22 event types
 
 ## Documentation
 
 | Document | Description |
 |----------|-------------|
-| [n8n Integration Guide](docs/n8n-unified-ui-integration/) | How to integrate n8n workflows with unified-ui |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution guidelines |
-| [SECURITY.md](SECURITY.md) | Security policy and vulnerability reporting |
-| [CHANGELOG.md](CHANGELOG.md) | Version history |
-
----
+| [README.md](../README.md) | Project overview and quick start |
+| [docs/n8n-unified-ui-integration/](../docs/n8n-unified-ui-integration/) | n8n integration guide |
 
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Please see the individual service repositories for contribution guidelines:
 
-For service-specific contributions, refer to the CONTRIBUTING.md in each service repository.
+- Each service has its own `CONTRIBUTING.md` and coding standards
+- All services use Conventional Commits for commit messages
+- PRs should be made against the respective service repository
 
----
+## Development Setup
 
-## Sponsors
+Refer to the README.md files in each service repository for setup instructions.
 
-If you find unified-ui useful, please consider [sponsoring the project](SPONSORS.md).
+### Service Ports (Local Development)
 
----
+| Service | Port |
+|---------|------|
+| Platform Service | 8000 |
+| Agent Service | 8085 |
+| ReACT Agent Service | 8086 |
+| Frontend | 5173 |
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License — see [LICENSE](../LICENSE)

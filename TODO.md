@@ -92,21 +92,13 @@ Beachte dabei den folgenden Workflow:
 ############################### v0.1.0 ###############################
 ---
 
-- unified-ui tools mcp server
-    - über konfig kann man angeben, welche tools man für den server "enablen" wird und dann werden diese nur registriert
-    - mcp server soll auch auth supporten (zB api key auth) -> über config (also env vars) mitgeben
-    - soll support für key vault
+- TODOs
+    - für alle services ein release cd! wie bei sdk, aber ohne pypi
+    - alle branches in develop -> main mit sauberen ci mergen -> ersten release machen
 
 - Sonntag
-    - AI-Based Refactring
-        - für agent-service, platform-service und frontend-service eine analyse machen lassen und refactoring vorschlagen
-        - dann die vorschläge durchgehen und umsetzen
     - Demo für N8N Tracing Import bauen
     - Demo für N8N Agent bauen
-    - Dashboard design/refactoring
-        - Links anpassen bei fav (zB Agent)
-        - mit mehr Farbe
-        - Favoriten namen
 
 --- 
 
