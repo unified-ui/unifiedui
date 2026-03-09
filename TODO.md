@@ -93,7 +93,6 @@ Beachte dabei den folgenden Workflow:
 ---
 
 - TODOs
-    - für alle services ein release cd! wie bei sdk, aber ohne pypi
     - alle branches in develop -> main mit sauberen ci mergen -> ersten release machen
 
 - Sonntag
