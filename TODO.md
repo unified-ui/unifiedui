@@ -20,6 +20,45 @@ npm run dev
 uv run uvicorn app.main:app --reload --port 8086
 ```
 
+### REST API Agent Service (Python/FastAPI)
+
+```sh
+# Start
+uv run uvicorn app.main:app --reload --port 8087
+```
+
+Base URL: http://localhost:8087
+
+Conversations (create session):
+POST http://localhost:8087/api/v1/anonymous/conversations
+POST http://localhost:8087/api/v1/basic-auth/conversations
+POST http://localhost:8087/api/v1/api-key/conversations
+POST http://localhost:8087/api/v1/entra-id/conversations
+POST http://localhost:8087/api/v1/entra-id-appreg/conversations
+
+Agent Invoke (SSE stream) — LangChain:
+POST http://localhost:8087/api/v1/anonymous/agent/langchain/invoke
+POST http://localhost:8087/api/v1/basic-auth/agent/langchain/invoke
+POST http://localhost:8087/api/v1/api-key/agent/langchain/invoke
+POST http://localhost:8087/api/v1/entra-id/agent/langchain/invoke
+POST http://localhost:8087/api/v1/entra-id-appreg/agent/langchain/invoke
+
+Agent Invoke (SSE stream) — LangGraph:
+POST http://localhost:8087/api/v1/anonymous/agent/langgraph/invoke
+POST http://localhost:8087/api/v1/basic-auth/agent/langgraph/invoke
+POST http://localhost:8087/api/v1/api-key/agent/langgraph/invoke
+POST http://localhost:8087/api/v1/entra-id/agent/langgraph/invoke
+POST http://localhost:8087/api/v1/entra-id-appreg/agent/langgraph/invoke
+
+Auth:
+- anonymous: no auth
+- basic-auth: Authorization: Basic base64(admin:password)
+- api-key: X-API-Key: test-key-123
+- entra-id: Authorization: Bearer <entra-id-user-token> (UPN must be in ENTRA_ID_AUTHORIZED_UPNS)
+- entra-id-appreg: Authorization: Bearer <client-credentials-token> (App ID must be in ENTRA_ID_AUTHORIZED_APP_IDS)
+
+Swagger UI: http://localhost:8087/docs
+
 ### Tests
 
 ```sh
@@ -92,12 +131,22 @@ Beachte dabei den folgenden Workflow:
 ############################### v0.1.0 ###############################
 ---
 
-- TODOs
-    - alle branches in develop -> main mit sauberen ci mergen -> ersten release machen
+- AppUserDropdown: Switch Account wenn MSAL (nutze MSAL Switch Accounr Sialog)
 
-- Sonntag
-    - Demo für N8N Tracing Import bauen
-    - Demo für N8N Agent bauen
+- Chat Widgets (custom)
+    - iframe testen! inkl callback -> eigene seite für iframe test erstellen und callback machen
+        - wie muss man callback definieren?
+        - Dokumentieren!
+    - testen
+        - iframe:
+            - dynamisch data von agent über "d" angeben lassen und übergeben
+
+- Backend-Seitiges Streamingverhalten wie bei Chainlit implementieren?
+    - einfach aus chainlit die Logik übernehmen? Wir könnten ja venv mit site-packages nutzen und dann chainlit als package installieren und die Logik übernehmen, oder? -> das wäre wahrscheinlich am einfachsten
+
+- Branding
+    - Foto in den Header mit aufnehmen
+    - App-Titel anpassbar machen (mit klein: by unified-ui), wenn titel nicht unified-ui ist
 
 --- 
 
