@@ -1,0 +1,36 @@
+services:
+  unifiedui-frontend:
+    build:
+      context: ../../../unified-ui-frontend-service
+      dockerfile: ../unifiedui/docker/local/dockerfiles/frontend.Dockerfile
+    container_name: unifiedui-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../../../unified-ui-frontend-service/src:/app/src
+      - ../../../unified-ui-frontend-service/public:/app/public
+      - ../../../unified-ui-frontend-service/index.html:/app/index.html:ro
+      - ../../../unified-ui-frontend-service/vite.config.ts:/app/vite.config.ts:ro
+      - ../../../unified-ui-frontend-service/tsconfig.json:/app/tsconfig.json:ro
+      - ../../../unified-ui-frontend-service/tsconfig.app.json:/app/tsconfig.app.json:ro
+      - ../../../unified-ui-frontend-service/tsconfig.node.json:/app/tsconfig.node.json:ro
+      - ../../../unified-ui-frontend-service/eslint.config.js:/app/eslint.config.js:ro
+      - ./config/vite.docker.config.ts:/app/vite.docker.config.ts:ro
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+      VITE_API_BASE_URL: http://localhost:8000
+      VITE_AGENT_SERVICE_URL: http://localhost:8085
+      VITE_MSAL_CLIENT_ID: ${MSAL_CLIENT_ID}
+      VITE_MSAL_AUTHORITY: ${MSAL_AUTHORITY}
+      VITE_MSAL_API_SCOPE: ${MSAL_API_SCOPE}
+      VITE_SHOW_RE_ACT_AGENT_DEVELOPMENT_PAGE: "true"
+      VITE_SHOW_EXTERNAL_APPS_PAGE: "true"
+    networks:
+      - unifiedui_network
+
+networks:
+  unifiedui_network:
+    name: unifiedui_network
+    driver: bridge

@@ -131,18 +131,47 @@ Beachte dabei den folgenden Workflow:
 ############################### v0.1.0 ###############################
 ---
 
-- AppUserDropdown: Switch Account wenn MSAL (nutze MSAL Switch Accounr Sialog)
+
+- DB
+    - killen
+    - DB Constraints für Namen + Tenant erstellen!!!
+    - neue external App iFrame embedding Tabelle erstellen (tbl=external_apps)
+        - id
+        - tenant_id
+        - name
+        - description
+        - url
+        - image_url
+        - created_at
+        - updated_at
+    - db migration
+
+- external Apps
+    - 
+
+
+- Samstag
+    - docker-compose setup!
+        - re-act agent service testen
+    - Apps:
+        - iFrame testen
+        - sidebaritem hoch
+    - chat widgets:
+        - iFrame testen inkl. data-übergabe und callback
+        - dokumentieren, wie funktioniert
+    - optimierungen im Networking-Tab finden
+        - /tags mehrfach abgefragt
+        - /chat-widgets/{id} -> wird mehrfach abgefragt -> abfrage in eine bündeln mit /chat-widgets?ids=1,2,3&fields=id,name,config -> in einer transaktion
+            - hier nach weiteren möglichkeiten suchen, wo wir daten abfragen, wo wir im prinzip nur id,name und ggf weitre brauchen
+                - vielleicht überall noch eine generischen fields param hin (bei GET /list und GET /{id}) -> damit man je nach use-case nur die daten abrufen kann, performant ist
+                - my_permissions immer mitgeben
+        - http://localhost:8085/api/v1/agent-service/tenants/aa574a07-04b3-40e8-ba72-e40c2c825442/conversations/564eb43b-1371-4726-9e9f-7c1cea7c829e/messages/msg_f454f1ce-d705-45ab-bffd-21a0705ca9f4/reactions
+            - aktuell wird einfach jede reaction einzeln abgefragt -> hier könnte man auch reactions je conversation abfragen und diese mappen (ohne metfields und so, nur was man braucht)
+        - refresh -> wird alles benötigt?
+        - auf sidebar items und untersieten klicken -> wird alles benötigt? irgendwas doppelt?
 
 - Chat Widgets (custom)
-    - iframe testen! inkl callback -> eigene seite für iframe test erstellen und callback machen
-        - wie muss man callback definieren?
-        - Dokumentieren!
-    - testen
-        - iframe:
-            - dynamisch data von agent über "d" angeben lassen und übergeben
-
-- Backend-Seitiges Streamingverhalten wie bei Chainlit implementieren?
-    - einfach aus chainlit die Logik übernehmen? Wir könnten ja venv mit site-packages nutzen und dann chainlit als package installieren und die Logik übernehmen, oder? -> das wäre wahrscheinlich am einfachsten
+    - fix: show widgets button gerade immer ausgeblendet!
 
 - Branding
     - Foto in den Header mit aufnehmen

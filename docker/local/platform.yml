@@ -1,0 +1,71 @@
+services:
+  unifiedui-platform:
+    build:
+      context: ../../../unified-ui-platform-service
+      dockerfile: ../unifiedui/docker/local/dockerfiles/platform.Dockerfile
+    container_name: unifiedui-platform
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../../../unified-ui-platform-service/unifiedui:/app/unifiedui
+      - ../../../unified-ui-platform-service/alembic:/app/alembic
+      - ../../../unified-ui-platform-service/alembic.ini:/app/alembic.ini:ro
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@unifiedui-database:5432/${POSTGRES_DB}
+      DB_HOST: unifiedui-database
+      DB_PORT: "5432"
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DOCUMENT_DATABASE: mongodb
+      MONGODB_CONNECTION_STRING: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@unifiedui-docdatabase:27017/?authSource=admin
+      MONGODB_DATABASE_NAME: unifiedui
+      CACHE_ENABLED: "true"
+      CACHE_BACKEND: redis
+      REDIS_HOST: unifiedui-cache
+      REDIS_PORT: "6379"
+      REDIS_DB: "0"
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      RABBITMQ_HOST: unifiedui-message-broker
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_MANAGEMENT_PORT: "15672"
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      VAULT_TYPE: HASHICORP_VAULT
+      APP_VAULT_TYPE: DOTENV
+      SECRETS_VAULT_TYPE: HASHICORP_VAULT
+      VAULT_ADDR: http://unifiedui-vault:8200
+      VAULT_TOKEN: ${VAULT_TOKEN}
+      SECRETS_HASHICORP_VAULT_ADDR: http://unifiedui-vault:8200
+      SECRETS_HASHICORP_VAULT_TOKEN: ${VAULT_TOKEN}
+      SECRETS_ENCRYPTION_KEY: ${SECRETS_ENCRYPTION_KEY}
+      AGENT_SERVICE_URL: http://unifiedui-agent:8085
+      PLATFORM_TO_AGENT_SERVICE_KEY: ${PLATFORM_TO_AGENT_SERVICE_KEY}
+      AGENT_TO_PLATFORM_SERVICE_KEY: ${AGENT_TO_PLATFORM_SERVICE_KEY}
+      IDENTITY_CLIENT_ID: ${MSAL_CLIENT_ID}
+      IDENTITY_CLIENT_SECRET: ${MSAL_CLIENT_SECRET}
+      IDENTITY_TENANT_ID: ${MSAL_TENANT_ID}
+      IDENTITY_VERIFY_SIGNATURE: "true"
+      CORS_ORIGINS: '["*"]'
+      CORS_ALLOW_CREDENTIALS: "false"
+      SYSTEM_ADMIN_EMAIL: ${SYSTEM_ADMIN_EMAIL:-}
+      LOG_LEVEL: DEBUG
+    networks:
+      - unifiedui_network
+    depends_on:
+      unifiedui-database:
+        condition: service_healthy
+      unifiedui-docdatabase:
+        condition: service_healthy
+      unifiedui-cache:
+        condition: service_healthy
+      unifiedui-vault:
+        condition: service_healthy
+      unifiedui-message-broker:
+        condition: service_healthy
+
+networks:
+  unifiedui_network:
+    name: unifiedui_network
+    driver: bridge

@@ -1,0 +1,114 @@
+services:
+  unifiedui-database:
+    image: postgres:16-alpine
+    container_name: unifiedui-database
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - unifiedui_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  unifiedui-docdatabase:
+    image: mongo:8.2
+    container_name: unifiedui-docdatabase
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - unifiedui_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  unifiedui-cache:
+    image: redis:8.4
+    container_name: unifiedui-cache
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - unifiedui_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  unifiedui-message-broker:
+    image: rabbitmq:4.2-management
+    container_name: unifiedui-message-broker
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - unifiedui_network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  unifiedui-vault:
+    image: hashicorp/vault:1.18
+    container_name: unifiedui-vault
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_ADDR: "http://127.0.0.1:8200"
+      SEED_PLATFORM_TO_AGENT_SERVICE_KEY: ${PLATFORM_TO_AGENT_SERVICE_KEY}
+      SEED_AGENT_TO_PLATFORM_SERVICE_KEY: ${AGENT_TO_PLATFORM_SERVICE_KEY}
+      SEED_AGENT_TO_REACT_SERVICE_KEY: ${AGENT_TO_REACT_SERVICE_KEY}
+    cap_add:
+      - IPC_LOCK
+    entrypoint: ["sh", "/vault-entrypoint.sh"]
+    volumes:
+      - vault_data:/vault/file
+      - ./vault/vault-config.hcl:/vault/config/vault-config.hcl:ro
+      - ./vault/vault-entrypoint.sh:/vault-entrypoint.sh:ro
+    networks:
+      - unifiedui_network
+    healthcheck:
+      test: ["CMD", "vault", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+volumes:
+  postgres_data:
+  mongo_data:
+  redis_data:
+  rabbitmq_data:
+  vault_data:
+
+networks:
+  unifiedui_network:
+    name: unifiedui_network
+    driver: bridge

@@ -1,0 +1,28 @@
+services:
+  unifiedui-sample-agent:
+    build:
+      context: ../../../unifiedui-sample-rest-api-agent
+      dockerfile: ../unifiedui/docker/local/dockerfiles/sample-agent.Dockerfile
+    container_name: unifiedui-sample-agent
+    restart: unless-stopped
+    ports:
+      - "8087:8087"
+    volumes:
+      - ../../../unifiedui-sample-rest-api-agent/app:/app/app
+    environment:
+      AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT:-}
+      AZURE_OPENAI_API_KEY: ${AZURE_OPENAI_API_KEY:-}
+      AZURE_OPENAI_DEPLOYMENT: ${AZURE_OPENAI_DEPLOYMENT:-gpt-4.1}
+      AZURE_OPENAI_API_VERSION: ${AZURE_OPENAI_API_VERSION:-2024-05-01-preview}
+      API_KEY: ${SAMPLE_AGENT_API_KEY:-default-api-key}
+      BASIC_AUTH_USERNAME: ${SAMPLE_AGENT_BASIC_USER:-admin}
+      BASIC_AUTH_PASSWORD: ${SAMPLE_AGENT_BASIC_PASS:-password}
+      ENTRA_ID_TENANT_ID: ${MSAL_TENANT_ID}
+      ENTRA_ID_CLIENT_ID: ${MSAL_CLIENT_ID}
+    networks:
+      - unifiedui_network
+
+networks:
+  unifiedui_network:
+    name: unifiedui_network
+    driver: bridge

@@ -1,0 +1,29 @@
+services:
+  unifiedui-react-agent:
+    build:
+      context: ../../../unified-ui-re-act-agent-service
+      dockerfile: ../unifiedui/docker/local/dockerfiles/react-agent.Dockerfile
+    container_name: unifiedui-react-agent
+    restart: unless-stopped
+    ports:
+      - "8086:8086"
+    volumes:
+      - ../../../unified-ui-re-act-agent-service/app:/app/app
+    environment:
+      SERVER_HOST: "0.0.0.0"
+      SERVER_PORT: "8086"
+      LOG_LEVEL: debug
+      VAULT_TYPE: HASHICORP_VAULT
+      HASHICORP_VAULT_ADDR: http://unifiedui-vault:8200
+      HASHICORP_VAULT_TOKEN: ${VAULT_TOKEN}
+      HASHICORP_VAULT_MOUNT_POINT: secret
+    networks:
+      - unifiedui_network
+    depends_on:
+      unifiedui-vault:
+        condition: service_healthy
+
+networks:
+  unifiedui_network:
+    name: unifiedui_network
+    driver: bridge

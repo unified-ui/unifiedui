@@ -1,0 +1,11 @@
+name: unifiedui-local
+
+include:
+  - path: infra.yml
+  - path: n8n.yml
+  - path: platform.yml
+  - path: agent.yml
+  - path: frontend.yml
+  - path: react-agent.yml
+  - path: sample-agent.yml
+  - path: sample-frontend.yml
