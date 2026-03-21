@@ -103,8 +103,6 @@ npm run lint && npx tsc --noEmit
 ## Checkout:
 
 - [Foundry REST API](https://learn.microsoft.com/en-us/azure/ai-foundry/reference/foundry-project-rest-preview?view=foundry)
-    - see: "In this article" on the right side!
--  OSS Project for Chat Frontend [chainlit](https://github.com/Chainlit/chainlit)
 
 ## Plan
 
@@ -128,50 +126,20 @@ Beachte dabei den folgenden Workflow:
 5. Reviewe nochmal deine Implementierung und baue ggf. Optimierungen ein. danach nochmal Schritt 4
 
 ---
-############################### v0.1.0 ###############################
+############################### v0.2.0 ###############################
 ---
 
 
-- DB
-    - killen
-    - DB Constraints für Namen + Tenant erstellen!!!
-    - neue external App iFrame embedding Tabelle erstellen (tbl=external_apps)
-        - id
-        - tenant_id
-        - name
-        - description
-        - url
-        - image_url
-        - created_at
-        - updated_at
-    - db migration
+- Sonntag
 
-- external Apps
-    - 
+    - AI Label Disclamer in chat!
+    - Chat Widgets (custom)
+        - fix: bei 
+    - Azure OpenAI LLM
+        - hier auch nach auth fragen: EntraID User Token (forward) (recommended und defazlt) oder API Key oder EntraID App Reg
 
-
-- Samstag
-    - docker-compose setup!
-        - re-act agent service testen
-    - Apps:
-        - iFrame testen
-        - sidebaritem hoch
-    - chat widgets:
-        - iFrame testen inkl. data-übergabe und callback
-        - dokumentieren, wie funktioniert
-    - optimierungen im Networking-Tab finden
-        - /tags mehrfach abgefragt
-        - /chat-widgets/{id} -> wird mehrfach abgefragt -> abfrage in eine bündeln mit /chat-widgets?ids=1,2,3&fields=id,name,config -> in einer transaktion
-            - hier nach weiteren möglichkeiten suchen, wo wir daten abfragen, wo wir im prinzip nur id,name und ggf weitre brauchen
-                - vielleicht überall noch eine generischen fields param hin (bei GET /list und GET /{id}) -> damit man je nach use-case nur die daten abrufen kann, performant ist
-                - my_permissions immer mitgeben
-        - http://localhost:8085/api/v1/agent-service/tenants/aa574a07-04b3-40e8-ba72-e40c2c825442/conversations/564eb43b-1371-4726-9e9f-7c1cea7c829e/messages/msg_f454f1ce-d705-45ab-bffd-21a0705ca9f4/reactions
-            - aktuell wird einfach jede reaction einzeln abgefragt -> hier könnte man auch reactions je conversation abfragen und diese mappen (ohne metfields und so, nur was man braucht)
-        - refresh -> wird alles benötigt?
-        - auf sidebar items und untersieten klicken -> wird alles benötigt? irgendwas doppelt?
-
-- Chat Widgets (custom)
-    - fix: show widgets button gerade immer ausgeblendet!
+    - Zitadel Auth testen
+    - LDAP Auth testen
 
 - Branding
     - Foto in den Header mit aufnehmen

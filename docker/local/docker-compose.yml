@@ -2,6 +2,8 @@ name: unifiedui-local
 
 include:
   - path: infra.yml
+  - path: identity.yml
+  - path: ldap.yml
   - path: n8n.yml
   - path: platform.yml
   - path: agent.yml

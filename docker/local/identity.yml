@@ -1,0 +1,35 @@
+services:
+  unifiedui-identity:
+    image: ghcr.io/zitadel/zitadel:v2.71.6
+    container_name: unifiedui-identity
+    restart: unless-stopped
+    command: start-from-init --masterkeyFromEnv --tlsMode disabled
+    ports:
+      - "8088:8080"
+    environment:
+      ZITADEL_MASTERKEY: ${ZITADEL_MASTERKEY}
+      ZITADEL_DATABASE_POSTGRES_HOST: unifiedui-database
+      ZITADEL_DATABASE_POSTGRES_PORT: 5432
+      ZITADEL_DATABASE_POSTGRES_DATABASE: ${ZITADEL_DB_NAME}
+      ZITADEL_DATABASE_POSTGRES_USER_USERNAME: ${ZITADEL_DB_USER}
+      ZITADEL_DATABASE_POSTGRES_USER_PASSWORD: ${ZITADEL_DB_PASSWORD}
+      ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: disable
+      ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: ${POSTGRES_USER}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: ${POSTGRES_PASSWORD}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: disable
+      ZITADEL_EXTERNALSECURE: "false"
+      ZITADEL_EXTERNALPORT: 8088
+      ZITADEL_EXTERNALDOMAIN: localhost
+      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME: ${ZITADEL_ADMIN_USERNAME}
+      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORD: ${ZITADEL_ADMIN_PASSWORD}
+    depends_on:
+      unifiedui-database:
+        condition: service_healthy
+    networks:
+      - unifiedui_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/debug/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
