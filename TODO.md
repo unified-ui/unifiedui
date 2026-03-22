@@ -131,15 +131,15 @@ Beachte dabei den folgenden Workflow:
 
 
 - Sonntag
+    - Zitadel Auth testen
+        - ...
+    - Azure OpenAI LLM
+        - hier auch nach auth fragen: EntraID User Token (forward) (recommended und defazlt) oder API Key oder EntraID App Reg
 
     - AI Label Disclamer in chat!
     - Chat Widgets (custom)
         - fix: bei 
-    - Azure OpenAI LLM
-        - hier auch nach auth fragen: EntraID User Token (forward) (recommended und defazlt) oder API Key oder EntraID App Reg
 
-    - Zitadel Auth testen
-    - LDAP Auth testen
 
 - Branding
     - Foto in den Header mit aufnehmen

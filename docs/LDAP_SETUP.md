@@ -74,9 +74,10 @@ dc=unifiedui,dc=local
 ├── ou=Users
 │   ├── uid=testuser1                 ← Test User 1
 │   ├── uid=testuser2                 ← Jane Developer
+│   ├── uid=tbear                     ← Teddy Bear
 │   └── uid=admin                     ← System Admin
 └── ou=Groups
-    ├── cn=developers                 ← testuser1, testuser2
+    ├── cn=developers                 ← testuser1, testuser2, tbear
     └── cn=admins                     ← admin
 ```
 
@@ -86,18 +87,19 @@ dc=unifiedui,dc=local
 
 ### 5.1 Benutzer
 
-| Username    | Name            | E-Mail                         | Passwort     |
-| ----------- | --------------- | ------------------------------ | ------------ |
-| `testuser1` | Test User 1     | `testuser1@unifiedui.local`    | `Test1234!`  |
-| `testuser2` | Jane Developer  | `testuser2@unifiedui.local`    | `Test1234!`  |
-| `admin`     | System Admin    | `admin@unifiedui.local`        | `Admin1234!` |
+| Username    | Name            | E-Mail                         | Passwort           |
+| ----------- | --------------- | ------------------------------ | ------------------ |
+| `testuser1` | Test User 1     | `testuser1@unifiedui.local`    | `UnifiedDev!2026a` |
+| `testuser2` | Jane Developer  | `testuser2@unifiedui.local`    | `UnifiedDev!2026b` |
+| `tbear`     | Teddy Bear      | `tbear@unifiedui.local`        | `UnifiedDev!2026c` |
+| `admin`     | System Admin    | `admin@unifiedui.local`        | `UnifiedAdm!2026x` |
 
 ### 5.2 Gruppen
 
-| Gruppenname   | Mitglieder                     | Beschreibung         |
-| ------------- | ------------------------------ | -------------------- |
-| `developers`  | `testuser1`, `testuser2`       | Development team     |
-| `admins`      | `admin`                        | Administrators       |
+| Gruppenname   | Mitglieder                           | Beschreibung         |
+| ------------- | ------------------------------------ | -------------------- |
+| `developers`  | `testuser1`, `testuser2`, `tbear`    | Development team     |
+| `admins`      | `admin`                              | Administrators       |
 
 > Die Seed-Daten werden über `docker/local/ldap/seed.ldif`
 > definiert. Änderungen an der Datei erfordern ein Neustarten
@@ -145,7 +147,7 @@ ldapsearch -x -H ldap://localhost:389 \
 ```bash
 ldapsearch -x -H ldap://localhost:389 \
   -D "uid=testuser1,ou=Users,dc=unifiedui,dc=local" \
-  -w "Test1234!" \
+  -w 'UnifiedDev!2026a' \
   -b "dc=unifiedui,dc=local" \
   -s base
 ```
@@ -228,13 +230,88 @@ EOF
 
 ---
 
-## 8. Ergebnis — benötigte Werte für Platform Service
+## 8. Service Principal (Service Account) anlegen
+
+Für den Platform Service wird ein **Service Account**
+benötigt, der Benutzer und Gruppen im LDAP-Verzeichnis
+suchen kann — ohne den vollen LDAP-Admin zu verwenden.
+Dieser Account hat nur **Read-Only-Zugriff** auf
+`ou=Users` und `ou=Groups`.
+
+### 8.1 Service Account erstellen
+
+```bash
+ldapadd -x -H ldap://localhost:389 \
+  -D "cn=admin,dc=unifiedui,dc=local" \
+  -w admin << 'EOF'
+dn: cn=svc-platform,ou=Users,dc=unifiedui,dc=local
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+cn: svc-platform
+sn: Service Account
+description: Platform Service — read-only user/group lookups
+userPassword: SvcPlatform!2026x
+EOF
+```
+
+### 8.2 Zugriff testen
+
+Nach dem Anlegen den Service Account testen:
+
+```bash
+# User-Suche mit Service Account
+ldapsearch -x -H ldap://localhost:389 \
+  -D "cn=svc-platform,ou=Users,dc=unifiedui,dc=local" \
+  -w 'SvcPlatform!2026x' \
+  -b "ou=Users,dc=unifiedui,dc=local" \
+  "(objectClass=inetOrgPerson)" \
+  uid cn mail
+
+# Group-Suche mit Service Account
+ldapsearch -x -H ldap://localhost:389 \
+  -D "cn=svc-platform,ou=Users,dc=unifiedui,dc=local" \
+  -w 'SvcPlatform!2026x' \
+  -b "ou=Groups,dc=unifiedui,dc=local" \
+  "(objectClass=groupOfNames)" \
+  cn member description
+```
+
+### 8.3 Platform Service konfigurieren
+
+Die `.env` bzw. Docker `.env` anpassen,
+damit der Platform Service den Service Account nutzt:
+
+```env
+LDAP_BIND_DN=cn=svc-platform,ou=Users,dc=unifiedui,dc=local
+LDAP_BIND_PASSWORD=SvcPlatform!2026x
+```
+
+> **Wichtig:** In Produktion sollte das Passwort
+> über einen Secrets Manager (Vault, Azure Key Vault)
+> bereitgestellt werden — nicht als Klartext in `.env`.
+
+> **Hinweis:** OpenLDAP erlaubt standardmäßig jedem
+> authentifizierten Benutzer Lesezugriff auf das
+> gesamte Verzeichnis. Der Service Account benötigt
+> daher keine zusätzlichen ACL-Regeln für Lookups.
+> Schreibzugriff (User anlegen/ändern) hat nur der
+> LDAP-Admin (`cn=admin`).
+
+> **osixia/openldap (Local Dev):** Das Standard-Docker-Image
+> erlaubt nur `cn=admin` vollen Lesezugriff. Daher wird der Service Account
+> über die `LDAP_READONLY_USER`-Umgebungsvariablen in `ldap.yml` erstellt.
+> Der DN ist `cn=svc-platform,dc=unifiedui,dc=local` (Root-Level).
+
+---
+
+## 9. Ergebnis — benötigte Werte für Platform Service
 
 | Wert              | Wert (Local Dev)                        | Env-Variable                |
 | ----------------- | --------------------------------------- | --------------------------- |
 | LDAP Server URL   | `ldap://unifiedui-ldap:389`             | `LDAP_SERVER_URL`           |
-| Bind DN           | `cn=admin,dc=unifiedui,dc=local`       | `LDAP_BIND_DN`              |
-| Bind Password     | `admin`                                 | `LDAP_BIND_PASSWORD`        |
+| Bind DN           | `cn=svc-platform,dc=unifiedui,dc=local` | `LDAP_BIND_DN`              |
+| Bind Password     | `SvcPlatform!2026x`                     | `LDAP_BIND_PASSWORD`        |
 | User Base DN      | `ou=Users,dc=unifiedui,dc=local`       | `LDAP_USER_BASE_DN`         |
 | Group Base DN     | `ou=Groups,dc=unifiedui,dc=local`      | `LDAP_GROUP_BASE_DN`        |
 | User Object Class | `inetOrgPerson`                         | `LDAP_USER_OBJECT_CLASS`    |
@@ -251,8 +328,8 @@ Beispiel `.env` (Platform Service):
 ```env
 IDENTITY_PROVIDER=ldap
 LDAP_SERVER_URL=ldap://unifiedui-ldap:389
-LDAP_BIND_DN=cn=admin,dc=unifiedui,dc=local
-LDAP_BIND_PASSWORD=admin
+LDAP_BIND_DN=cn=svc-platform,dc=unifiedui,dc=local
+LDAP_BIND_PASSWORD=SvcPlatform!2026x
 LDAP_USER_BASE_DN=ou=Users,dc=unifiedui,dc=local
 LDAP_GROUP_BASE_DN=ou=Groups,dc=unifiedui,dc=local
 LDAP_USER_OBJECT_CLASS=inetOrgPerson
@@ -263,7 +340,7 @@ LDAP_GROUP_MEMBER_ATTRIBUTE=member
 
 ---
 
-## 9. Troubleshooting
+## 10. Troubleshooting
 
 ### Container startet nicht
 

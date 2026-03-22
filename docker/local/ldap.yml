@@ -10,6 +10,9 @@ services:
       LDAP_ORGANISATION: ${LDAP_ORGANISATION}
       LDAP_DOMAIN: ${LDAP_DOMAIN}
       LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD}
+      LDAP_READONLY_USER: "true"
+      LDAP_READONLY_USER_USERNAME: svc-platform
+      LDAP_READONLY_USER_PASSWORD: ${LDAP_SVC_PASSWORD}
       LDAP_SEED_INTERNAL_LDIF_PATH: /ldif-custom
     volumes:
       - ldap_data:/var/lib/ldap

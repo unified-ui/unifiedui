@@ -6,13 +6,15 @@
 #
 # Default domain: unifiedui.local (dc=unifiedui,dc=local)
 #
-# Users:        Password:
-#   testuser1   Test1234!
-#   testuser2   Test1234!
-#   admin       Admin1234!
+# Users:           Password:
+#   testuser1      UnifiedDev!2026a
+#   testuser2      UnifiedDev!2026b
+#   tbear          UnifiedDev!2026c
+#   admin          UnifiedAdm!2026x
+#   svc-platform   SvcPlatform!2026x   (service account)
 #
 # Groups:
-#   developers  (testuser1, testuser2)
+#   developers  (testuser1, testuser2, tbear)
 #   admins      (admin)
 # ============================================================
 
@@ -39,7 +41,7 @@ mail: testuser1@unifiedui.local
 uidNumber: 10001
 gidNumber: 10000
 homeDirectory: /home/testuser1
-userPassword: Test1234!
+userPassword: UnifiedDev!2026a
 
 dn: uid=testuser2,ou=Users,dc=unifiedui,dc=local
 objectClass: inetOrgPerson
@@ -54,7 +56,22 @@ mail: testuser2@unifiedui.local
 uidNumber: 10002
 gidNumber: 10000
 homeDirectory: /home/testuser2
-userPassword: Test1234!
+userPassword: UnifiedDev!2026b
+
+dn: uid=tbear,ou=Users,dc=unifiedui,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: tbear
+sn: Bear
+givenName: Teddy
+cn: Teddy Bear
+displayName: Teddy Bear
+mail: tbear@unifiedui.local
+uidNumber: 10004
+gidNumber: 10000
+homeDirectory: /home/tbear
+userPassword: UnifiedDev!2026c
 
 dn: uid=admin,ou=Users,dc=unifiedui,dc=local
 objectClass: inetOrgPerson
@@ -69,7 +86,17 @@ mail: admin@unifiedui.local
 uidNumber: 10003
 gidNumber: 10000
 homeDirectory: /home/admin
-userPassword: Admin1234!
+userPassword: UnifiedAdm!2026x
+
+# Service Account (platform-service user/group lookups)
+dn: cn=svc-platform,ou=Users,dc=unifiedui,dc=local
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+cn: svc-platform
+sn: Service Account
+description: Platform Service — read-only user/group lookups
+userPassword: SvcPlatform!2026x
 
 # POSIX Group (required for posixAccount gidNumber dropdown)
 dn: cn=users,ou=Groups,dc=unifiedui,dc=local
@@ -79,6 +106,7 @@ gidNumber: 10000
 description: Default user group
 memberUid: testuser1
 memberUid: testuser2
+memberUid: tbear
 memberUid: admin
 
 # Application Groups (for member-based group queries)
@@ -88,6 +116,7 @@ cn: developers
 description: Development team
 member: uid=testuser1,ou=Users,dc=unifiedui,dc=local
 member: uid=testuser2,ou=Users,dc=unifiedui,dc=local
+member: uid=tbear,ou=Users,dc=unifiedui,dc=local
 
 dn: cn=admins,ou=Groups,dc=unifiedui,dc=local
 objectClass: groupOfNames

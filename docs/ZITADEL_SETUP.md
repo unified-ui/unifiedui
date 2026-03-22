@@ -268,11 +268,10 @@ Erwartete Felder: `issuer`, `authorization_endpoint`,
 Beispiel `.env` (Frontend):
 
 ```env
-VITE_AUTH_PROVIDER=oidc
 VITE_OIDC_AUTHORITY=http://localhost:8088
 VITE_OIDC_CLIENT_ID=<client-id-from-step-5>
-VITE_OIDC_REDIRECT_URI=http://localhost:5173/callback
-VITE_OIDC_SCOPES=openid profile email
+VITE_OIDC_REDIRECT_URI=http://localhost:5173/auth/callback/oidc
+VITE_OIDC_SCOPE=openid profile email
 ```
 
 ### 11.2 Backend (Platform Service)

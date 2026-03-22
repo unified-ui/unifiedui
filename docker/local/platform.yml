@@ -49,7 +49,16 @@ services:
       IDENTITY_VERIFY_SIGNATURE: "true"
       CORS_ORIGINS: '["*"]'
       CORS_ALLOW_CREDENTIALS: "false"
+      LDAP_SERVER_URL: ldap://unifiedui-ldap:389
+      LDAP_BIND_DN: ${LDAP_BIND_DN}
+      LDAP_BIND_PASSWORD: ${LDAP_BIND_PASSWORD}
+      LDAP_BASE_DN: ${LDAP_BASE_DN}
+      LDAP_USE_SSL: "false"
+      LDAP_JWT_SECRET: ${LDAP_JWT_SECRET}
+      LDAP_USER_SEARCH_FILTER: "(objectClass=person)"
+      LDAP_GROUP_SEARCH_FILTER: "(objectClass=groupOfNames)"
       SYSTEM_ADMIN_EMAIL: ${SYSTEM_ADMIN_EMAIL:-}
+      SYSTEM_ADMIN_USERNAME: ${SYSTEM_ADMIN_USERNAME:-}
       LOG_LEVEL: DEBUG
     networks:
       - unifiedui_network

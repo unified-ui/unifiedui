@@ -18,4 +18,4 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:8000/api/v1/platform-service/healthcheck || exit 1
 
-CMD ["sh", "-c", "uv run alembic upgrade head && uv run uvicorn unifiedui.app:app --reload --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", ".venv/bin/alembic upgrade head && .venv/bin/uvicorn unifiedui.app:app --reload --host 0.0.0.0 --port 8000"]
