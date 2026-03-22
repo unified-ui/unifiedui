@@ -11,6 +11,7 @@ services:
       - ../../../unified-ui-platform-service/unifiedui:/app/unifiedui
       - ../../../unified-ui-platform-service/alembic:/app/alembic
       - ../../../unified-ui-platform-service/alembic.ini:/app/alembic.ini:ro
+      - ${FILE_STORAGE_LOCAL_BASE_PATH:-../../../unifiedui/tmp/.files}:/data/files
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@unifiedui-database:5432/${POSTGRES_DB}
       DB_HOST: unifiedui-database
@@ -67,6 +68,9 @@ services:
       MSAL_SYSTEM_ADMIN_EMAIL: ${MSAL_SYSTEM_ADMIN_EMAIL:-}
       LDAP_SYSTEM_ADMIN_USERNAME: ${LDAP_SYSTEM_ADMIN_USERNAME:-}
       OIDC_ZITADEL_SYSTEM_ADMIN_USERNAME: ${OIDC_ZITADEL_SYSTEM_ADMIN_USERNAME:-}
+      FILE_STORAGE_TYPE: ${FILE_STORAGE_TYPE:-local}
+      FILE_STORAGE_LOCAL_BASE_PATH: /data/files
+      FILE_STORAGE_MAX_FILE_SIZE_BYTES: ${FILE_STORAGE_MAX_FILE_SIZE_BYTES:-26214400}
       LOG_LEVEL: DEBUG
     networks:
       - unifiedui_network
