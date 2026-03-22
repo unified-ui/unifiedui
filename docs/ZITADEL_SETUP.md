@@ -230,7 +230,44 @@ Damit Gruppenmitgliedschaften im Token stehen, müssen
 
 ---
 
-## 10. OIDC Discovery & JWKS
+## 10. Service User erstellen (Management API)
+
+Damit der Platform Service alle Benutzer der Organisation
+durchsuchen kann (z.B. bei der Tenant-Zugriffsvergabe),
+wird ein **Service User** mit Personal Access Token (PAT) benötigt.
+
+### 10.1 Service User anlegen
+
+> **Console-Pfad:** Organization → Users → Service Users Tab → New
+
+| Feld              | Wert                          |
+| ----------------- | ----------------------------- |
+| Username           | `unified-ui-platform-svc`    |
+| Name               | `unified-ui Platform Service`|
+| Access Token Type  | **JWT**                      |
+
+### 10.2 Personal Access Token (PAT) erstellen
+
+1. Den neuen Service User öffnen.
+2. Tab **Personal Access Tokens** → **New**.
+3. Optional: Ablaufdatum setzen (oder leer lassen für kein Ablauf).
+4. **Token kopieren** — wird als `OIDC_ZITADEL_SERVICE_TOKEN` verwendet.
+
+### 10.3 Org-Level Manager-Rolle zuweisen
+
+1. Links: **Organization** → Zahnrad-Icon oben rechts (Settings).
+2. Tab **Managers** → **Add Manager**.
+3. Service User `unified-ui-platform-svc` suchen und auswählen.
+4. Rolle: **Org User Manager** (für User-Suche ausreichend).
+5. **Add** klicken.
+
+Der Service User kann jetzt via
+`POST /management/v1/users/_search` alle User der Organisation
+durchsuchen.
+
+---
+
+## 11. OIDC Discovery & JWKS
 
 Nach der Einrichtung sind folgende Endpoints verfügbar:
 
@@ -243,7 +280,7 @@ Nach der Einrichtung sind folgende Endpoints verfügbar:
 | **Userinfo Endpoint**       | `http://localhost:8088/oidc/v1/userinfo`                           |
 | **End Session**             | `http://localhost:8088/oidc/v1/end_session`                        |
 
-### 10.1 Discovery prüfen
+### 11.1 Discovery prüfen
 
 ```bash
 curl -s http://localhost:8088/.well-known/openid-configuration | python3 -m json.tool
@@ -254,9 +291,9 @@ Erwartete Felder: `issuer`, `authorization_endpoint`,
 
 ---
 
-## 11. Ergebnis — benötigte Werte pro Umgebung
+## 12. Ergebnis — benötigte Werte pro Umgebung
 
-### 11.1 Frontend (React SPA)
+### 12.1 Frontend (React SPA)
 
 | Wert            | Wo zu finden                 | Env-Variable                |
 | --------------- | ---------------------------- | --------------------------- |
@@ -274,25 +311,28 @@ VITE_OIDC_REDIRECT_URI=http://localhost:5173/auth/callback/oidc
 VITE_OIDC_SCOPE=openid profile email
 ```
 
-### 11.2 Backend (Platform Service)
+### 12.2 Backend (Platform Service)
 
-| Wert                 | Wo zu finden                 | Env-Variable                       |
-| -------------------- | ---------------------------- | ---------------------------------- |
-| JWKS URL             | OIDC Discovery               | `IDENTITY_JWKS_URL`                |
-| Userinfo URL         | OIDC Discovery               | `IDENTITY_OIDC_USERINFO_URL`       |
-| Management API URL   | Zitadel Docs                 | `IDENTITY_OIDC_MANAGEMENT_API_URL` |
-| Client ID            | API Application (Step 6)     | `IDENTITY_CLIENT_ID`               |
-| Client Secret        | API Application (Step 6)     | `IDENTITY_CLIENT_SECRET`           |
+| Wert                 | Wo zu finden                 | Env-Variable                           |
+| -------------------- | ---------------------------- | -------------------------------------- |
+| JWKS URL             | OIDC Discovery               | `OIDC_JWKS_URL`                        |
+| Userinfo URL         | OIDC Discovery               | `OIDC_USERINFO_URL`                    |
+| Management API URL   | Zitadel Docs                 | `OIDC_ZITADEL_MANAGEMENT_API_URL`      |
+| Service Token (PAT)  | Service User (Step 10)       | `OIDC_ZITADEL_SERVICE_TOKEN`           |
+| System Admin User    | Zitadel Admin                | `OIDC_ZITADEL_SYSTEM_ADMIN_USERNAME`   |
+| Client ID            | API Application (Step 6)     | `OIDC_CLIENT_ID`                       |
+| Client Secret        | API Application (Step 6)     | `OIDC_CLIENT_SECRET`                   |
 
 Beispiel `.env` (Platform Service):
 
 ```env
-IDENTITY_PROVIDER=oidc
-IDENTITY_JWKS_URL=http://unifiedui-identity:8080/oauth/v2/keys
-IDENTITY_OIDC_USERINFO_URL=http://unifiedui-identity:8080/oidc/v1/userinfo
-IDENTITY_OIDC_MANAGEMENT_API_URL=http://unifiedui-identity:8080/management/v1
-IDENTITY_CLIENT_ID=<client-id-from-step-6>
-IDENTITY_CLIENT_SECRET=<client-secret-from-step-6>
+OIDC_ISSUER_URL=http://localhost:8088
+OIDC_CLIENT_ID=<client-id>
+OIDC_JWKS_URL=http://unifiedui-identity:8080/oauth/v2/keys
+OIDC_USERINFO_URL=http://unifiedui-identity:8080/oidc/v1/userinfo
+OIDC_ZITADEL_MANAGEMENT_API_URL=http://unifiedui-identity:8080/management/v1
+OIDC_ZITADEL_SERVICE_TOKEN=<service-user-pat>
+OIDC_ZITADEL_SYSTEM_ADMIN_USERNAME=zitadel-admin@zitadel.localhost
 IDENTITY_VERIFY_SIGNATURE=true
 ```
 
@@ -302,9 +342,9 @@ IDENTITY_VERIFY_SIGNATURE=true
 
 ---
 
-## 12. Testen
+## 13. Testen
 
-### 12.1 Token manuell anfordern (PKCE)
+### 13.1 Token manuell anfordern (PKCE)
 
 Für einen schnellen Smoke-Test den Authorization Code Flow
 im Browser durchspielen:
@@ -325,13 +365,13 @@ im Browser durchspielen:
       -d "code_verifier=<VERIFIER>"
     ```
 
-### 12.2 Token inspizieren
+### 13.2 Token inspizieren
 
 Den erhaltenen `access_token` auf https://jwt.io einfügen
 und prüfen, ob `sub`, `name`, `email` und Gruppen-Claims
 vorhanden sind.
 
-### 12.3 JWKS-Validierung prüfen
+### 13.3 JWKS-Validierung prüfen
 
 ```bash
 curl -s http://localhost:8088/oauth/v2/keys | python3 -m json.tool
