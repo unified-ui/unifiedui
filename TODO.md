@@ -184,27 +184,119 @@ Beachte dabei den folgenden Workflow:
         - colors
             - im dark mode fällt es sehr auf, dass man shadow praktisch nur sehr selten sieht!
                 - man sieht immer nur ne border die sehr hell ist. finde ich nicht so schön. bitte vielleicht einmal ein alternatives design für cards und container im darkmode ausarbeiten
+                - vielleicht border gleiche farbe wie item-background, damit man nicht sieht oder sehr ähnlich, damit man die nicht so präsent sieht
+            - der dark mode ist generell sehr schwarz-weiß; bisschen blau; farbe kommt fast nur über badges rein. vielleicht könnte man hier generell etwas mehr farbe reinbringen, damit es nicht so trist ist? es soll clean sein, aber auch modern und ansprechend
         - Allgemein:
             - Icons und Icons konsistent für ein Item
-        - Cards: Schatten im Dark-Mode nicht sichtbar -> ?hellerer/dunklerer? schatten!
-        - auf manchen seiten -> läd gesamte content-page (nicht sidebar, header, aber site-header) solange auch die daten laden... das sollte nicht so sein. der cntent header sollte direkt da sein
-    - Dashboard
-        - mehr variation
+                - zB Create chat agent
+            - auf manchen seiten -> läd gesamte content-page (nicht sidebar, header, aber site-header) solange auch die daten laden... das sollte nicht so sein. der cntent header sollte direkt da sein
+                - nur als beispiel: auf external Apps seite -> aktuell wird einfach loading spinner in der mitte der seite angezeigt, bis alle daten da sind. das ist aber nicht so schön. man kann ja den header ganz normal anzeigen und liste laden -> wie zB in chat-agents list page oder auch workflows!
+    - Page:Dashboard (/dashboard)
+        - Layout/Design überarbeiten:
+            - die kacheln "Chat Agents, "Wofklows" finde ich super. können bleiben
+            - ich stelle mir oben den titel vor, wie er gerade ist; ganz rechts ein button "Create" mit sonem arrow-dropdown icon -> da drauf klick -> dropdown mit den items: Chat Agents, Workflows, Chat Widgets, External Apps, Credentials, Tools, AI Models, Custom Groups, Principals -> je nachdem was man auswählt, öffnet sich der entsprechende create dialog auf der seite
+            - unter den aktuellen kacheln sollte sone horizontale kachel-gallery sein, die man per navigationsbuttons nach rechts und links scrollen (je ein item) kann. in den kacheln werden dann die items angezeigt, die man zuletzt besucht hat (recently visited/interagiert hat)
+                - die Card (quadratisch, maximal leicht rechteckig (breiter als hoch)) (ähnlich wie die aktuellen Kacheln oben -> Anzahl Chat Agents etc):
+                    - in card oben icon des items; darunte rin groß dick der namen; darunter der typ (wie aktuell schon in der card) und darunteer in recht klein und weniger deutlich: wann letztes mal besucht (vor <zeit> minuten, stunden, tage, wochen, monate)
+                    - oben rechts mit einem sternchen anzeigen, obs favorit ist; aber hir nicht toggeln können und wenn kein favorit, auch stern nicht zeigen
+                - max 25 abfragen und anzeigen!
+            - darunter sollte man auch noch die favorieten als so wrapped card-list sehen; wie aktuell, aber mit load more button wenn möglich.
+            - aktuell lässt sich die page nicht skrollen... Der titel sollte oben fixiert bleiben, aber die seite (content) sollte dann auch skollfähig sein
         - Funktionale fixen:
-            - 
+            - die links gehen alle auf /chat-agents/{id}. das muss dann in dem neuen dashboard natürlich korrekt sein
         - Funktionalität erweitern
-            - 
-    - Chats
-        - Create-
-    - List Pages (Agents, Workflows)
-        - Anpassung Filter / Suche:
-            - die Sortier-Optionen
-    - Detail Pages
-    - ...
+            - schon im design beschreiben
+    - Page:Chats (/conversations)
+        - Layout/Design überarbeiten
+            - aktuell sind die "vorschläge" die man für einen chat agent definieren kann im "_emptyState_1jccf_1" container bzw gerade nicht mal mehr zu sehen
+                - die sollen über dem _inputOuterWrapper_1547w_11 liegen und die brauchen auch bisschen padding die badges
+                - in der conversation sidebar ist der new chat button links neben dem search button im m_4081bf90 mantine-Group-root; bitte new chat button nach rechts und search nach links
+            - Component: Tracing-Hierarchie für Conversation page überarbeiten:
+                - der container (_container_3d3v3_1) für logs, metadata etc ist initial zu wenig hoch. bitte hier höher inital (doppelt so hoch). kann man ja erhöhen, aber ist mit zu niedrig initial!
+                - dann sollte der container (_container_3d3v3_1) gleiche background color wie auch die tracinig hierachie oben (m_c0783ff9 mantine-ScrollArea-viewport) haben. sieht sonst komisch aus
+                - 
+        - Funktionale fixen:
+            - keine
+        - Funktionalität erweitern
+            - keine
+    - Page:EmbedChat (/chat-agents/{id}/embed-chat)
+        - Layout/Design überarbeiten
+            - puh. mir gefällt die page design-technisch gar nicht!
+                - einfach nur container mit rundungen und gleiche farben...
+                - die aufteilung ist okay, aber die container cards gefallen mir überhaupt nicht. bitte arbeite gerne ein neues design/layout für diese seite aus! gebe mir das als layout design und vorschläge
+                - inhaltlich passt das, nur die container finde ich voll langweilig...
+        - Funktionale fixen:
+            - keine
+        - Funktionalität erweitern
+            - aktuell haben wir oben ne navigation "Chat Agents > {agent name} > Embed Chat". {angent name} ist aber nicht klickbar. ich fände es gut, wenn man dann in den chat springen würde. und die sidebar sollte hier auch auf Chat Agents aktiv sein und auch die data sidebar dann zeigen. liegt ja auf dem pfad
+    - Page:Agents (/chat-agents)
+        - Layout/Design überarbeiten
+            - Create Dialog:
+                - type: neue order: Microsoft Foundry / n8n / REST API / ReACT Agent
+                - is active: default auf true!!!
+            - 3-dot-menu: nimm "Pin" raus. hat keine funktion und wir haben fav schon vorne in der liste
+        - Funktionale fixen:
+            - keine
+        - Funktionalität erweitern:
+            - ?dialog=new -> öffnet den create dialog für chat agents
+            - duplicate -> dupliziert agent 1:1 und schreibt hinter: "Copy" bzw "Copy{n}" wenn schon Copy existiert
+                - dafür brauchen wir wahrschenlich backend endpoint! planen!
+    - Page:Workflows (/autonomous-agents -> in /workflows umbenennen)
+        - Layout/Design überarbeiten
+            - 3-dot-menu: nimm "Pin" raus. hat keine funktion und wir haben fav schon vorne in der liste
+        - Funktionale fixen:
+            - keine
+        - Funktionalität erweitern:
+            - siehe Agents Page
+    - Workflow-Details (/autonomous-agents/{id} -> in /workflows/{id} umbenennen)
+        - Layout/Design überarbeiten
+            - ?tab=details
+                - auch hier ist wieder so eine langweilige "container-struktur" gegebene wie bei Embed Chat. bitte hier auch gerne neues design/layout vorschlagen und ausarbeiten lassen!
+            - wenn ich in den dialog "Integrate Autonomous Agent" gehe, hat dieser zB ein icon mit hintergundfarbe. find eich richtig nice. ich finde, die create und edit dialoge für agenten, workflows etc etc könnten genau dieses pattern auch nutzen. daher gerne hier diesen header für den zentalen dialog nutzen...
+        - Funktionale fixen:
+            - keine
+        - Funktionalität erweitern:
+            - keine
+    - Page:External Apps (/external-apps)
+        - Layout/Design überarbeiten
+        - Funktionale fixen:
+            - keine
+        - Funktionalität erweitern:
+            - ?dialog=new -> öffnet den create dialog für external apps
+            - hat keine query params für editSelectedId etc. sowas brauchen wir immer, wenn ein dialog geöffnet wird. 
+            - cards haben bei titel und description keinen tooltip wie überall sonst auch, wenn was zu groß ist. bitte hinzufügen
+    - Page:ChatWidgets (//chat-widgets)
+        - Layout/Design überarbeiten
+            - 3-dot-menu: nimm "Pin" raus. hat keine funktion und wir haben fav schon vorne in der liste
+        - Funktionale fixen:
+            - keine
+        - Funktionalität erweitern:
+            - ?dialog=new -> öffnet den create dialog für chat widgets
+            - hat keine query params für editSelectedId, dialog=prompt-integration/new etc. sowas brauchen wir immer, wenn ein dialog geöffnet wird.
+            - implement duplicate funktion wie bei agents und workflows
+    - Page:ChatWidget-Details (/chat-widgets/{id}) (bei iFrame type)
+        - Layout/Design überarbeiten
+            - auch wieder sehr sehr langweilige container struktur. bitte hier auch gerne neues design/layout vorschlagen und ausarbeiten lassen!
+        - Funktionale fixen:
+            - so width und height / allow full screen eigentlich total irrelevant, weil wir das im chat-window sowieso so rendern wie es geht! also hier diese onfigmöglichkeiten im FE entfernen und im Backend genauso. wir brauchen im prinzip nur die url.
+        - Funktionalität erweitern:
+            - Wenn ich oben links auf den Namen, soll daraus text box werden und ich soll den Namen editieren können. bei enter dann speichern!
+            - denk dran -> hier audch data sidebar beim hovern!
+    - Page:ChatWidget-Designer (/widget-designer/{id}) (bei form type)
+        - Layout/Design überarbeiten
+            - hier werden wir gesondert dran arbeiten!
+        - Funktionale fixen:
+            - keine
+        - Funktionalität erweitern:
+            - bei den 3-dots menu; auch edit details hizufügen und den dialog verfügabr machen!
+    - ListPages -> haben fast alle einen toggle button für "active"
+        - überall (liste, tabelle etc) wo toggle ist -> wenn von true auf false gestellt werden soll -> immer fragen mit dialog (wie bei delete, nur halt als warning dialog), ob man wirklich deaktivieren möchte. das item ist dann nicht mehr aktiv und verfügbar...
     - Settings
         - Organisation:
-            - Tabelle mit Tenants unten (page unten skrollbar )
-    - Dialoge
+            - Tabelle mit Tenants unten (page unten skrollbar)
+        - alle:
+            - einfach darauf achten, auch hier IMMER mit query params zu arbeiten, wenn dialoge geöffnet werden. also ?tab={tab}&selectedId={id} oder ?tab={tab}&dialog=new etc. damit wir eine saubere struktur haben und auch beim suchen auf das item navigieren können!
+        - create custom group -> hier zB kein icon im dialog header -> also wirklich wichtig zentralen dialog mit standard header zu bauen und zu reusen (für create und edit; NICHT alle!)
     - UX
         - Error Notifications:
             - ja, es ist wichtig dem nutzer die richtigen error notifications anzuzeigen, allerdings wird es aktuell übertieben.
@@ -213,9 +305,39 @@ Beachte dabei den folgenden Workflow:
                     - ja, wenn nutzer auf einen button klickt um zB daten abzufragen, dann soll error message kommen, oder wenn er auf seite navigiert und es gibt nen 500er bzw. zB der serrvr nicht erreichbar ist
                     - vielleicht müssen wir auch einfach nur die aufrufe optimieren -> bei klick auf button -> immer ausführen, aber wenn auf seite navigiert und nutzer reader oder so ist und wir wissen ja, auf welche endpoints er zugriff hat, dann brauchen wir beim navigieren zB auf settings nicht irgendwelche protectet routes aufrufen. ist auch gleichzeitig performance optimierung!
                 - hier das issue dazu: https://github.com/orgs/unified-ui/projects/1/views/2?pane=issue&itemId=165464674&issue=unified-ui%7Cunifiedui%7C11
-        
-    
+    - refactoring:
+        - wir haben ja viele dialoge. man könnte für so edit/create dialoge ein zentrales dialog component bauen, welches header mit icon und titel + schlißen button hat und dann ne content area, die frei gestaltbar ist. dann sehen components immer einheitlich aus.
+            - ich finde die dialoge sehr gut! aber wenn ich neue von copilot erstellen lasse, sind die immer etwas anders und der baut immer wieder nach -> hier könnte man eine einheitliche dialog struktur vorgeben, damit die dialoge immer gleich aussehen
+            - überall wo noch "Autonomous Agent(s)" steht, bitte in "Workflows" ändern. in dialogen, in buttons, in url routes; überall!
+    - weiteres:
+        - /dashboard in /home ändern!!! beachte dabei auch das routing von / etc etc.
+    - Anmerkung:
+        - Wir brauchen glaube common CreateDialogCommon und EditDialogCommon; da sich die header hier auch unterscheiden. ich finde den edit dialog header sehr sehr schon. also sollten wir hier zwei haben. vielleicht noch einen weiteren für info, warn, und configrm deletion etc. du verstehst
 
+Erstelle aus meinen groben Anforderungen ein detaillierten Anforderungskatalog, der logisch aufbauend ist und kategorien in pakete packt.
+zB erstmal allgemeine Themen wie die umbenennung, oder sachen, die halt übergreifen sind; diese dann erstmal in kleine arbeitspakete bündeln und requirements beschreiben
+bsp:
+1. Allgemeine Themen (voraussetzungen für die anderen Pakete)
+    1.1 Umbenennung Autonomous Agents in Workflows
+    1.2 Einheitliche Dialogstruktur
+    1.3 Error Notifications UX optimieren
+    1.4 ListPages: Deaktivieren von Items mit Bestätigungsdialog
+    ...
+2. Redesign
+    2.1 Main Search
+    2.2 Sidebar
+    2.3 Colors (Dark Mode)
+    2.4 Page: Dashboard
+    2.5 Page: Chats
+    2.6 Page: EmbedChat
+    2.7 Page: Agents
+    2.8 Page: Workflows
+    2.9 Page: Workflow Details
+    2.10 Page: External Apps
+    2.11 Page: Widgets
+    ....
+
+ich will daraus dann konkrete arbeites pakete mit plan erstellen, welche ich dann einzeln implementieren und testen und abnehmen kann, bevor wir das nächste paket angehen.
 
 
 - Branding
