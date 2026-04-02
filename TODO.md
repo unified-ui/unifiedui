@@ -129,7 +129,18 @@ Beachte dabei den folgenden Workflow:
 ############################### v0.2.0 ###############################
 ---
 
+Ich möchte ein Redesign der App machen, um es moderner, ansprechender und auch nutzerfreundlicher zu machen. Es soll aber nicht nur ein Redesign sein, sondern auch funktionale Verbesserungen und Erweiterungen geben, damit die App insgesamt besser wird.
+Dafür entwickeln wir gemeinsam zwei Dateien, auf die immer wieder verwiesen werden kann.
+Ich habe grobe Anforderungen definiert. diese möchte ich von dir in eine klare saubere anforerungsstruktur bringen, welche strukturiert und sequenzell Pakete mit Anforderungen definiert, damit ich diese dann Stück für Stück implementieren kann.
+Diese Datei stellt die Anforderungen dar.
+Die zweite Datei Soll dann zu jedem Anforderungspunkt die konkrete Implementierung beschreiben.
+Die Requirements können in einem Batch definiert werden, ich schaue rüber und gebe anmerkungen.
+Wenn die Reuqiremtns-datei passt, soll jedes arbeitspaket einzeln in einem Batch geplant, von mir reviewt und dann das nächste paket geplant, von mir reviert werden und  so weiter.
+wenn der implementierungsplan dann steht, wirst du mir alle anpassungen nacheinander (jedes paket einzeln) implementieren. nach der implementierung eines pakets, teste ich die implementierung, werde anpassungen geben und dann irgendwann final sagen, dass das paket so passt. bei diesem prozess markiertst du dann den titel das paketes mit (startet, in progress, fertig oder so ähnlich), damit ich und du immer den überblick habe, was gerade implementiert wird und was schon fertig ist.
 
+Hier einmal meine semistrukturierten Anforderungen:
+
+```
 - Redesign:
     - Main-Search
         - search-results
@@ -313,6 +324,7 @@ Beachte dabei den folgenden Workflow:
         - /dashboard in /home ändern!!! beachte dabei auch das routing von / etc etc.
     - Anmerkung:
         - Wir brauchen glaube common CreateDialogCommon und EditDialogCommon; da sich die header hier auch unterscheiden. ich finde den edit dialog header sehr sehr schon. also sollten wir hier zwei haben. vielleicht noch einen weiteren für info, warn, und configrm deletion etc. du verstehst
+```
 
 Erstelle aus meinen groben Anforderungen ein detaillierten Anforderungskatalog, der logisch aufbauend ist und kategorien in pakete packt.
 zB erstmal allgemeine Themen wie die umbenennung, oder sachen, die halt übergreifen sind; diese dann erstmal in kleine arbeitspakete bündeln und requirements beschreiben
