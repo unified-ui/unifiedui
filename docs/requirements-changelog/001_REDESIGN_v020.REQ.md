@@ -35,7 +35,7 @@ Jedes Paket bekommt einen Status-Marker im Titel:
 
 ---
 
-## Paket 0: Voraussetzungen & Übergreifende Grundlagen ⏳ In Progress
+## Paket 0: Voraussetzungen & Übergreifende Grundlagen ✅ Done
 
 > Grundlegende Änderungen, die als Basis für alle nachfolgenden Pakete dienen.
 
