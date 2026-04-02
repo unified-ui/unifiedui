@@ -349,7 +349,9 @@ bsp:
     2.11 Page: Widgets
     ....
 
-ich will daraus dann konkrete arbeites pakete mit plan erstellen, welche ich dann einzeln implementieren und testen und abnehmen kann, bevor wir das nächste paket angehen.
+
+Hast du alle deine Aufgaben verstanden.
+Hast du rückfragen zu irgendeiner Zeit, stelle diese bitte gern!
 
 
 - Branding
