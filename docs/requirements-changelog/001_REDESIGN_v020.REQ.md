@@ -16,8 +16,9 @@
 1. **Implementierungsübersicht**: Copilot liest den relevanten Code ein und erstellt eine kompakte Übersicht: welche Dateien betroffen sind, welcher Ansatz gewählt wird, bei Design-Paketen konkrete Varianten mit Empfehlung.
 2. **Review**: Nutzer prüft die Übersicht, gibt OK oder Korrekturen.
 3. **Implementierung**: Copilot implementiert das **gesamte Paket** (alle Teilpakete zusammen, nicht einzeln).
-4. **Test & Feedback**: Nutzer testet die Implementierung und gibt Anpassungswünsche.
-5. **Abschluss**: Paket wird als `✅ Done` im Titel markiert → weiter zum nächsten Paket.
+4. **Testhinweise**: Copilot zeigt nach Implementierung kurz auf, was der Nutzer manuell testen soll (Stichpunkte).
+5. **Test & Feedback**: Nutzer testet die Implementierung und gibt Anpassungswünsche.
+6. **Abschluss**: Paket wird als `✅ Done` im Titel markiert → weiter zum nächsten Paket.
 
 ### Status-Tracking
 
