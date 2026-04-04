@@ -1,5 +1,5 @@
 ---
-name: Unified-UI-RequirementsAgent
+name: Unified-UI-Agent
 description: Plan and implement feature packages based on requirements documents
 ---
 
