@@ -29,6 +29,10 @@ services:
       VITE_OIDC_CLIENT_ID: ${OIDC_CLIENT_ID}
       VITE_SHOW_RE_ACT_AGENT_DEVELOPMENT_PAGE: "true"
       VITE_SHOW_EXTERNAL_APPS_PAGE: "true"
+      # Branding Configuration
+      VITE_APP_TITLE: ${VITE_APP_TITLE:-unified-ui}
+      VITE_THEME_PRESET: ${VITE_THEME_PRESET:-default}
+      VITE_BRANDING_SLUG: ${VITE_BRANDING_SLUG:-default}
     networks:
       - unifiedui_network
 

@@ -2,18 +2,6 @@
 
 ## TODOs
 
-Unified-UI
-- Listen nochmal refactoren / redeeignen
-    - Chat-Agents, Workflows, Widgets
-- Branding
-    - Überarbeiten
-    - Titel anpassen:
-        - SVG
-        - Titel (mir links Subtitel by unified-ui); wenn nicht unified-u
-
-- Branding
-    - Foto in den Header mit aufnehmen
-    - App-Titel anpassbar machen (mit klein: by unified-ui), wenn titel nicht unified-ui ist
 
 --- 
 
@@ -25,14 +13,6 @@ Unified-UI
         - gruppen anlegen
     - Rollen testen mit mehreren Usern
 
-- Orga:
-    - Repos refactoren / aufräumen
-    - GitHub Projekt sauber aufsetzen mit issues etc
-    - Branching-Konzept
-    - automatischen Change-log
-    - Copilot reviews
-    - ruff als linter + linter bei go und ts
-    - CI um linter + coverage tests erweitern
 
 ## Future
 
