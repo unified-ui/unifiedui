@@ -5,6 +5,7 @@ include:
   - path: identity.yml
   - path: ldap.yml
   - path: n8n.yml
+  - path: ollama.yml
   - path: platform.yml
   - path: agent.yml
   - path: frontend.yml

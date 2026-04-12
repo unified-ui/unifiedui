@@ -2,7 +2,23 @@
 
 ## TODOs
 
+- iac & deployment
+    - wie du in der session gesehen hast, hast du ja noch sehr viele manuelle anpassungen vornehmen müssen. damit wir keine überraschungen erleben, bitte kille alle deployments (iac) und baue komplett neu auf. möglichst ohne anapssungen! wenn du anpassungen machen musstest, bitte notiere diese genau, damit wir später fixen können.
+    teste dann alles. hoffentlich sollte es direkt laufen. wenn ja, bitte dpeloye test (tst) mal. auch hier sollten keine anpassunegn nötig sein (korrekt?)
+    - sql server
+        - hier nur entra id auth erlauben; und admin (mich) hinzufügen
 
+    - dev.unified-ui.enricogoerlitz.de mappen
+
+- chat-widgets
+    - liste sieht komisch aus
+    - params müssen für iFrame konfiguriert werden können (siehe YT-Embedding -> braucht params)
+    - iFrame -> url muss pflichtfeld sein
+
+- alles
+    - alles soll default active sein (workflow, chat-widgets, ....)
+    - api aufrufe optimieren
+        - mehr mit select=id,name etc arbeiten (manuell schauen; zB tags abfrage!)
 --- 
 
 

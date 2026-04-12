@@ -1,0 +1,37 @@
+services:
+  unifiedui-ollama:
+    image: ollama/ollama:latest
+    container_name: unifiedui-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - unifiedui_network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:11434/api/tags || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  unifiedui-ollama-init:
+    image: ollama/ollama:latest
+    container_name: unifiedui-ollama-init
+    restart: "no"
+    entrypoint: ["/bin/sh", "-c", "sleep 3 && OLLAMA_HOST=http://unifiedui-ollama:11434 ollama pull llama3.2:3b"]
+    networks:
+      - unifiedui_network
+    depends_on:
+      unifiedui-ollama:
+        condition: service_healthy
+
+volumes:
+  ollama_data:
+    name: unifiedui_ollama_data
+
+networks:
+  unifiedui_network:
+    name: unifiedui_network
+    driver: bridge

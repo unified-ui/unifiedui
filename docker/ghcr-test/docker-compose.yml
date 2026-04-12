@@ -1,0 +1,167 @@
+# Test compose file for GHCR images
+# Usage: docker compose up -d
+
+name: unifiedui-ghcr-test
+
+services:
+  # ======================== Infrastructure =====================
+  database:
+    image: postgres:16-alpine
+    container_name: ghcr-test-database
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: unifiedui
+      POSTGRES_PASSWORD: unifiedui_password
+      POSTGRES_DB: unifiedui
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - test_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U unifiedui"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  docdatabase:
+    image: mongo:8.0
+    container_name: ghcr-test-docdatabase
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - test_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  cache:
+    image: redis:7-alpine
+    container_name: ghcr-test-cache
+    command: ["redis-server", "--requirepass", "admin"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - test_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "admin", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ======================== Services ===========================
+  platform-service:
+    image: ghcr.io/enricogoerlitz/unified-ui-platform-service:latest
+    container_name: ghcr-test-platform
+    ports:
+      - "8000:8000"
+    environment:
+      # Database
+      DATABASE_URL: postgresql://unifiedui:unifiedui_password@database:5432/unifiedui
+      DB_HOST: database
+      DB_PORT: "5432"
+      DB_NAME: unifiedui
+      DB_USER: unifiedui
+      DB_PASSWORD: unifiedui_password
+      # MongoDB
+      DOCUMENT_DATABASE: mongodb
+      MONGODB_CONNECTION_STRING: mongodb://admin:admin@docdatabase:27017/?authSource=admin
+      MONGODB_DATABASE_NAME: unifiedui
+      # Cache
+      CACHE_ENABLED: "true"
+      CACHE_BACKEND: REDIS
+      REDIS_HOST: cache
+      REDIS_PORT: "6379"
+      REDIS_DB: "0"
+      REDIS_PASSWORD: admin
+      # Vault (disabled for local test)
+      VAULT_TYPE: DOTENV
+      APP_VAULT_TYPE: DOTENV
+      SECRETS_VAULT_TYPE: DOTENV
+      SECRETS_ENCRYPTION_KEY: local-dev-encryption-key-32chars
+      # Agent Service
+      AGENT_SERVICE_URL: http://agent-service:8085
+      PLATFORM_TO_AGENT_SERVICE_KEY: local-dev-platform-to-agent-key
+      AGENT_TO_PLATFORM_SERVICE_KEY: local-dev-agent-to-platform-key
+      # Auth (disabled for local test)
+      IDENTITY_VERIFY_SIGNATURE: "false"
+      IDENTITY_CLIENT_ID: test-client-id
+      IDENTITY_TENANT_ID: test-tenant-id
+      # CORS
+      CORS_ORIGINS: '["*"]'
+      CORS_ALLOW_CREDENTIALS: "false"
+      # File Storage
+      FILE_STORAGE_TYPE: local
+      FILE_STORAGE_LOCAL_BASE_PATH: /data/files
+      # Logging
+      LOG_LEVEL: DEBUG
+    volumes:
+      - file_storage:/data/files
+    networks:
+      - test_network
+    depends_on:
+      database:
+        condition: service_healthy
+      docdatabase:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+
+  agent-service:
+    image: ghcr.io/enricogoerlitz/unified-ui-agent-service:latest
+    container_name: ghcr-test-agent
+    ports:
+      - "8085:8085"
+    environment:
+      # Server
+      SERVER_HOST: "0.0.0.0"
+      SERVER_PORT: "8085"
+      # Environment
+      ENVIRONMENT: local
+      LOG_LEVEL: debug
+      # DocDB (MongoDB)
+      DOCDB_TYPE: mongodb
+      MONGODB_URI: mongodb://admin:admin@docdatabase:27017/?authSource=admin
+      MONGODB_DATABASE: agent-service
+      # Cache
+      CACHE_TYPE: redis
+      REDIS_HOST: cache
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: admin
+      REDIS_DB: "1"
+      # Vault (dotenv for local)
+      VAULT_TYPE: dotenv
+      # Platform Service
+      PLATFORM_SERVICE_URL: http://platform-service:8000
+      PLATFORM_TO_AGENT_SERVICE_KEY: local-dev-platform-to-agent-key
+      AGENT_TO_PLATFORM_SERVICE_KEY: local-dev-agent-to-platform-key
+      # Encryption
+      SECRETS_ENCRYPTION_KEY: local-dev-encryption-key-32chars
+    networks:
+      - test_network
+    depends_on:
+      docdatabase:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  mongo_data:
+  redis_data:
+  file_storage:
+
+networks:
+  test_network:
+    name: unifiedui_ghcr_test
+    driver: bridge
