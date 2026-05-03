@@ -1,0 +1,26 @@
+# Compose override that enables the debug backdoor (REQ 007).
+#
+# Usage:
+#   cd unifiedui/docker/local
+#   export DEBUG_BACK_DOOR_SECRET=$(openssl rand -hex 32)
+#   docker compose -f docker-compose.yml -f docker-compose.debug.yml up -d
+#
+# This sets ENABLE_DEBUG_BACK_DOOR=true on platform-service AND agent-service,
+# forces self-hosted deployment_mode, and enables the mock identity provider on
+# the platform service so synthetic tokens validate.
+#
+# DO NOT commit a populated DEBUG_BACK_DOOR_SECRET. Always pass via env at runtime.
+
+services:
+  unifiedui-platform:
+    environment:
+      ENABLE_DEBUG_BACK_DOOR: "true"
+      DEBUG_BACK_DOOR_SECRET: ${DEBUG_BACK_DOOR_SECRET}
+      ALLOW_MOCK_IDENTITY_PROVIDER: "true"
+      DEPLOYMENT_MODE: self-hosted
+
+  unifiedui-agent:
+    environment:
+      ENABLE_DEBUG_BACK_DOOR: "true"
+      DEBUG_BACK_DOOR_SECRET: ${DEBUG_BACK_DOOR_SECRET}
+      DEPLOYMENT_MODE: self-hosted

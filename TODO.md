@@ -2,6 +2,15 @@
 
 ## TODOs
 
+- fixes:
+    - is_active überall raus und nur bei Agents und Credentials machen UND etzt auch bei beiden im BE checken, ob active und sonst 4xx zurückgeben
+        - wenn nicht active (agent) -> nicht chatten können; credentials -> nicht freitext holen und 4XX zurückgeben
+    - auf /chat-agents/{id}
+        - oben mit link im chat agents, damit man zurück kommt
+        - edit und managed access via button; nicht hinter 3-dot-button verstecken
+
+
+
 - iac & deployment
     - wie du in der session gesehen hast, hast du ja noch sehr viele manuelle anpassungen vornehmen müssen. damit wir keine überraschungen erleben, bitte kille alle deployments (iac) und baue komplett neu auf. möglichst ohne anapssungen! wenn du anpassungen machen musstest, bitte notiere diese genau, damit wir später fixen können.
     teste dann alles. hoffentlich sollte es direkt laufen. wenn ja, bitte dpeloye test (tst) mal. auch hier sollten keine anpassunegn nötig sein (korrekt?)
@@ -19,6 +28,7 @@
     - alles soll default active sein (workflow, chat-widgets, ....)
     - api aufrufe optimieren
         - mehr mit select=id,name etc arbeiten (manuell schauen; zB tags abfrage!)
+
 --- 
 
 
