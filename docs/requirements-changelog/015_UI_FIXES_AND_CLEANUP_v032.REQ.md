@@ -229,7 +229,7 @@
 
 ---
 
-### Paket 6: FilterableSelect (Dropdown with Search) — Alignment Fix
+### Paket 6: FilterableSelect (Dropdown with Search) — Alignment Fix ✅ Done
 
 > Fix the search input alignment in the searchable dropdown component.
 
