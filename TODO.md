@@ -2,32 +2,56 @@
 
 ## TODOs
 
-- fixes:
-    - is_active überall raus und nur bei Agents und Credentials machen UND etzt auch bei beiden im BE checken, ob active und sonst 4xx zurückgeben
+- Design UI und weiterefixes:
+    - allgemein:
+        - sidebar
+            - es gibt eine data sidebar, die eingeblendet wird, wenn man in einem unteritem ist; wenn cih in chat-agents/{id} bin, wird beim hovern über agents die datasidebar eingeblendet; hier sind die links zu den agents auf die chats ; aber ich will den link auf den chat-agents/{id}
+            - settings kann raus; haben wir um user dropdpwn; also einfach item unten enfernen; dann ist admin button ganz unten und settings weg
+        - alles was mit ReACT Agents zu tun hat und auch tools, soll aus dem code entfernt werden; sowohl backend (platform service), als auch frontend. auch aus den dokumentationen soll das raus!
+    - /chat-agents/
+        - 3-dots-menu:
+            - Open Chat menüpunkt unter Open hinzufügen -> chat öffnen (wie auch auf der /{id} seite der link!)
+            - embed agent auf ?embed page navigieren etc
+    - /chat-agents/{id}
+        - unter Tab embed: ALLES aus `/chat-agents/29be8df5-a39f-440f-8f1d-94924fe11f81/embed-chat` rein! (Config, iframe definition, url, allow origins, open chat button für preview...)
+            - dann kann die embed-chat seite auch weg!
+        - Manage access button weg
+        - im tab overview -> info header icon hat kein icon nur das  quadrat mit den darben; muss noch icon rein!
+    - /workflows/{id}
+        - tab details: Endpoint & Keys > {YOUR-AGENT-SERVICE-HOST} => haben wir schon in den env
+            - ebenso im &dialog=integrate-workflow
+    - /conversations
+        - search -> noch immer alle conversations?
+    - /admin
+        - /
+            - hier soll nicht ganze page skollbar sein, sondern alles unter "m_4081bf90 mantine-Group-root"; also "Analytics" header und die filter sachen sollten immer oben stehen und dann sollte es entsprechend nen div geben, das unten skrollbar ist mit allen analytics cards, tables etc
+        - /settings (alle tabs)
+            - auch hier das problem: es sollte eigentlich jeweil NUR DIE TABELLE Skrollbar sein! nicht die gesamte Seite!
+
+    - chat-widgets
+        - params müssen für iFrame konfiguriert werden können (siehe YT-Embedding -> braucht params)
+            - vielleicht sollte man auch alternativ selbst die iFrame Definition eingeben können, damit!
+        - iFrame -> url muss pflichtfeld sein
+
+    - alles weitere
+        - DropDown with search Component
+            - hier ist search box bissl zu weit links oder so (foto)
+        - alles soll default active sein (workflow, chat-widgets, ....)
+
+    - is_active überall raus und nur bei Agents und Credentials machen UND jetzt auch bei beiden im BE checken, ob active und sonst 4xx zurückgeben (wenn man zB nen Agent aufruft, der credentials braucht aber credentials ist inactive, dann soll 4xx zurückgegeben und gute beschreibung)
         - wenn nicht active (agent) -> nicht chatten können; credentials -> nicht freitext holen und 4XX zurückgeben
-    - auf /chat-agents/{id}
-        - oben mit link im chat agents, damit man zurück kommt
-        - edit und managed access via button; nicht hinter 3-dot-button verstecken
 
 
+- global search
+    - 
 
-- iac & deployment
-    - wie du in der session gesehen hast, hast du ja noch sehr viele manuelle anpassungen vornehmen müssen. damit wir keine überraschungen erleben, bitte kille alle deployments (iac) und baue komplett neu auf. möglichst ohne anapssungen! wenn du anpassungen machen musstest, bitte notiere diese genau, damit wir später fixen können.
-    teste dann alles. hoffentlich sollte es direkt laufen. wenn ja, bitte dpeloye test (tst) mal. auch hier sollten keine anpassunegn nötig sein (korrekt?)
-    - sql server
-        - hier nur entra id auth erlauben; und admin (mich) hinzufügen
+- n8n Integration verbessern:
+    - /workflows/{id}
+        - traces testen (verschiedene elemente im RUN mit gutem Icon textanzeigen?)
 
-    - dev.unified-ui.enricogoerlitz.de mappen
+- api aufrufe optimieren
+    - mehr mit select=id,name etc arbeiten (manuell schauen; zB tags abfrage!)
 
-- chat-widgets
-    - liste sieht komisch aus
-    - params müssen für iFrame konfiguriert werden können (siehe YT-Embedding -> braucht params)
-    - iFrame -> url muss pflichtfeld sein
-
-- alles
-    - alles soll default active sein (workflow, chat-widgets, ....)
-    - api aufrufe optimieren
-        - mehr mit select=id,name etc arbeiten (manuell schauen; zB tags abfrage!)
 
 --- 
 
