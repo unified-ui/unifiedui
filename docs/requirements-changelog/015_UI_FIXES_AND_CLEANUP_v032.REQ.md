@@ -179,7 +179,7 @@
 
 ---
 
-### Paket 5: External Apps — iFrame Configuration
+### Paket 5: External Apps — iFrame Configuration ✅ Done
 
 > Improve External Apps with a `config` JSON column (replacing the dedicated `url` column), two embedding modes (URL+params vs. raw iFrame HTML), and a backend config validator.
 
@@ -290,6 +290,118 @@ Entities **removed in Paket 0**: `Tool`
 - `ChatAgent` and `Credential` currently default to `is_active=False`
 - No backend enforcement currently exists — `is_active` is only used for UI display
 - Enforcement scope: `unified-ui-agent-service` (Go) — the invoke handler must check active state before forwarding to the AI backend
+
+---
+
+### Paket 8: Notification Drawer — Rich Error Details
+
+> Notifications currently show only a generic title `"Error"` and the raw `error.message` (e.g. `"Failed to fetch"`). Users need more context — at minimum the HTTP status, server-provided `detail`, and ideally the full server JSON response (collapsible).
+
+#### 8.1 Analysis (Current State)
+
+**API client** (`src/api/client.ts`):
+- Throws `new Error(errorData.detail || \`HTTP ${response.status}: ${response.statusText}\`)` (~5 occurrences)
+- Loses everything except `detail` (no status code, no raw body, no validation errors array)
+- Network failures throw native `TypeError: Failed to fetch` — no extra context available
+- Two response shapes in the wild:
+  - Platform-service: `{"detail": "message"}` or `{"detail": [{"loc":..., "msg":..., "type":...}]}` (FastAPI validation)
+  - Agent-service: `{"message": "..."}` (Go domain errors)
+
+**Notification flow** (`src/contexts/IdentityContext.tsx` → `onError` ~L65-75):
+- Title is hardcoded `t('error')` → "Error" / "Fehler"
+- Message is `error.message` only
+- No raw payload is attached → `NotificationEntry` has no `details` / `rawJson` field
+
+**Notification storage** (`src/contexts/NotificationContext.tsx`):
+- `NotificationEntry`: `{ id, title, message, color, timestamp, read }` — no detail/raw fields
+- Persisted to localStorage
+
+**Notification UI** (`src/components/common/NotificationDrawer/NotificationDrawer.tsx`):
+- Renders title + message + relative time
+- No expand/collapse, no JSON viewer
+
+#### 8.2 Proposed Solution
+
+**New `ApiError` class** in `src/api/errors.ts` (or extend existing):
+
+```ts
+export class ApiError extends Error {
+  constructor(
+    public readonly status: number,        // 0 for network errors
+    public readonly statusText: string,    // e.g. "Bad Request", "Network Error"
+    message: string,                       // primary user-facing detail
+    public readonly detail?: string,       // server `detail` / `message` (short)
+    public readonly raw?: unknown,         // full parsed JSON body (if any)
+    public readonly url?: string,          // request URL for context
+    public readonly method?: string,       // HTTP method
+  ) { super(message); this.name = 'ApiError'; }
+}
+```
+
+**API client** — wrap all `throw new Error(...)` with `ApiError`:
+- Extract `detail` (platform) or `message` (agent)
+- Attach full parsed JSON as `raw`
+- Wrap `TypeError: Failed to fetch` in `ApiError(0, 'Network Error', ...)`
+- Wrap unexpected exceptions in `ApiError(0, 'Unexpected Error', ...)`
+
+**`NotificationEntry`** — extend with optional fields:
+
+```ts
+export interface NotificationEntry {
+  id: string;
+  title: string;
+  message: string;
+  color: string;
+  timestamp: number;
+  read: boolean;
+  status?: number;        // HTTP status (for API errors)
+  url?: string;           // request URL (for API errors)
+  method?: string;        // HTTP method
+  rawJson?: unknown;      // server response body (for collapsible viewer)
+}
+```
+
+**`onError` in IdentityContext** — derive better title/message:
+- Title: `${error.status} ${error.statusText}` for ApiError with status (e.g. `"404 Not Found"`, `"Network Error"`)
+- Message: `error.detail || error.message`
+- Pass `status`, `url`, `method`, `rawJson` through to `addNotification`
+
+**NotificationDrawer UI changes:**
+- Show new compact secondary line: `${method} ${url}` (dimmed, monospace) when present
+- When `rawJson` present, render a Mantine `Spoiler` or `Accordion` with `<pre>{JSON.stringify(rawJson, null, 2)}</pre>`
+- Add a copy-to-clipboard button on the raw JSON block
+- Keep existing close-button + read state behavior
+
+**Toast (`notifications.show`)** — keep concise (title + message only). Rich JSON only in the drawer.
+
+#### 8.3 Requirements
+
+| ID    | Requirement |
+|-------|-------------|
+| 8.1.1 | Create `ApiError` class in `src/api/errors.ts` with fields: `status`, `statusText`, `message`, `detail`, `raw`, `url`, `method` |
+| 8.1.2 | `client.ts`: replace all `throw new Error(errorData.detail ...)` with `throw new ApiError(...)`, parsing both `detail` (platform) and `message` (agent) shapes |
+| 8.1.3 | `client.ts`: wrap network errors (`TypeError: Failed to fetch`) and unexpected exceptions in `ApiError(0, 'Network Error', ...)` / `ApiError(0, 'Unexpected Error', ...)` |
+| 8.2.1 | Extend `NotificationEntry` interface with optional `status`, `url`, `method`, `rawJson` |
+| 8.2.2 | `IdentityContext.onError`: when `error instanceof ApiError`, set title to `${status} ${statusText}` (or `statusText` when status=0), message to `detail \|\| message`, attach `status` + `url` + `method` + `rawJson` |
+| 8.2.3 | `IdentityContext.onError`: keep existing PermissionError branch unchanged |
+| 8.3.1 | `NotificationDrawer`: render `${method} ${url}` as dimmed monospace line below message when present |
+| 8.3.2 | `NotificationDrawer`: when `rawJson` is present, render a Mantine `Spoiler` (or `Accordion.Item`) labeled `t('notifications.showDetails')` containing `<pre>` with formatted JSON |
+| 8.3.3 | `NotificationDrawer`: add copy-to-clipboard button next to the raw JSON block |
+| 8.4.1 | i18n keys (en-US + de-DE): `notifications.showDetails`, `notifications.hideDetails`, `notifications.copyDetails`, `notifications.networkError`, `notifications.unexpectedError` |
+| 8.5.1 | Existing toast (`notifications.show`) remains short — only title + message, no JSON in toast |
+| 8.6.1 | Backwards-compat: `NotificationEntry` records from localStorage without new fields render exactly as before |
+
+#### 8.4 Scope Clarifications
+
+- **Success / Info notifications stay unchanged** — they already render well (verified visually). Paket 8 enriches **error** notifications only.
+- The new collapsible JSON block uses the **same styling** as the existing notification cards (Mantine tokens, dark-mode aware, monospace `<pre>` with `var(--mantine-color-dark-6)` background).
+- `rawJson` field is only populated for `ApiError` instances — non-error notifications (success, info) leave it `undefined` and the Spoiler is not rendered.
+
+#### 8.5 Out of Scope
+
+- Standardising the backend error response shape (platform uses `detail`, agent uses `message`) — handled in a separate REQ if desired
+- Stack traces in production builds
+- Server-side error tracking / Sentry integration
 
 ---
 
