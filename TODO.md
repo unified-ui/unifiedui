@@ -5,6 +5,7 @@
 - bugs:
     - klick auf X bei notification
     - wenn man in organisation nen user hinzufügt (zum ersten mal), ist name nicht drin -> fixes und refresh geht auch nicht
+    - traces bei n8n integration sind versetzt (chat)
     - emtec customizing
 
 - n8n Integration verbessern:
