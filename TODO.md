@@ -5,6 +5,7 @@
 - bugs:
     - klick auf X bei notification
     - wenn man in organisation nen user hinzufügt (zum ersten mal), ist name nicht drin -> fixes und refresh geht auch nicht
+    - emtec customizing
 
 - n8n Integration verbessern:
     - /workflows/{id}
